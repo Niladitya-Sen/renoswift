@@ -15,147 +15,95 @@ import { variants } from '@/lib/motion';
 
 export default function Hero() {
     return (
-        <Carousel
-            plugins={[
-                Autoplay({
-                    delay: 5000,
-                }),
-            ]}
-            className='overflow-hidden relative isolate mt-8'
-        >
-            <CarouselContent>
-                <CarouselItem>
-                    <div className='h-full rounded-lg bg-[url("/assets/slide-1.jpg")] bg-no-repeat bg-center bg-cover p-8 flex flex-col justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:rounded-lg after:from-[40%] after:to-transparent after:-z-10'>
-                        <div className='ml-14 sm:ml-20 max-w-sm'>
-                            <motion.h1
-                                initial={variants.fadeIn().hidden}
-                                whileInView={variants.fadeIn().visible}
-                                className='heading-1 mb-4 text-white'
-                            >
-                                Gardening
-                            </motion.h1>
-                            <motion.p
-                                initial={variants.fadeIn(0.25).hidden}
-                                whileInView={variants.fadeIn(0.25).visible}
-                                className='text-white mb-12'>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis, ea!
-                            </motion.p>
-                            <motion.div
-                                initial={variants.fadeIn(0.4).hidden}
-                                whileInView={variants.fadeIn(0.4).visible}
-                                className='flex gap-2'
-                            >
-                                <Button>Buy Now</Button>
-                                <Button variant={'outline'}>Get Discount</Button>
-                            </motion.div>
-                            <motion.p
-                                initial={variants.fadeIn(0.6).hidden}
-                                whileInView={variants.fadeIn(0.6).visible}
-                                className='text-white font-semibold mt-12'
-                            >
-                                Get special price
-                            </motion.p>
-                            <motion.p
-                                initial={variants.fadeIn(0.6).hidden}
-                                whileInView={variants.fadeIn(0.6).visible}
-                                className='text-white mt-1'>
-                                &#8377; 149999.99
-                            </motion.p>
-                            <motion.p
-                                initial={variants.fadeIn(0.65).hidden}
-                                whileInView={variants.fadeIn(0.65).visible}
-                                className='text-white mt-1 text-xs'>
-                                **Product prices with discount are available until the end of stock**
-                            </motion.p>
+        <section className='mt-10'>
+            <h1 className='heading-1'>Welcome to RenoSwift</h1>
+            <p className='text-foreground/80 mb-8'>Your Partner in Crafting Stunning Bathrooms!</p>            
+            <Carousel
+                plugins={[
+                    Autoplay({
+                        delay: 5000,
+                    }),
+                ]}
+                className='overflow-hidden relative isolate mt-8'
+            >
+                <CarouselContent>
+                    <CarouselItem>
+                        <div className='h-full rounded-lg bg-[url("/assets/slide-1.jpg")] bg-no-repeat bg-center bg-cover p-8 flex flex-col justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
+                            <div className='ml-10 sm:ml-20 max-w-sm'>
+                                <motion.p
+                                    initial={variants.fadeIn(0.1).hidden}
+                                    whileInView={variants.fadeIn(0.1).visible}
+                                    className='heading-1 text-white text-2xl mb-4'
+                                >
+                                    Transforming Spaces: RenoSwift&apos;s Vision for Your Dream Bathroom
+                                </motion.p>
+                                <motion.p
+                                    initial={variants.fadeIn(0.25).hidden}
+                                    whileInView={variants.fadeIn(0.25).visible}
+                                    className='text-white text-sm font-medium mb-12'>
+                                    At RenoSwift, we embark on a journey with you to turn your bathroom dreams into reality. Committed to innovation and unwavering quality, we are more than just a renovation service - we are your dedicated companions in transforming your space.
+                                </motion.p>
+                                <motion.div
+                                    initial={variants.fadeIn(0.4).hidden}
+                                    whileInView={variants.fadeIn(0.4).visible}
+                                    className='flex gap-2'
+                                >
+                                    <Button>Request a Quote</Button>
+                                </motion.div>
+                            </div>
                         </div>
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className='h-full rounded-lg bg-[url("/assets/slide-2.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col justify-center'>
-                        <div className='ml-14 sm:ml-20 max-w-sm'>
-                            <motion.h1
-                                initial={variants.fadeIn().hidden}
-                                whileInView={variants.fadeIn().visible}
-                                className='heading-1 text-white uppercase'
-                            >
-                                Save now
-                            </motion.h1>
-                            <motion.h1
-                                initial={variants.fadeIn().hidden}
-                                whileInView={variants.fadeIn().visible}
-                                className='heading-1 text-7xl text-white uppercase'
-                            >
-                                50%
-                            </motion.h1>
-                            <motion.h1
-                                initial={variants.fadeIn().hidden}
-                                whileInView={variants.fadeIn().visible}
-                                className='heading-1 text-2xl mb-4 text-white uppercase'
-                            >
-                                on new kitchen
-                            </motion.h1>
-                            <motion.div
-                                initial={variants.fadeIn(0.4).hidden}
-                                whileInView={variants.fadeIn(0.4).visible}
-                                className='flex gap-2'
-                            >
-                                <Button variant={'secondary'}>Shop Now</Button>
-                            </motion.div>
-                            <motion.p
-                                initial={variants.fadeIn(0.6).hidden}
-                                whileInView={variants.fadeIn(0.6).visible}
-                                className='text-white font-semibold text-4xl mt-12'
-                            >
-                                Kitchen
-                            </motion.p>
-                            <motion.p
-                                initial={variants.fadeIn(0.6).hidden}
-                                whileInView={variants.fadeIn(0.6).visible}
-                                className='text-white mt-1 text-xl'>
-                                &#8377; 149999.99
-                            </motion.p>
-                            <motion.p
-                                initial={variants.fadeIn(0.65).hidden}
-                                whileInView={variants.fadeIn(0.65).visible}
-                                className='text-white mt-1 text-xs'>
-                                **Product prices with discount are available until the end of stock**
-                            </motion.p>
+                    </CarouselItem>
+                    <CarouselItem>
+                        <div className='h-full rounded-lg bg-[url("/assets/slide-2.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
+                            <div className='ml-10 sm:ml-20 max-w-sm'>
+                                <motion.p
+                                    initial={variants.fadeIn(0.1).hidden}
+                                    whileInView={variants.fadeIn(0.1).visible}
+                                    className='heading-1 text-white text-2xl mb-4'
+                                >
+                                    Crafting Timeless Elegance: Your Bathroom, Our Expertise
+                                </motion.p>
+                                <motion.p
+                                    initial={variants.fadeIn(0.25).hidden}
+                                    whileInView={variants.fadeIn(0.25).visible}
+                                    className='text-white text-sm font-medium mb-12'
+                                >
+                                    Renoswift®️ revolutionizes the renovation experience by bringing expert services right to your doorstep. Our team is driven by a passion for delivering quality work, always on time. As your one-stop solution for home renovations, we take pride in the seamless integration of our Design and Technical teams.
+                                </motion.p>
+                            </div>
                         </div>
-                    </div>
-                </CarouselItem>
-                <CarouselItem>
-                    <div className='h-full rounded-lg bg-[url("/assets/slide-3.jpg")] bg-no-repeat bg-center bg-cover flex items-center justify-center'>
-                        <div className='max-w-sm text-center flex flex-col items-center justify-center'>
-                            <motion.h1
-                                initial={variants.fadeIn().hidden}
-                                whileInView={variants.fadeIn().visible}
-                                className='heading-1 mb-4 text-white'
-                            >
-                                Bathroom Furniture
-                            </motion.h1>
-                            <motion.p
-                                initial={variants.fadeIn(0.25).hidden}
-                                whileInView={variants.fadeIn(0.25).visible}
-                                className='text-white mb-12'>
-                                Score new arrivals from latest items
-                                <br />
-                                Multipurpose eCommerce template ready
-                            </motion.p>
-                            <motion.div
-                                initial={variants.fadeIn(0.4).hidden}
-                                whileInView={variants.fadeIn(0.4).visible}
-                                className='flex gap-2'
-                            >
-                                <Button>New Collection</Button>
-                                <Button variant={'outline'}>Get first discount</Button>
-                            </motion.div>
+                    </CarouselItem>
+                    <CarouselItem>
+                        <div className='h-full rounded-lg bg-[url("/assets/slide-3.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/50 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
+                            <div className='ml-10 sm:ml-20 max-w-sm'>
+                                <motion.p
+                                    initial={variants.fadeIn(0.1).hidden}
+                                    whileInView={variants.fadeIn(0.1).visible}
+                                    className='heading-1 text-white text-2xl mb-4'
+                                >
+                                    RenoSwift: Where Innovation Meets Bathroom Design Excellence
+                                </motion.p>
+                                <motion.p
+                                    initial={variants.fadeIn(0.25).hidden}
+                                    whileInView={variants.fadeIn(0.25).visible}
+                                    className='text-white text-sm font-medium'
+                                >
+                                    Our Design team specializes in curating beautiful and personalized designs for your home, ensuring a touch of elegance in every corner. Meanwhile, our Technical team, equipped with years of expertise, ensures a bespoke and high-quality experience, all within a budget that suits your needs.
+                                </motion.p>
+                                <motion.p
+                                    initial={variants.fadeIn(0.45).hidden}
+                                    whileInView={variants.fadeIn(0.45).visible}
+                                    className='text-white text-sm mt-2 font-medium'
+                                >
+                                    Embark on a journey with RenoSwift, where excellence meets affordability. Your dream bathroom awaits - let&apos;s make it a reality together!
+                                </motion.p>
+                            </div>
                         </div>
-                    </div>
-                </CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious className='absolute left-8' />
-            <CarouselNext className='absolute right-8' />
-        </Carousel>
-
+                    </CarouselItem>
+                </CarouselContent>
+                <CarouselPrevious className='absolute left-8 hidden sm:inline-flex' />
+                <CarouselNext className='absolute right-8 hidden sm:inline-flex' />
+            </Carousel>
+        </section>
     )
 }

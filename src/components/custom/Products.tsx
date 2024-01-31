@@ -36,15 +36,9 @@ const products = [
     },
     {
         id: 5,
-        name: 'Kitchen Chimney',
-        price: 25000,
+        name: 'Showers',
+        price: 5000,
         image: '/assets/product-5.jpg',
-    },
-    {
-        id: 6,
-        name: 'Gas Stove',
-        price: 15000,
-        image: '/assets/product-6.jpg',
     },
 ];
 
@@ -97,7 +91,7 @@ function ProductCard({ name, price, image }: Readonly<{ name: string, price: num
 export default function Products() {
     return (
         <section className='my-20'>
-            <h1 className='heading-1 mb-2'>Popular products</h1>
+            <h1 className='heading-1 mb-2'>Popular Products</h1>
             <p className='text-foreground/80 mb-8'>Find your perfect match.</p>
             <div>
                 <div className='grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-6'>

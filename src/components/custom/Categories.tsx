@@ -13,12 +13,12 @@ import { Button } from '../ui/button';
 
 const categories = [
     {
-        title: 'Garden',
-        description: 'Beautiful Plants',
+        title: 'Bathtubs',
+        description: 'Asthetic Design',
         image: '/assets/product-1.jpg'
     },
     {
-        title: 'Kitchen',
+        title: 'Showers',
         description: 'New Collection',
         image: '/assets/product-2.jpg'
     },
@@ -38,8 +38,6 @@ function CategoryCard({ title, description, image }: { title: string, descriptio
                 <motion.div
                     className='flex flex-col items-center justify-center flex-1 translate-y-20 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500'
                 >
-                    <div className='flex-grow-[0.5]'></div>
-                    <p className='text-white'>{description}</p>
                     <div className='flex-grow'></div>
                     <Button>Request Quote</Button>
                 </motion.div>

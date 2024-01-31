@@ -2,6 +2,9 @@ import React from 'react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
+import { IoIosCall } from "react-icons/io";
+import { MdMail } from "react-icons/md";
 
 export default function Footer() {
     return (
@@ -15,31 +18,90 @@ export default function Footer() {
                     <div>
                         <h5 className='mb-2 font-semibold'>Browse by</h5>
                         <ul className='text-foreground/80 flex flex-col gap-2'>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Brand</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Product</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Category</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Projects</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Sales</a></li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Brand</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Product</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Category</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Projects</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Sales</Link>
+                            </li>
                         </ul>
                     </div>
                     <div>
                         <h5 className='mb-2 font-semibold'>Quick links</h5>
                         <ul className='text-foreground/80 flex flex-col gap-2'>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">In-Store Pickup</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Gift Cards</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Afterpay</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Shop</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">FAQ</a></li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">In-Store Pickup</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Gift Cards</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Afterpay</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Shop</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">FAQ</Link>
+                            </li>
                         </ul>
                     </div>
                     <div>
                         <h5 className='mb-2 font-semibold'>Order info</h5>
                         <ul className='text-foreground/80 flex flex-col gap-2'>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Order Status </a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Payments</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Shipping</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Returns</a></li>
-                            <li className="transition-transform duration-300 hover:translate-x-4"><a href="#">Order history</a></li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Order Status </Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Payments</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Shipping</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Returns</Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">Order history</Link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 className='mb-2 font-semibold'>Contact Us</h5>
+                        <ul className='text-foreground/80 flex flex-col gap-2'>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">
+                                    <IoIosCall className='inline-block mr-2 text-lg' />
+                                    +911204902825
+                                </Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">
+                                    <IoIosCall className='inline-block mr-2 text-lg' />
+                                    +919818204406
+                                </Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="#">
+                                    <IoIosCall className='inline-block mr-2 text-lg' />
+                                    +919205022725
+                                </Link>
+                            </li>
+                            <li className="transition-transform duration-300 hover:translate-x-4">
+                                <Link href="mailto:info@renoswift.com">
+                                    <MdMail className='inline-block mr-2 text-lg' />
+                                    info@renoswift.com
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

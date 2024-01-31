@@ -1,21 +1,18 @@
 "use client";
 
-import React, { useEffect } from 'react';
-import { Button } from '../ui/button';
-import { BsMoonStarsFill } from "react-icons/bs";
-import { MdSunny } from "react-icons/md";
-import Link from 'next/link';
-import Image from 'next/image';
-import { HiMenuAlt3 } from "react-icons/hi";
-import { cn } from '@/lib/utils';
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
+    SheetTrigger
+} from "@/components/ui/sheet";
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect } from 'react';
+import { BsMoonStarsFill } from "react-icons/bs";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { MdSunny } from "react-icons/md";
+import { Button } from '../ui/button';
 
 
 export default function Navbar() {
@@ -48,16 +45,32 @@ export default function Navbar() {
                 </Link>
                 <div className='flex items-center gap-2'>
                     <div className='hidden lg:flex items-center gap-2'>
-                        <Button variant={'ghost'} size={'sm'}>Home</Button>
-                        <Button variant={'ghost'} size={'sm'}>About Us</Button>
-                        <Button variant={'ghost'} size={'sm'}>Services</Button>
-                        <Button variant={'ghost'} size={'sm'}>Packages</Button>
-                        <Button variant={'ghost'} size={'sm'}>Blogs</Button>
-                        <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
-                        <Button variant={'ghost'} size={'sm'}>Our Presence</Button>
-                        <Button variant={'ghost'} size={'sm'}>Contact</Button>
+                        <Link href={"/"}>
+                            <Button variant={'ghost'} size={'sm'}>Home</Button>
+                        </Link>
+                        <Link href={"/about"}>
+                            <Button variant={'ghost'} size={'sm'}>About Us</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={'ghost'} size={'sm'}>Services</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={'ghost'} size={'sm'}>Packages</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={'ghost'} size={'sm'}>Blogs</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={'ghost'} size={'sm'}>Our Presence</Button>
+                        </Link>
+                        <Link href={"/contact"}>
+                            <Button variant={'ghost'} size={'sm'}>Contact</Button>
+                        </Link>
                     </div>
-                    <Button variant={'ghost'} size={'icon'} onClick={() => {
+                    <Button className={cn('hidden')} variant={'ghost'} size={'icon'} onClick={() => {
                         if (theme === 'dark') {
                             setTheme('light');
                         } else {
@@ -80,14 +93,30 @@ export default function Navbar() {
                         </SheetTrigger>
                         <SheetContent>
                             <div className='flex flex-col items-start'>
-                                <Button variant={'ghost'} size={'sm'}>Home</Button>
-                                <Button variant={'ghost'} size={'sm'}>About Us</Button>
-                                <Button variant={'ghost'} size={'sm'}>Services</Button>
-                                <Button variant={'ghost'} size={'sm'}>Packages</Button>
-                                <Button variant={'ghost'} size={'sm'}>Blogs</Button>
-                                <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
-                                <Button variant={'ghost'} size={'sm'}>Our Presence</Button>
-                                <Button variant={'ghost'} size={'sm'}>Contact</Button>
+                                <Link href={"/"}>
+                                    <Button variant={'ghost'} size={'sm'}>Home</Button>
+                                </Link>
+                                <Link href={"/about"}>
+                                    <Button variant={'ghost'} size={'sm'}>About Us</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={'ghost'} size={'sm'}>Services</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={'ghost'} size={'sm'}>Packages</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={'ghost'} size={'sm'}>Blogs</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={'ghost'} size={'sm'}>Our Presence</Button>
+                                </Link>
+                                <Link href={"/contact"}>
+                                    <Button variant={'ghost'} size={'sm'}>Contact</Button>
+                                </Link>
                             </div>
                         </SheetContent>
                     </Sheet>

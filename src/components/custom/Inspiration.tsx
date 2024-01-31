@@ -29,9 +29,9 @@ const inspirations = [
     },
     {
         id: 5,
-        name: 'Gas Stove',
+        name: 'Showers',
         btnText: 'Classic design',
-        image: '/assets/product-6.jpg',
+        image: '/assets/product-5.jpg',
     },
 ];
 

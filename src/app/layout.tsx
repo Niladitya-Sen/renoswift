@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/custom/Navbar";
+import Footer from "@/components/custom/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -176,7 +178,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <main className="max-w-screen-xl mx-auto px-4">
+          <Navbar />
           {children}
+          <Footer />
         </main>
       </body>
     </html>
