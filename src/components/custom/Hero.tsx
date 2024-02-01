@@ -16,7 +16,7 @@ import { variants } from '@/lib/motion';
 export default function Hero() {
     return (
         <section className='mt-10'>
-            <h1 className='heading-1'>Welcome to RenoSwift</h1>
+            <h1 className='heading-1 mb-2'>Welcome to RenoSwift</h1>
             <p className='text-foreground/80 mb-8'>Your Partner in Crafting Stunning Bathrooms!</p>            
             <Carousel
                 plugins={[
