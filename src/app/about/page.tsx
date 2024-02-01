@@ -111,8 +111,8 @@ export default function About() {
                             />
                         </CarouselItem>
                     </CarouselContent>
-                    <CarouselPrevious className='absolute left-8' />
-                    <CarouselNext className='absolute right-8' />
+                    <CarouselPrevious className='absolute left-8 hidden sm:inline-flex' />
+                    <CarouselNext className='absolute right-8 hidden sm:inline-flex' />
                 </Carousel>
             </section>
 

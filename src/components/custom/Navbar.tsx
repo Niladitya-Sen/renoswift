@@ -13,10 +13,12 @@ import { BsMoonStarsFill } from "react-icons/bs";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdSunny } from "react-icons/md";
 import { Button } from '../ui/button';
+import { usePathname } from "next/navigation";
 
 
 export default function Navbar() {
     const [theme, setTheme] = React.useState<'light' | 'dark' | null>(null);
+    const pathname = usePathname();
 
     useEffect(() => {
         const theme_local = localStorage.getItem('theme') as 'light' | 'dark';
@@ -46,28 +48,28 @@ export default function Navbar() {
                 <div className='flex items-center gap-2'>
                     <div className='hidden lg:flex items-center gap-2'>
                         <Link href={"/"}>
-                            <Button variant={'ghost'} size={'sm'}>Home</Button>
+                            <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                         </Link>
                         <Link href={"/about"}>
-                            <Button variant={'ghost'} size={'sm'}>About Us</Button>
+                            <Button variant={pathname === '/about' ? 'default' : 'ghost'} size={'sm'}>About Us</Button>
                         </Link>
                         <Link href={"/"}>
-                            <Button variant={'ghost'} size={'sm'}>Services</Button>
+                            <Button variant={pathname === '/services' ? 'default' : 'ghost'} size={'sm'}>Services</Button>
                         </Link>
                         <Link href={"/"}>
-                            <Button variant={'ghost'} size={'sm'}>Packages</Button>
+                            <Button variant={pathname === '/packages' ? 'default' : 'ghost'} size={'sm'}>Packages</Button>
                         </Link>
                         <Link href={"/"}>
-                            <Button variant={'ghost'} size={'sm'}>Blogs</Button>
+                            <Button variant={pathname === '/blogs' ? 'default' : 'ghost'} size={'sm'}>Blogs</Button>
                         </Link>
                         <Link href={"/"}>
-                            <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
+                            <Button variant={pathname === '/testimonials' ? 'default' : 'ghost'} size={'sm'}>Testimonials</Button>
                         </Link>
                         <Link href={"/"}>
-                            <Button variant={'ghost'} size={'sm'}>Our Presence</Button>
+                            <Button variant={pathname === '/presence' ? 'default' : 'ghost'} size={'sm'}>Our Presence</Button>
                         </Link>
                         <Link href={"/contact"}>
-                            <Button variant={'ghost'} size={'sm'}>Contact</Button>
+                            <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
                         </Link>
                     </div>
                     <Button className={cn('hidden')} variant={'ghost'} size={'icon'} onClick={() => {
@@ -87,35 +89,35 @@ export default function Navbar() {
                     </Button>
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button variant={'ghost'} size={'icon'} className={cn('block lg:hidden')}>
+                            <Button variant={'ghost'} size={'icon'} className={cn('inline-flex lg:hidden')}>
                                 <HiMenuAlt3 className='text-xl' />
                             </Button>
                         </SheetTrigger>
                         <SheetContent>
                             <div className='flex flex-col items-start'>
                                 <Link href={"/"}>
-                                    <Button variant={'ghost'} size={'sm'}>Home</Button>
+                                    <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                                 </Link>
                                 <Link href={"/about"}>
-                                    <Button variant={'ghost'} size={'sm'}>About Us</Button>
+                                    <Button variant={pathname === '/about' ? 'default' : 'ghost'} size={'sm'}>About Us</Button>
                                 </Link>
                                 <Link href={"/"}>
-                                    <Button variant={'ghost'} size={'sm'}>Services</Button>
+                                    <Button variant={pathname === '/services' ? 'default' : 'ghost'} size={'sm'}>Services</Button>
                                 </Link>
                                 <Link href={"/"}>
-                                    <Button variant={'ghost'} size={'sm'}>Packages</Button>
+                                    <Button variant={pathname === '/packages' ? 'default' : 'ghost'} size={'sm'}>Packages</Button>
                                 </Link>
                                 <Link href={"/"}>
-                                    <Button variant={'ghost'} size={'sm'}>Blogs</Button>
+                                    <Button variant={pathname === '/blogs' ? 'default' : 'ghost'} size={'sm'}>Blogs</Button>
                                 </Link>
                                 <Link href={"/"}>
-                                    <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
+                                    <Button variant={pathname === '/testimonials' ? 'default' : 'ghost'} size={'sm'}>Testimonials</Button>
                                 </Link>
                                 <Link href={"/"}>
-                                    <Button variant={'ghost'} size={'sm'}>Our Presence</Button>
+                                    <Button variant={pathname === '/presence' ? 'default' : 'ghost'} size={'sm'}>Our Presence</Button>
                                 </Link>
                                 <Link href={"/contact"}>
-                                    <Button variant={'ghost'} size={'sm'}>Contact</Button>
+                                    <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
                                 </Link>
                             </div>
                         </SheetContent>

@@ -40,6 +40,12 @@ const products = [
         price: 5000,
         image: '/assets/product-5.jpg',
     },
+    {
+        id: 6,
+        name: 'Towel Rack',
+        price: 3000,
+        image: '/assets/product-6.jpg',
+    },
 ];
 
 function ProductCard({ name, price, image }: Readonly<{ name: string, price: number, image: string }>) {
