@@ -68,11 +68,9 @@ function ProductCard({ name, image }: Readonly<{ name: string, image: string }>)
             </CardHeader>
             <div className="flex justify-between items-center p-6">
                 <p className="heading-1 text-xl mb-1">{name}</p>
-                <span title="Add to cart">
-                    <Button>
-                        Request Quote
-                    </Button>
-                </span>
+                <Button>
+                    Request Quote
+                </Button>
             </div>
         </Card>
 
