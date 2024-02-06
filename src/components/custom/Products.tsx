@@ -13,42 +13,36 @@ const products = [
     {
         id: 1,
         name: 'Bathtub',
-        price: 50000,
         image: '/assets/product-10.jpg',
     },
     {
         id: 2,
         name: 'Sink',
-        price: 10000,
         image: '/assets/product-9.jpg',
     },
     {
         id: 3,
         name: 'Toilet',
-        price: 15000,
         image: '/assets/product-8.jpg',
     },
     {
         id: 4,
         name: 'Vanity',
-        price: 25000,
         image: '/assets/product-7.jpg',
     },
     {
         id: 5,
         name: 'Showers',
-        price: 5000,
         image: '/assets/product-5.jpg',
     },
     {
         id: 6,
         name: 'Towel Rack',
-        price: 3000,
         image: '/assets/product-6.jpg',
     },
 ];
 
-function ProductCard({ name, price, image }: Readonly<{ name: string, price: number, image: string }>) {
+function ProductCard({ name, image }: Readonly<{ name: string, image: string }>) {
     return (
         <Card className={cn('rounded-lg overflow-hidden bg-secondary transition-all duration-500 group hover:shadow-md')}>
             <CardHeader className={cn('p-0 relative overflow-hidden')}>
@@ -73,19 +67,10 @@ function ProductCard({ name, price, image }: Readonly<{ name: string, price: num
                 </div>
             </CardHeader>
             <div className="flex justify-between items-center p-6">
-                <div>
-                    <p className="heading-1 text-xl mb-1">{name}</p>
-                    <p className="font-medium text-foreground/80">
-                        {price.toLocaleString('en-IN', {
-                            maximumFractionDigits: 2,
-                            style: 'currency',
-                            currency: 'INR',
-                        })}
-                    </p>
-                </div>
+                <p className="heading-1 text-xl mb-1">{name}</p>
                 <span title="Add to cart">
-                    <Button variant={'default'} size={'icon'}>
-                        <IoCart className="text-xl" />
+                    <Button>
+                        Request Quote
                     </Button>
                 </span>
             </div>
