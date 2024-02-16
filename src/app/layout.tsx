@@ -3,8 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
-
-const inter = Inter({ subsets: ["latin"] });
+import SectionWrapper from "@/components/custom/SectionWrapper";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -166,7 +165,7 @@ export const metadata: Metadata = {
   ],
 
   category: "Home Improvement",
-  
+
 };
 
 export default function RootLayout({
@@ -177,10 +176,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <main className="max-w-screen-xl mx-auto px-4">
+        <main>
           <Navbar />
           {children}
-          <Footer />
+          <SectionWrapper>
+            <Footer />
+          </SectionWrapper>
         </main>
       </body>
     </html>

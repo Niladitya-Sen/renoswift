@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
@@ -5,10 +7,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { IoIosCall } from "react-icons/io";
 import { MdMail } from "react-icons/md";
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 export default function Footer() {
+    const pathname = usePathname();
+    
     return (
-        <footer className='bg-primary/20 dark:bg-primary/50 mt-20 mb-10 rounded-lg py-12 px-10 sm:px-20'>
+        <footer className={cn('bg-primary/20 dark:bg-primary/50 mt-20 mb-10 rounded-lg py-12 px-10 sm:px-20', {
+            'hidden': pathname === '/auth/login' || pathname === '/auth/signup'        
+        })}>
             <div className='flex items-center justify-center w-full mb-4'>
                 <Image src='/assets/logo.jpg' alt='logo' width={200} height={100} />
             </div>

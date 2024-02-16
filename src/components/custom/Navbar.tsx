@@ -8,40 +8,21 @@ import {
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
-import { BsMoonStarsFill } from "react-icons/bs";
+import React from 'react';
 import { HiMenuAlt3 } from "react-icons/hi";
-import { MdSunny } from "react-icons/md";
 import { Button } from '../ui/button';
 import { usePathname } from "next/navigation";
+import SectionWrapper from "./SectionWrapper";
 
 
 export default function Navbar() {
-    const [theme, setTheme] = React.useState<'light' | 'dark' | null>(null);
     const pathname = usePathname();
 
-    useEffect(() => {
-        const theme_local = localStorage.getItem('theme') as 'light' | 'dark';
-        if (theme_local) {
-            setTheme(theme_local);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-
-        if (localStorage.getItem('theme') !== theme && theme !== null) {
-            localStorage.setItem('theme', theme);
-        }
-    }, [theme]);
-
     return (
-        <nav className='sticky top-0 z-50 bg-background'>
-            <section className='py-4 flex justify-between items-center px-2 text-foreground'>
+        <nav className={cn('sticky top-0 z-50 bg-background', {
+            'hidden': pathname === '/auth/login' || pathname === '/auth/signup'
+        })}>
+            <SectionWrapper className='py-4 flex justify-between items-center px-2 text-foreground'>
                 <Link href={"/"}>
                     <Image src='/assets/logo.jpg' alt='logo' width={200} height={100} />
                 </Link>
@@ -71,22 +52,10 @@ export default function Navbar() {
                         <Link href={"/contact"}>
                             <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
                         </Link>
+                        <Link href={"/auth/login"}>
+                            <Button variant={'outline'} className={cn('border-primary border-[3px]')} size={'sm'}>Login</Button>
+                        </Link>
                     </div>
-                    <Button className={cn('hidden')} variant={'ghost'} size={'icon'} onClick={() => {
-                        if (theme === 'dark') {
-                            setTheme('light');
-                        } else {
-                            setTheme('dark');
-                        }
-                    }}>
-                        {
-                            theme === 'dark' ? (
-                                <MdSunny className='text-xl text-primary' onClick={() => setTheme('dark')} />
-                            ) : (
-                                <BsMoonStarsFill className='text-xl' onClick={() => setTheme('light')} />
-                            )
-                        }
-                    </Button>
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant={'ghost'} size={'icon'} className={cn('inline-flex lg:hidden')}>
@@ -124,7 +93,7 @@ export default function Navbar() {
                     </Sheet>
 
                 </div>
-            </section>
+            </SectionWrapper>
         </nav>
     )
 }
