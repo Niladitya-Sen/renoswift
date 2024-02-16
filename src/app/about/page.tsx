@@ -1,5 +1,6 @@
 "use client";
 
+import SectionWrapper from "@/components/custom/SectionWrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -7,7 +8,6 @@ import { cn } from "@/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import React from "react";
-import 'react-vertical-timeline-component/style.min.css';
 
 const reasons = [
     {
@@ -42,29 +42,9 @@ function ChooseUsCard({ title, description, index }: Readonly<{ title: string, d
     )
 }
 
-/* function ChooseUsCard({ title, description, index }: Readonly<{ title: string, description: string, index: number }>) {
-    return (
-        <VerticalTimelineElement
-            visible={true}
-            className=""
-            contentStyle={{ background: 'rgb(249, 207, 43)', color: 'black' }}
-            contentArrowStyle={{ borderRight: '7px solid  rgb(249, 207, 43)' }}
-            iconStyle={{ background: '#f9cf2b', color: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            icon={
-                <p className="flex justify-center items-center w-8 h-8 rounded-full text-black text-sm font-bold">{index}</p>
-            }
-        >
-            <h3 className="heading-1 text-black text-xl">{title}</h3>
-            <p>
-                {description}
-            </p>
-        </VerticalTimelineElement>
-    )
-} */
-
 export default function About() {
     return (
-        <React.Fragment>
+        <SectionWrapper>
             <h1 className="heading-1 text-center my-[2em]">RenoSwift: Crafting Your Dream Bathroom Experience</h1>
 
             <section className="bg-secondary rounded-lg p-8 sm:p-12 mt-[4em] flex flex-col-reverse md:flex-row gap-12 items-center justify-between">
@@ -166,20 +146,6 @@ export default function About() {
 
             <section className="bg-primary/20 rounded-lg p-8 sm:p-12 mt-[4em]">
                 <h2 className="heading-1 text-2xl">Why Choose Us?</h2>
-                {/* <VerticalTimeline
-                    lineColor={"#f9cf2b"}
-                >
-                    {
-                        reasons.map((reason, index) => (
-                            <ChooseUsCard
-                                key={index}
-                                title={reason.title}
-                                description={reason.description}
-                                index={index + 1}
-                            />
-                        ))
-                    }
-                </VerticalTimeline> */}
                 <div className="grid gap-8 grid-cols-[repeat(auto-fit,minmax(250px,1fr))] mt-8">
                     {
                         reasons.map((reason, index) => (
@@ -199,6 +165,6 @@ export default function About() {
                 <p>We use products of renowned national and international brands for our projects.</p>
                 <Button size={"lg"}>REQUEST A QUOTE</Button>
             </section>
-        </React.Fragment>
+        </SectionWrapper>
     )
 }

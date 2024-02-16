@@ -1,3 +1,4 @@
+import SectionWrapper from '@/components/custom/SectionWrapper'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -5,14 +6,13 @@ import React from 'react'
 
 export default function Contact() {
     return (
-        <section className="relative mt-10">
+        <SectionWrapper className="relative mt-10">
             <div className="absolute inset-0 rounded-lg overflow-hidden">
                 <iframe
                     title='map'
                     src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d223960.2906516919!2d77.3597857!3d28.7082013!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ceff8a4bf2d6f%3A0xcac8cca1b277fdcc!2sRenoswift!5e0!3m2!1sen!2sin!4v1706711828654!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
-                    /* style={{ filter: "grayscale(1) contrast(1.2) opacity(0.6);", border: "0"}} */
                     allowFullScreen={false}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
@@ -32,6 +32,6 @@ export default function Contact() {
                     <Button>Send</Button>
                 </div>
             </div>
-        </section>
+        </SectionWrapper>
     )
 }
