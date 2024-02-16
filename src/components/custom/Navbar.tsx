@@ -52,10 +52,10 @@ export default function Navbar() {
                         <Link href={"/contact"}>
                             <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
                         </Link>
-                        <Link href={"/auth/login"}>
-                            <Button variant={'outline'} className={cn('border-primary border-[3px]')} size={'sm'}>Login</Button>
-                        </Link>
                     </div>
+                    <Link href={"/auth/login"}>
+                        <Button variant={'outline'} className={cn('border-primary border-[3px]')} size={'sm'}>Login</Button>
+                    </Link>
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant={'ghost'} size={'icon'} className={cn('inline-flex lg:hidden')}>

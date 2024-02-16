@@ -49,7 +49,7 @@ export default function Login() {
                 </label>
                 <OTPInput value={otp} setValue={setOtp} />
                 <Button>Log In</Button>
-                <p className='text-center'>Don't have an account? <Link href='/auth/signup' className='text-primary underline'>Sign Up</Link></p>
+                <p className='text-center'>Don&apos;t have an account? <Link href='/auth/signup' className='text-primary underline'>Sign Up</Link></p>
             </form>
         </>
     )
