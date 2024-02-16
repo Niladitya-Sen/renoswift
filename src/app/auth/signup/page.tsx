@@ -31,10 +31,10 @@ export default function Signup() {
                 <AiOutlineLoading3Quarters className='animate-spin text-5xl text-primary' />
             </div>
             <form
-                className='bg-white px-6 py-8 rounded-lg max-w-md w-full flex flex-col gap-6 mx-auto'
+                className='bg-white px-6 py-8 rounded-lg max-w-md w-full flex flex-col gap-6 mx-auto mt-2'
                 onSubmit={handleSignup}
             >
-                <h1 className='heading-1 text-center mb-4'>Create Your Account</h1>
+                <h1 className='heading-1 text-2xl sm:text-3xl text-center mb-4'>Create Your Account</h1>
                 <label htmlFor="name">
                     <p className='ml-1 mb-1 font-semibold'>Full Name*</p>
                     <Input name="name" type='text' inputMode='text' placeholder='Enter your full name' required />
