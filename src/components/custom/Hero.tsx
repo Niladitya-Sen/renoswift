@@ -28,8 +28,8 @@ export default function Hero() {
             >
                 <CarouselContent>
                     <CarouselItem>
-                        <div className='h-full rounded-lg bg-[url("/assets/slide-1.jpg")] bg-no-repeat bg-center bg-cover p-8 flex flex-col justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
-                            <div className='ml-10 sm:ml-20 max-w-sm'>
+                        <div className='h-full rounded-lg bg-[url("/assets/slide-1.jpg")] bg-no-repeat bg-center bg-cover p-8 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
+                            <div className='max-w-lg text-center'>
                                 <motion.p
                                     initial={variants.fadeIn(0.1).hidden}
                                     whileInView={variants.fadeIn(0.1).visible}
@@ -46,7 +46,7 @@ export default function Hero() {
                                 <motion.div
                                     initial={variants.fadeIn(0.4).hidden}
                                     whileInView={variants.fadeIn(0.4).visible}
-                                    className='flex gap-2'
+                                    className='flex items-center justify-center w-full gap-2'
                                 >
                                     <Button>Request a Quote</Button>
                                 </motion.div>
@@ -54,8 +54,8 @@ export default function Hero() {
                         </div>
                     </CarouselItem>
                     <CarouselItem>
-                        <div className='h-full rounded-lg bg-[url("/assets/slide-2.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
-                            <div className='ml-10 sm:ml-20 max-w-sm'>
+                        <div className='h-full rounded-lg bg-[url("/assets/slide-2.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
+                            <div className='max-w-lg text-center'>
                                 <motion.p
                                     initial={variants.fadeIn(0.1).hidden}
                                     whileInView={variants.fadeIn(0.1).visible}
@@ -74,8 +74,8 @@ export default function Hero() {
                         </div>
                     </CarouselItem>
                     <CarouselItem>
-                        <div className='h-full rounded-lg bg-[url("/assets/slide-3.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/50 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
-                            <div className='ml-10 sm:ml-20 max-w-sm'>
+                        <div className='h-full rounded-lg bg-[url("/assets/slide-3.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/50 after:rounded-lg after:from-[50%] after:to-transparent after:-z-10'>
+                            <div className='max-w-lg text-center'>
                                 <motion.p
                                     initial={variants.fadeIn(0.1).hidden}
                                     whileInView={variants.fadeIn(0.1).visible}

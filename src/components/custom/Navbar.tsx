@@ -13,7 +13,14 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { Button } from '../ui/button';
 import { usePathname } from "next/navigation";
 import SectionWrapper from "./SectionWrapper";
-
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -26,7 +33,9 @@ export default function Navbar() {
                 <Link href={"/"}>
                     <Image src='/assets/logo.jpg' alt='logo' width={200} height={100} />
                 </Link>
-                <div className='flex items-center gap-2'>
+                <div className={cn('hidden', {
+                    'flex items-center gap-2': pathname === "/" || pathname === "/about" || pathname === "/services" || pathname === "/packages" || pathname === "/blogs" || pathname === "/testimonials" || pathname === "/presence" || pathname === "/contact"
+                })}>
                     <div className='hidden lg:flex items-center gap-2'>
                         <Link href={"/"}>
                             <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
@@ -91,7 +100,26 @@ export default function Navbar() {
                             </div>
                         </SheetContent>
                     </Sheet>
-
+                </div>
+                <div className={cn('block', {
+                    'hidden': pathname === "/" || pathname === "/about" || pathname === "/services" || pathname === "/packages" || pathname === "/blogs" || pathname === "/testimonials" || pathname === "/presence" || pathname === "/contact"
+                })}>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <div className="flex gap-2 font-semibold items-center justify-center hover:bg-secondary py-2 px-4 rounded-lg">
+                                <img src="https://github.com/shadcn.png" alt="profile" className="rounded-full w-10 h-10" />
+                                Ram Sharma
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Billing</DropdownMenuItem>
+                            <DropdownMenuItem>Team</DropdownMenuItem>
+                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             </SectionWrapper>
         </nav>

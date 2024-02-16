@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
 import SectionWrapper from "@/components/custom/SectionWrapper";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -182,6 +183,7 @@ export default function RootLayout({
           <SectionWrapper>
             <Footer />
           </SectionWrapper>
+          <Toaster />
         </main>
       </body>
     </html>
