@@ -5,7 +5,7 @@ import { Input } from '../ui/input'
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 
-export default function OTPInput({ value, setValue }: Readonly<{ value: string[], setValue: React.Dispatch<React.SetStateAction<string[]>> }>) {
+export default function OTPInput({ value, setValue, sendOTP }: Readonly<{ value: string[], setValue: React.Dispatch<React.SetStateAction<string[]>>, sendOTP: () => Promise<void>; }>) {
 
     const [time, setTime] = useState(30);
     const [timeInterval, setTimeInterval] = useState<NodeJS.Timeout>();
@@ -94,7 +94,10 @@ export default function OTPInput({ value, setValue }: Readonly<{ value: string[]
                     minimumIntegerDigits: 2,
                     useGrouping: false
                 })}</p>
-                <Button type="button" variant={'ghost'} disabled={disable} onClick={countDown}>
+                <Button type="button" variant={'ghost'} disabled={disable} onClick={() => {
+                    sendOTP();
+                    countDown();
+                }}>
                     {
                         resend ? 'Resend OTP' : 'Send OTP'
                     }

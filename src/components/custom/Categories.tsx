@@ -29,7 +29,7 @@ const categories = [
     },
 ];
 
-function CategoryCard({ title, description, image }: { title: string, description: string, image: string }) {
+function CategoryCard({ title, description, image }: Readonly<{ title: string, description: string, image: string }>) {
     return (
         <Card className={cn('bg-cover bg-center bg-no-repeat aspect-video overflow-hidden transition-all duration-500 group hover:scale-[0.95] cursor-pointer')} style={{ backgroundImage: `url('${image}')` }}>
             <CardHeader className='bg-gradient-to-b from-black/50 from-[30%] to-transparent h-full'>

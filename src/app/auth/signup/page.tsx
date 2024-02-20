@@ -3,23 +3,69 @@
 import OTPInput from '@/components/custom/OTPInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-
 
 export default function Signup() {
     const [otp, setOtp] = useState(['', '', '', '']);
     const [loading, setLoading] = useState(false);
+    const { toast } = useToast();
+    const emailRef = useRef<HTMLInputElement>(null);
+    const nameRef = useRef<HTMLInputElement>(null);
 
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
         bodyContent.otp = otp.join('');
-        /* console.log(bodyContent); */
-        setTimeout(() => setLoading(false), 2000);
+        console.log(bodyContent);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/signup`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bodyContent)
+        });
+        const data = await response.json();
+        setLoading(false);
+        if (response.ok) {
+            toast({
+                description: 'Signup successful!',
+            })
+        } else {
+            toast({
+                description: 'Error signing up ! Please try again later.',
+                variant: 'destructive'
+            });
+        }
+        console.log(data);
+    };
+
+    const sendOTP = async () => {
+        setLoading(true);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/signup/otp`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: emailRef.current?.value, name: nameRef.current?.value })
+        });
+        const data = await response.json();
+        setLoading(false);
+        console.log(data);
+        if (response.ok) {
+            toast({
+                description: data.message,
+            });
+        } else {
+            toast({
+                description: data.message,
+                variant: 'destructive'
+            });
+        }
     };
 
     return (
@@ -37,17 +83,17 @@ export default function Signup() {
                 <h1 className='heading-1 text-2xl sm:text-3xl text-center mb-4'>Create Your Account</h1>
                 <label htmlFor="name">
                     <p className='ml-1 mb-1 font-semibold'>Full Name*</p>
-                    <Input name="name" type='text' inputMode='text' placeholder='Enter your full name' required />
+                    <Input ref={nameRef} name="name" type='text' inputMode='text' placeholder='Enter your full name' required />
                 </label>
                 <label htmlFor="email">
                     <p className='ml-1 mb-1 font-semibold'>Email ID*</p>
-                    <Input name="email" type='email' inputMode='email' placeholder='Enter your email' required />
+                    <Input ref={emailRef} name="email" type='email' inputMode='email' placeholder='Enter your email' required />
                 </label>
                 <label htmlFor="phone">
                     <p className='ml-1 mb-1 font-semibold'>Phone number*</p>
                     <Input name="phone" type='text' inputMode='numeric' placeholder='Enter your phone number' maxLength={10} minLength={10} required />
                 </label>
-                <OTPInput value={otp} setValue={setOtp} />
+                <OTPInput value={otp} setValue={setOtp} sendOTP={sendOTP} />
                 <Button>Sign Up</Button>
                 <p className='text-center'>Already have an account? <Link href='/auth/login' className='text-primary underline'>Login</Link></p>
             </form>
