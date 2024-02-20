@@ -90,3 +90,21 @@ createdDate datetime default NOW() not null,
 modifiedDate datetime default NOW() not null,
 DBTimeStamp datetime default NOW() not null
 );
+
+create table OTP (
+id bigint primary key auto_increment,
+email varchar(255),
+phoneNumber varchar(255),
+otp int not null,
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+check (otp >= 1000 and otp <= 9999)
+);
+
+select * from OTP;
