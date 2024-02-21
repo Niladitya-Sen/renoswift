@@ -1,10 +1,8 @@
+import { Toaster } from "@/components/ui/toaster";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/custom/Navbar";
-import Footer from "@/components/custom/Footer";
-import SectionWrapper from "@/components/custom/SectionWrapper";
-import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -176,15 +174,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
-        <main>
-          <Navbar />
-          {children}
-          <SectionWrapper>
-            <Footer />
-          </SectionWrapper>
-          <Toaster />
-        </main>
+      <body className={cn(poppins.className)}>
+        {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -22,14 +22,14 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function Navbar() {
+export default function Navbar({ className }: Readonly<{ className?: string }>) {
     const pathname = usePathname();
 
     return (
         <nav className={cn('sticky top-0 z-50 bg-background', {
             'hidden': pathname === '/auth/login' || pathname === '/auth/signup'
         })}>
-            <SectionWrapper className='py-4 flex justify-between items-center px-2 text-foreground'>
+            <SectionWrapper className={cn('py-4 flex justify-between items-center px-2 text-foreground', className)}>
                 <Link href={"/"}>
                     <Image src='/assets/logo.jpg' alt='logo' width={200} height={100} />
                 </Link>
