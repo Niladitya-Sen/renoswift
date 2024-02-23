@@ -17,10 +17,10 @@ export default function RFQLayout({ children }: Readonly<{ children: React.React
                         'border-primary text-primary': pathname === '/ot' || pathname.includes('/ot/rfq')
                     })}>Raised RFQ</Link>
                     <Link href={"/ot/send-quotation"} className={cn('border-b-2 pb-1 pl-1 text-gray-500 font-medium', {
-                        'border-primary text-primary': pathname === '/ot/send-quotation'
+                        'border-primary text-primary': pathname.includes('/ot/send-quotation')
                     })}>Send Quotation</Link>
                     <Link href={"/ot/pending"} className={cn('border-b-2 pb-1 pl-1 text-gray-500 font-medium', {
-                        'border-primary text-primary': pathname === '/ot/pending'
+                        'border-primary text-primary': pathname.includes('/ot/pending')
                     })}>Pending</Link>
                 </div>
                 {children}

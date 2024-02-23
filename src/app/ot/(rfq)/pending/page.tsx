@@ -25,7 +25,7 @@ export default function Pending() {
                         <TableCell>rahul@gmail.com</TableCell>
                         <TableCell>7894567851</TableCell>
                         <TableCell>
-                            <Link href={`/ot/rfq/RS00R219`} className={'px-4 py-2 rounded-lg border-blue-500 border-2 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200'}>View</Link>
+                            <Link href={`/ot/pending/RS00R219`} className={'px-4 py-2 rounded-lg border-blue-500 border-2 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-200'}>View</Link>
                         </TableCell>
                     </TableRow>
                 </TableBody>

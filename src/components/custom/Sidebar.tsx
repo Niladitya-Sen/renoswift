@@ -22,21 +22,21 @@ export default function Sidebar() {
                 RFQs
             </Link>
             <Link href="/ot/orders" className={cn('p-5 flex items-center gap-8 hover:bg-black/20 transition-all duration-200', {
-                'bg-primary hover:bg-primary/80': pathname === '/ot/orders'
+                'bg-primary hover:bg-primary/80': pathname.includes('/ot/orders')
             })}>
                 <HiOutlineShoppingCart size={38} />
                 Orders
             </Link>
             <Link href="/ot/payments" className={cn('p-5 flex items-center gap-8 hover:bg-black/20 transition-all duration-200', {
-                'bg-primary hover:bg-primary/80': pathname === '/ot/payments'
+                'bg-primary hover:bg-primary/80': pathname.includes('/ot/payments')
             })}>
                 <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M30.0833 22.1668V9.50016C30.0833 7.7585 28.6583 6.3335 26.9166 6.3335H4.74992C3.00825 6.3335 1.58325 7.7585 1.58325 9.50016V22.1668C1.58325 23.9085 3.00825 25.3335 4.74992 25.3335H26.9166C28.6583 25.3335 30.0833 23.9085 30.0833 22.1668ZM26.9166 22.1668H4.74992V9.50016H26.9166V22.1668ZM15.8333 11.0835C13.2049 11.0835 11.0833 13.2052 11.0833 15.8335C11.0833 18.4618 13.2049 20.5835 15.8333 20.5835C18.4616 20.5835 20.5833 18.4618 20.5833 15.8335C20.5833 13.2052 18.4616 11.0835 15.8333 11.0835ZM36.4166 11.0835V28.5002C36.4166 30.2418 34.9916 31.6668 33.2499 31.6668H6.33325V28.5002H33.2499V11.0835H36.4166Z" className='fill-black' />
                 </svg>
                 Payments
             </Link>
-            <Link href="/ot/notifications" className={cn('p-5 flex items-center gap-8 hover:bg-black/20 transition-all duration-200', {
-                'bg-primary hover:bg-primary/80': pathname === '/ot/notifications'
+            <Link href="/ot/notifications/all" className={cn('p-5 flex items-center gap-8 hover:bg-black/20 transition-all duration-200', {
+                'bg-primary hover:bg-primary/80': pathname.includes('/ot/notifications')
             })}>
                 <FaRegBell size={38} />
                 Notifications
