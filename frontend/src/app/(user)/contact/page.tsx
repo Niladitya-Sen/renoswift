@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function Contact() {
     return (
-        <SectionWrapper className="relative mt-10">
+        <SectionWrapper className="relative mt-10 w-full">
             <div className="absolute inset-0 rounded-lg overflow-hidden">
                 <iframe
                     title='map'
