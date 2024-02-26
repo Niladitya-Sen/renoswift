@@ -14,5 +14,16 @@ export const variants = {
                 },
             },
         }
+    },
+    scaleOut: {
+        hidden: {
+            scale: 1,
+        },
+        visible: {
+            scale: 1.1,
+            transition: {
+                duration: 5.0,
+            },
+        },
     }
 }

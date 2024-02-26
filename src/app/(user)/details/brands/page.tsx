@@ -34,6 +34,7 @@ export default function Brands() {
             {
                 brands.map(brand => (
                     <label
+                        key={brand.id}
                         htmlFor={"brand" + brand.id}
                         className='block relative bg-black rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer'
                     >

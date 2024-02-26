@@ -3,7 +3,6 @@ import { Input } from '@/components/ui/input';
 import { AiFillInfoCircle } from "react-icons/ai";
 
 export default function Details() {
-
     return (
         <>
             <div className='grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] md:grid-cols-5 gap-y-4 gap-x-2'>

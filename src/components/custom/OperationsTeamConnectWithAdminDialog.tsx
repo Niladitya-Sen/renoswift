@@ -1,6 +1,6 @@
 "use client";
 
-import { useNotification } from "@/app/ot/notifications/[type]/page";
+import { useNotification } from "@/context/NotificationContext";
 import {
     Dialog,
     DialogContent,

@@ -1,11 +1,11 @@
 "use client";
 
 import OperationsTeamConnectWithAdminDialog from '@/components/custom/OperationsTeamConnectWithAdminDialog';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import { NotificationProvider, useNotification } from '@/context/NotificationContext';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
-import { createContext, useContext, useState } from 'react';
 
 const notifications = [
     {
@@ -22,22 +22,7 @@ const notifications = [
     }
 ];
 
-const NotificationContext = createContext<{
-    dialogOpen: boolean;
-    setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
-} | null>(null);
-
-export const useNotification = () => {
-    const context = useContext(NotificationContext);
-
-    if (!context) {
-        throw new Error('useNotification must be used within a NotificationProvider');
-    }
-
-    return context;
-}
-
-export function NotificationsCard({ title, date }: { title: string, date: string }) {
+function NotificationsCard({ title, date }: Readonly<{ title: string, date: string }>) {
     const notification = useNotification();
 
     return (
@@ -53,11 +38,9 @@ export function NotificationsCard({ title, date }: { title: string, date: string
     )
 }
 
-export default function Notifications({ params: { type } }: { params: { type: string } }) {
-    const [dialogOpen, setDialogOpen] = useState(false);
-
+export default function Notifications({ params: { type } }: Readonly<{ params: { type: string } }>) {
     return (
-        <NotificationContext.Provider value={{ dialogOpen, setDialogOpen }}>
+        <NotificationProvider>
             <OperationsTeamConnectWithAdminDialog />
             <div className='mb-4 flex items-center justify-between'>
                 <div className='space-x-4'>
@@ -81,6 +64,6 @@ export default function Notifications({ params: { type } }: { params: { type: st
                     ))
                 }
             </div>
-        </NotificationContext.Provider>
+        </NotificationProvider>
     )
 }
