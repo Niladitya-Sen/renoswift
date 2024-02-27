@@ -21,6 +21,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import MobileSidebar from "./MobileSidebar";
 
 export default function Navbar({ className }: Readonly<{ className?: string }>) {
     const pathname = usePathname();
@@ -30,7 +31,7 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
             'hidden': pathname === '/auth/login' || pathname === '/auth/signup'
         })}>
             <SectionWrapper className={cn('py-4 flex justify-between items-center px-2 text-foreground', className)}>
-                <Link href={"/"}>
+                <Link href={"/"} className="w-[40%] sm:w-auto inline-block">
                     <Image src='/assets/logo.jpg' alt='logo' width={200} height={100} />
                 </Link>
                 <div className={cn('hidden', {
@@ -121,6 +122,9 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
+                {
+                    !pathname.includes('admin') && <MobileSidebar />
+                }
             </SectionWrapper>
         </nav>
     )

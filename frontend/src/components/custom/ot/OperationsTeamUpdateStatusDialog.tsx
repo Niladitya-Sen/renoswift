@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useRef } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 export default function OperationsTeamUpdateStatusDialog({ open, onOpenChange }: Readonly<{ open: boolean, onOpenChange: (open: boolean) => void }>) {
     const dialogCloseRef = useRef<HTMLButtonElement>(null);

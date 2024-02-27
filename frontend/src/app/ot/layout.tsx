@@ -1,16 +1,16 @@
 import Navbar from '@/components/custom/Navbar'
-import Sidebar from '@/components/custom/Sidebar'
+import OperationsTeamSidebar from '@/components/custom/ot/OperationsTeamSidebar'
 import React from 'react'
 
 export default function OperationsTeamLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <main className="flex flex-col h-screen max-w-screen-2xl mx-auto">
-            <Navbar className='max-w-screen-2xl' />
-            <section className='h-full flex'>
-                <Sidebar />
-                <section className='py-2 px-4 flex-1'>
-                    {children}
-                </section>
+        <main className="max-w-screen-2xl mx-auto grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen w-screen relative isolate">
+            <header className='col-span-full'>
+                <Navbar className='max-w-screen-2xl' />
+            </header>
+            <OperationsTeamSidebar />
+            <section className='py-2 px-4 overflow-y-auto'>
+                {children}
             </section>
         </main>
     )

@@ -1,7 +1,7 @@
 "use client";
 
-import OperationsTeamStatusTrackingDialog from "@/components/custom/OperationsTeamStatusTrackingDialog";
-import OperationsTeamUpdateStatusDialog from "@/components/custom/OperationsTeamUpdateStatusDialog";
+import OperationsTeamStatusTrackingDialog from "@/components/custom/ot/OperationsTeamStatusTrackingDialog";
+import OperationsTeamUpdateStatusDialog from "@/components/custom/ot/OperationsTeamUpdateStatusDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

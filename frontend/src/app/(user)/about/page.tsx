@@ -1,5 +1,6 @@
 "use client";
 
+import Certificate from "@/components/custom/Certificate";
 import SectionWrapper from "@/components/custom/SectionWrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -106,7 +107,7 @@ export default function About() {
                 <Image
                     src='/assets/renovation-1.jpg'
                     alt='renovation'
-                    width={350}
+                    width={450}
                     height={350}
                     className="rounded-lg object-cover object-center"
                 />
@@ -159,6 +160,8 @@ export default function About() {
                     }
                 </div>
             </section>
+
+            <Certificate />
 
             <section className="text-center space-y-4 text-xl font-medium mt-20 bg-secondary rounded-lg p-8 sm:p-12">
                 <p>We Create A Home Space Of Your Dreams</p>

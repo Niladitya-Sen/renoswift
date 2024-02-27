@@ -17,7 +17,6 @@ export default function Index() {
             <SectionWrapper className={cn('w-full')}>
                 <ChooseUs />
                 <Categories />
-                <Certificate />
                 <Products />
                 <Inspiration />
                 <Working />

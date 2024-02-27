@@ -16,7 +16,7 @@ import {
 
 export default function Certificate() {
     return (
-        <section>
+        <section className="my-20">
             <div className="flex items-center justify-between">
                 <h1 className='heading-1'>We are Certified!</h1>
                 <TooltipProvider>

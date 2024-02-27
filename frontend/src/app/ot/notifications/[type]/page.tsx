@@ -1,6 +1,6 @@
 "use client";
 
-import OperationsTeamConnectWithAdminDialog from '@/components/custom/OperationsTeamConnectWithAdminDialog';
+import OperationsTeamConnectWithAdminDialog from '@/components/custom/ot/OperationsTeamConnectWithAdminDialog';
 import { buttonVariants } from '@/components/ui/button';
 import { NotificationProvider, useNotification } from '@/context/NotificationContext';
 import { cn } from '@/lib/utils';
