@@ -5,12 +5,20 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Button } from '@/components/ui/button';
 import { FaEye } from "react-icons/fa";
+import { notFound } from 'next/navigation';
+import AdminAddEmployeeDialog from '@/components/custom/admin/AdminAddEmployeeDialog';
+import Link from 'next/link';
 
 export default function UserType({ params: { type } }: Readonly<{ params: { type: string } }>) {
+
+    if (type !== 'customers' && type !== 'operations-team') {
+        notFound();
+    }
+
     return (
         <div>
             <Table>
-                <TableHeader className={cn('bg-sky-500')}>
+                <TableHeader className={cn('bg-primary')}>
                     <TableRow>
                         <TableHead className={cn('text-white')}>Customer ID</TableHead>
                         <TableHead className={cn('text-white')}>Name</TableHead>
@@ -30,13 +38,13 @@ export default function UserType({ params: { type } }: Readonly<{ params: { type
                                 <TableCell>7894567851</TableCell>
                                 <TableCell>Active</TableCell>
                                 {
-                                    type === 'ot' ? (
+                                    type === 'operations-team' ? (
                                         <TableCell>
-                                            <div className='flex gap-4 items-center justify-end'>
+                                            <Link href={`/admin/users/operations-team/${type.slice(0, 3) + "dkfuh1256"}`} className='flex gap-4 items-center justify-end'>
                                                 <Button variant={'ghost'} size={'icon'}>
                                                     <FaEye className='text-sky-500' />
                                                 </Button>
-                                            </div>
+                                            </Link>
                                         </TableCell>
                                     ) : (
                                         <TableCell>
@@ -57,9 +65,15 @@ export default function UserType({ params: { type } }: Readonly<{ params: { type
                 </TableBody>
             </Table>
             {
-                type === 'ot' && (
+                type === 'operations-team' && (
                     <div className='bg-white w-full sticky bottom-0'>
-                        <Button className={cn('bg-sky-500 hover:bg-sky-400 text-white mx-auto flex mt-4')}>Add Employee</Button>
+                        <AdminAddEmployeeDialog
+                            trigger={
+                                <Button className={cn('mx-auto flex mt-4')}>
+                                    Add Employee
+                                </Button>
+                            }
+                        />
                     </div>
                 )
             }

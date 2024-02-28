@@ -22,15 +22,15 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
             <ul className='md:w-[17rem] border-2 h-full overflow-hidden'>
                 <li>
                     <Link href="/admin" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname === '/admin'
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname === '/admin'
                     })}>
                         <MdOutlineSpaceDashboard className='text-2xl' />
                         <span className='font-medium hidden md:inline'>Dashboard</span>
                     </Link>
                 </li>
                 <li>
-                    <Link href="/admin/users" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname.includes('/admin/users')
+                    <Link href="/admin/users/customers" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/users')
                     })}>
                         <CgProfile className='text-2xl' />
                         <span className='font-medium hidden md:inline'>Manage Users</span>
@@ -38,7 +38,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                 </li>
                 <li>
                     <Link href="/admin/suppliers" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname === '/admin/suppliers'
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/suppliers')
                     })}>
                         <FiPackage className='text-2xl' />
                         <span className='font-medium hidden md:inline'>Product Suppliers</span>
@@ -46,7 +46,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                 </li>
                 <li>
                     <Link href="/admin/rfqs" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname === '/admin/rfqs'
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/rfqs')
                     })}>
                         <TiDocumentText className='text-2xl' />
                         <span className='font-medium hidden md:inline'>All RFQs</span>
@@ -54,7 +54,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                 </li>
                 <li>
                     <Link href="/admin/products" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname === '/admin/products'
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/products')
                     })}>
                         <BsGiftFill className='text-2xl' />
                         <span className='font-medium hidden md:inline'>Products</span>
@@ -62,7 +62,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                 </li>
                 <li>
                     <Link href="/admin/orders" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname === '/admin/orders'
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/orders')
                     })}>
                         <FaRegListAlt className='text-2xl' />
                         <span className='font-medium hidden md:inline'>Orders</span>
@@ -70,7 +70,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                 </li>
                 <li>
                     <Link href="/admin/payments" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname === '/admin/payments'
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/payments')
                     })}>
                         <MdOutlinePayments className='text-2xl' />
                         <span className='font-medium hidden md:inline'>Payments</span>
@@ -78,7 +78,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                 </li>
                 <li>
                     <Link href="/admin/notifications" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
-                        'text-sky-800 bg-sky-100 hover:bg-sky-100': pathname === '/admin/notifications'
+                        'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/notifications')
                     })}>
                         <IoMdNotificationsOutline className='text-2xl' />
                         <span className='font-medium hidden md:inline'>Notifications</span>

@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import AdminChangeColorScheme from "@/components/custom/admin/AdminChangeColorScheme";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -175,6 +176,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(poppins.className)}>
+        <AdminChangeColorScheme />
         {children}
         <Toaster />
       </body>

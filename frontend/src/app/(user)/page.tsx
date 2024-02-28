@@ -1,5 +1,5 @@
 import Categories from '@/components/custom/Categories';
-import Certificate from '@/components/custom/Certificate';
+import ChatBot from '@/components/custom/ChatBot';
 import ChooseUs from '@/components/custom/ChooseUs';
 import Hero from '@/components/custom/Hero';
 import Inspiration from '@/components/custom/Inspiration';
@@ -8,7 +8,6 @@ import Products from '@/components/custom/Products';
 import SectionWrapper from '@/components/custom/SectionWrapper';
 import Working from '@/components/custom/Working';
 import { cn } from '@/lib/utils';
-import React from 'react'
 
 export default function Index() {
     return (
@@ -21,6 +20,7 @@ export default function Index() {
                 <Inspiration />
                 <Working />
                 <Newsletter />
+                <ChatBot />
             </SectionWrapper>
         </>
     );

@@ -5,7 +5,7 @@ export default function AdminAnalytics() {
     return (
         <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-3 gap-8 max-w-[900px]'>
             <div className='flex items-center justify-between gap-8 shadow-md p-4 rounded-lg border-2'>
-                <div className='bg-sky-100 rounded-sm p-4'>
+                <div className='bg-primary/20 rounded-sm p-4'>
                     <Image
                         src='/assets/admin/rfq.svg'
                         width={36}
