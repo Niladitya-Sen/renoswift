@@ -175,7 +175,7 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                     </DropdownMenu>
                 </div>
                 {
-                    pathname.includes('ot') && <MobileSidebar />
+                    pathname.includes('/ot') && <MobileSidebar />
                 }
             </SectionWrapper>
         </nav>
