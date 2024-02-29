@@ -77,7 +77,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                     </Link>
                 </li>
                 <li>
-                    <Link href="/admin/notifications" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
+                    <Link href="/admin/notifications/all" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200', {
                         'text-primary bg-primary/10 hover:bg-primary/20': pathname.includes('/admin/notifications')
                     })}>
                         <IoMdNotificationsOutline className='text-2xl' />

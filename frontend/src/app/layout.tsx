@@ -1,9 +1,9 @@
+import AdminChangeColorScheme from "@/components/custom/admin/AdminChangeColorScheme";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import AdminChangeColorScheme from "@/components/custom/admin/AdminChangeColorScheme";
 
 const poppins = Poppins({
   subsets: ["latin"],
