@@ -10,7 +10,7 @@ export default function SendQuotationDetails({ params: { requestId } }: Readonly
 
     return (
         <div>
-            <Link href={"/ot/send-quotation"} className={cn('absolute right-4 top-4')}>
+            <Link href={"/ot/send-quotation"} className={cn('md:absolute block right-4 top-4 my-2 ml-auto w-fit')}>
                 <Button variant={"link"}>
                     <IoArrowBack className='mr-2 text-lg' />
                     <span title='back'>back</span>

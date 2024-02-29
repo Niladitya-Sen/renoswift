@@ -3,16 +3,14 @@ import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
-import { IoArrowBack } from "react-icons/io5"
 
 export default function SendQuotationDetails({ params: { requestId } }: Readonly<{ params: { requestId: string } }>) {
     const formData: Record<string, string> = {};
 
     return (
         <div className='relative'>
-            <Link href={"/admin/rfqs/send-quotation"} className={cn('absolute -top-16 right-2')}>
-                <Button variant={"link"}>
-                    <IoArrowBack className='mr-2 text-lg' />
+            <Link href={"/admin/rfqs/send-quotation"} className={cn('absolute -top-[7rem] sm:-top-16 right-2')}>
+                <Button variant={"outline"} className={cn('border-primary text-primary hover:text-primary')}>
                     <span title='back'>back</span>
                 </Button>
             </Link>

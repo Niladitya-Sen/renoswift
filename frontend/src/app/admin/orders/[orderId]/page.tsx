@@ -1,7 +1,4 @@
-"use client";
-
-import OperationsTeamStatusTrackingDialog from "@/components/custom/ot/OperationsTeamStatusTrackingDialog";
-import OperationsTeamUpdateStatusDialog from "@/components/custom/ot/OperationsTeamUpdateStatusDialog";
+import AdminStatusTrackingDialog from "@/components/custom/admin/AdminStatusTrackingDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,28 +11,14 @@ import {
 } from "@/components/ui/table";
 import { cn } from '@/lib/utils';
 import Link from "next/link";
-import { useState } from "react";
-import { IoArrowBack } from "react-icons/io5";
 import { TbProgress } from "react-icons/tb";
 
 export default function OrderDetails({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
-    const [statusDialogOpen, setStatusDialogOpen] = useState(false);
-    const [trackingDialogOpen, setTrackingDialogOpen] = useState(false);
-
     return (
-        <section>
-            <Link href={"/ot/orders"} className={cn('ml-auto block w-fit mb-4')}>
-                <Button variant={"link"}>
-                    <IoArrowBack className='mr-2 text-lg' />
-                    <span title='back'>back</span>
-                </Button>
+        <section className="space-y-6 relative">
+            <Link href={`/admin/orders`} className={cn('absolute -top-12 right-2 block')}>
+                <Button size={'sm'} variant={'outline'} className={cn('border-primary text-primary hover:text-primary w-fit')}>Back</Button>
             </Link>
-            <OperationsTeamUpdateStatusDialog open={statusDialogOpen} onOpenChange={() => {
-                setStatusDialogOpen(false);
-            }} />
-            <OperationsTeamStatusTrackingDialog open={trackingDialogOpen} onOpenChange={() => {
-                setTrackingDialogOpen(false);
-            }} />
             <Table>
                 <TableHeader className={cn('bg-primary')}>
                     <TableRow>
@@ -53,17 +36,19 @@ export default function OrderDetails({ params: { orderId } }: Readonly<{ params:
                         <TableCell>&#8377;51,677</TableCell>
                         <TableCell>Confirmed</TableCell>
                         <TableCell className={cn('flex items-center justify-end')}>
-                            <Button variant={"outline"} className={cn('border-primary border-2')} onClick={() => {
-                                setTrackingDialogOpen(true);
-                            }}>
-                                <TbProgress className="text-lg" />
-                                <span className="ml-2">Track Progress</span>
-                            </Button>
+                            <AdminStatusTrackingDialog
+                                trigger={
+                                    <Button variant={"outline"} className={cn('border-primary border-2')}>
+                                        <TbProgress className="text-lg" />
+                                        <span className="ml-2">Track Progress</span>
+                                    </Button>
+                                }
+                            />
                         </TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
-            <div className="max-w-4xl w-full px-5 space-y-6 mt-6">
+            <div className="max-w-4xl w-full space-y-6">
                 <div className="flex items-center gap-4 w-full">
                     <div className="w-full">
                         <p className='font-semibold'>Current Status</p>
@@ -88,9 +73,6 @@ export default function OrderDetails({ params: { orderId } }: Readonly<{ params:
                     </div>
                 </div>
             </div>
-            <Button size={'lg'} className="mx-auto flex mt-6" onClick={() => {
-                setStatusDialogOpen(true);
-            }}>Update Status</Button>
         </section>
     )
 }

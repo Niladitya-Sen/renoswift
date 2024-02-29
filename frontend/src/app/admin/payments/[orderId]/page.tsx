@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Table,
     TableBody,
@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { cn } from '@/lib/utils';
 import Link from "next/link";
-import { IoArrowBack } from "react-icons/io5";
 
 const payments = [
     {
@@ -158,7 +157,7 @@ const payments = [
     },
 ];
 
-function PaymentTableRow({ phase, amount, dueDate, status }: { phase: string, amount: number, dueDate: string, status: string }) {
+function PaymentTableRow({ phase, amount, dueDate, status }: Readonly<{ phase: string, amount: number, dueDate: string, status: string }>) {
     return (
         <TableRow>
             <TableCell>{phase}</TableCell>
@@ -171,10 +170,9 @@ function PaymentTableRow({ phase, amount, dueDate, status }: { phase: string, am
 
 export default function PaymentDetails({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
     return (
-        <>
-            <Link href={"/ot/payments"} className={cn('ml-auto block w-fit mb-4')}>
-                <Button variant={"link"}>
-                    <IoArrowBack className='mr-2 text-lg' />
+        <div className="relative">
+            <Link href={"/admin/payments"} className={cn('absolute -top-14 right-2')}>
+                <Button variant={"outline"} className={cn('border-primary text-primary hover:text-primary')}>
                     <span title='back'>back</span>
                 </Button>
             </Link>
@@ -190,7 +188,7 @@ export default function PaymentDetails({ params: { orderId } }: Readonly<{ param
                 </TableHeader>
                 <TableBody>
                     <TableRow>
-                        <TableCell className="font-medium">ORD786856</TableCell>
+                        <TableCell className="font-medium">{orderId}</TableCell>
                         <TableCell>&#8377;51,677</TableCell>
                         <TableCell>&#8377;1,71,704</TableCell>
                         <TableCell>21/04/24</TableCell>
@@ -215,6 +213,6 @@ export default function PaymentDetails({ params: { orderId } }: Readonly<{ param
                     </TableBody>
                 </Table>
             </div>
-        </>
+        </div>
     )
 }

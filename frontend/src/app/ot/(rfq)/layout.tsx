@@ -12,7 +12,7 @@ export default function RFQLayout({ children }: Readonly<{ children: React.React
         <div className='flex flex-col h-full'>
             <h1 className='px-4 py-2 bg-primary font-semibold uppercase text-lg text-white'>Request For Quotation</h1>
             <section className='border-2 rounded-sm mt-4 pt-4 px-4 flex-1 overflow-y-auto relative'>
-                <div className='my-4 grid grid-cols-[0.8fr_1fr_0.8fr] max-w-md w-full'>
+                <div className='my-4 grid grid-cols-[0.8fr_1fr_0.8fr] max-w-md w-full text-sm md:text-base'>
                     <Link href={"/ot"} className={cn('border-b-2 pb-1 pl-1 text-gray-500 font-medium', {
                         'border-primary text-primary': pathname === '/ot' || pathname.includes('/ot/rfq')
                     })}>Raised RFQ</Link>

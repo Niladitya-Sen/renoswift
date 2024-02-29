@@ -1,18 +1,15 @@
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import Image from 'next/image'
-import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
-import { IoArrowBack } from "react-icons/io5";
-import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function RFQDetails({ params: { requestId } }: Readonly<{ params: { requestId: string } }>) {
     return (
         <div className='relative'>
-            <Link href={"/admin/rfqs"} className={cn('absolute right-2 -top-16')}>
-                <Button variant={"link"}>
-                    <IoArrowBack className='mr-2 text-lg' />
+            <Link href={"/admin/rfqs"} className={cn('absolute right-2 -top-[7rem] sm:-top-16')}>
+                <Button variant={"outline"} className={cn('border-primary text-primary hover:text-primary')}>
                     <span title='back'>back</span>
                 </Button>
             </Link>

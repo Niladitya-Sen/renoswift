@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { FaEye } from "react-icons/fa6";
+import AdminAddProductDialog from '@/components/custom/admin/AdminAddProductDialog';
 
 export default function Products() {
     return (
@@ -27,7 +28,7 @@ export default function Products() {
                         <TableCell>Hindware</TableCell>
                         <TableCell>In Stock</TableCell>
                         <TableCell>
-                            <Link href={`/admin/suppliers/${"pdkfuh1256"}`} className='flex gap-4 items-center justify-end'>
+                            <Link href={`/admin/products/${"pdkfuh1256"}`} className='flex gap-4 items-center justify-end'>
                                 <Button variant={'ghost'} size={'icon'}>
                                     <FaEye className='text-primary text-xl' />
                                 </Button>
@@ -65,7 +66,11 @@ export default function Products() {
                 </TableBody>
             </Table>
 
-            <Button className={cn('flex mx-auto')}>Add Product</Button>
+            <AdminAddProductDialog
+                trigger={
+                    <Button className={cn('flex mx-auto')}>Add Product</Button>
+                }
+            />
         </>
     )
 }

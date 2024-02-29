@@ -10,7 +10,7 @@ import Link from 'next/link'
 export default function RFQDetails({ params: { requestId } }: Readonly<{ params: { requestId: string } }>) {
     return (
         <div>
-            <Link href={"/ot"} className={cn('absolute right-4 top-4')}>
+            <Link href={"/ot"} className={cn('md:absolute block right-4 top-4 my-2 ml-auto w-fit')}>
                 <Button variant={"link"}>
                     <IoArrowBack className='mr-2 text-lg' />
                     <span title='back'>back</span>

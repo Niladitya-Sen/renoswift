@@ -22,6 +22,16 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import MobileSidebar from "./MobileSidebar";
+import { MdOutlineShoppingCart, MdOutlineSpaceDashboard } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { FiPackage } from "react-icons/fi";
+import { TiDocumentText } from "react-icons/ti";
+import { BsGiftFill } from "react-icons/bs";
+import { FaRegListAlt } from "react-icons/fa";
+import { MdOutlinePayments } from "react-icons/md";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
+import { BiSupport } from "react-icons/bi";
 
 export default function Navbar({ className }: Readonly<{ className?: string }>) {
     const pathname = usePathname();
@@ -109,16 +119,58 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                         <DropdownMenuTrigger>
                             <div className="flex gap-2 font-semibold items-center justify-center hover:bg-secondary py-2 px-4 rounded-lg">
                                 <img src="https://github.com/shadcn.png" alt="profile" className="rounded-full w-10 h-10" />
-                                Ram Sharma
+                                <p>Ram Sharma</p>
                             </div>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuContent className={cn('w-[10rem]')}>
+                            <DropdownMenuItem>
+                                <div className="w-full flex gap-2 items-center justify-start">
+                                    <CgProfile className='text-xl' />
+                                    <p>Profile</p>
+                                </div>
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Billing</DropdownMenuItem>
-                            <DropdownMenuItem>Team</DropdownMenuItem>
-                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <div className="w-full flex gap-2 items-center justify-start">
+                                    <TiDocumentText className='text-xl' />
+                                    <p>RFQs</p>
+                                </div>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <div className="w-full flex gap-2 items-center justify-start">
+                                    <MdOutlineShoppingCart className="text-xl" />
+                                    <p>Orders</p>
+                                </div>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <div className="w-full flex gap-2 items-center justify-start">
+                                    <MdOutlinePayments className='text-xl' />
+                                    <p>Payments</p>
+                                </div>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <div className="w-full flex gap-2 items-center justify-start">
+                                    <IoMdNotificationsOutline className='text-xl' />
+                                    <p>Notifications</p>
+                                </div>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <div className="w-full flex gap-2 items-center justify-start">
+                                    <BiSupport className='text-xl' />
+                                    <p>Support Team</p>
+                                </div>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                <div className="w-full flex gap-2 items-center justify-start">
+                                    <FiLogOut className='text-xl' />
+                                    <p>Log Out</p>
+                                </div>
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

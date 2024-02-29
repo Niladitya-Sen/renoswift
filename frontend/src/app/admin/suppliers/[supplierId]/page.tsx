@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
-export default function SupplierDetails({ params: { supplierId } }: { params: { supplierId: string } }) {
+export default function SupplierDetails({ params: { supplierId } }: Readonly<{ params: { supplierId: string } }>) {
     const [readOnly, setReadOnly] = useState(true);
 
     return (
@@ -38,7 +38,7 @@ export default function SupplierDetails({ params: { supplierId } }: { params: { 
                 </TableBody>
             </Table>
 
-            <form className='grid grid-cols-3 gap-4 mt-8'>
+            <form className='grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8'>
                 <label htmlFor="spoc">
                     <p className='font-medium mb-1'>SPOC</p>
                     <Input readOnly={readOnly} type="text" id="spoc" placeholder="SPOC" required />
