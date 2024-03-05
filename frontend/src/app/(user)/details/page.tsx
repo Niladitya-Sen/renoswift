@@ -3,5 +3,5 @@
 import { redirect } from 'next/navigation';
 
 export default function Details() {
-    redirect('/details/property');
+    redirect('/customer/details/property');
 }

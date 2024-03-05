@@ -31,7 +31,7 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
 
     return (
         <div>
-            <Link href={"/ot/pending"} className={cn('md:absolute block right-4 top-4 my-2 ml-auto w-fit')}>
+            <Link href={"/ot/pending"} className={cn('block ml-auto w-fit')}>
                 <Button variant={"link"}>
                     <IoArrowBack className='mr-2 text-lg' />
                     <span title='back'>back</span>

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React from 'react'
 
-export default function RFQLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RFQSLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const pathname = usePathname();
 
     return (

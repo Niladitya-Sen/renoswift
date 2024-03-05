@@ -4,22 +4,14 @@ import SectionWrapper from '@/components/custom/SectionWrapper';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
-import { usePathname, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import React, { useState } from 'react';
 
 
 export default function CustomerDetailsForm({ children }: Readonly<{ children: React.ReactNode }>) {
     const [loading, setLoading] = useState<boolean>(false);
     const { toast } = useToast();
-    const searchParams = useSearchParams();
     const pathname = usePathname();
-
-    useEffect(() => {
-        if (searchParams.has('form')) {
-            const form = searchParams.get('form');
-            console.log(form);
-        }
-    }, [pathname, searchParams]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -38,8 +30,22 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
     return (
         <SectionWrapper>
             <div className='bg-[url("/assets/gallery-1.jpg")] bg-cover bg-center text-center rounded-lg h-[30rem] text-background'>
-                <div className='rounded-lg bg-gradient-to-b from-black/60 to-transparent h-full flex items-center justify-center text-3xl'>
-                    <p>Share insights about your present bathroom</p>
+                <div className='rounded-lg bg-gradient-to-b from-black/60 to-transparent h-full flex flex-col gap-2 items-center justify-center text-3xl'>
+                    {
+                        pathname === "/details/property" ? (
+                            <>
+                                <p>Share Your Space</p>
+                                <p>Shape Your Dream</p>
+                                <p className='text-xl mt-10'>Share Insights About Your Present Bathroom</p>
+                            </>
+                        ) : (
+                            <>
+                                <p>Your Style</p>
+                                <p>Your Brand</p>
+                                <p className='text-xl mt-10'>Pick from our pool of partners</p>
+                            </>
+                        )
+                    }
                 </div>
             </div>
             <form className='mt-20 relative' onSubmit={handleSubmit}>
