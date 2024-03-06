@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
@@ -15,13 +16,21 @@ export default function Signup() {
     const { toast } = useToast();
     const emailRef = useRef<HTMLInputElement>(null);
     const nameRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
 
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
         bodyContent.otp = otp.join('');
-        console.log(bodyContent);
+        setTimeout(() => {
+            setLoading(false);
+            toast({
+                title: 'Signup successful!',
+            });
+            router.push('/customer/welcome');
+        }, 1000);
+        /* console.log(bodyContent);
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/signup`, {
             method: 'POST',
             headers: {
@@ -34,19 +43,27 @@ export default function Signup() {
         if (response.ok) {
             toast({
                 description: 'Signup successful!',
-            })
+            });
+            router.push('/customer/welcome');
         } else {
             toast({
                 description: 'Error signing up ! Please try again later.',
                 variant: 'destructive'
             });
         }
-        console.log(data);
+        console.log(data); */
     };
 
     const sendOTP = async () => {
         setLoading(true);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/signup/otp`, {
+        setTimeout(() => {
+            setLoading(false);
+            toast({
+                title: 'OTP sent successfully!',
+            });
+        }, 1000);
+
+        /* const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/signup/otp`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -65,7 +82,7 @@ export default function Signup() {
                 description: data.message,
                 variant: 'destructive'
             });
-        }
+        } */
     };
 
     return (

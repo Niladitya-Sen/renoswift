@@ -4,14 +4,14 @@ import SectionWrapper from '@/components/custom/SectionWrapper';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 
 export default function CustomerDetailsForm({ children }: Readonly<{ children: React.ReactNode }>) {
     const [loading, setLoading] = useState<boolean>(false);
     const { toast } = useToast();
-    const pathname = usePathname();
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -24,31 +24,14 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
                 title: "Details Submitted!",
                 description: "Your details have been submitted successfully. We will get back to you soon.",
             });
+            router.push('/customer/quotation');
         }, 2000);
     }
 
     return (
-        <SectionWrapper>
-            <div className='bg-[url("/assets/gallery-1.jpg")] bg-cover bg-center text-center rounded-lg h-[30rem] text-background'>
-                <div className='rounded-lg bg-gradient-to-b from-black/60 to-transparent h-full flex flex-col gap-2 items-center justify-center text-3xl'>
-                    {
-                        pathname === "/details/property" ? (
-                            <>
-                                <p>Share Your Space</p>
-                                <p>Shape Your Dream</p>
-                                <p className='text-xl mt-10'>Share Insights About Your Present Bathroom</p>
-                            </>
-                        ) : (
-                            <>
-                                <p>Your Style</p>
-                                <p>Your Brand</p>
-                                <p className='text-xl mt-10'>Pick from our pool of partners</p>
-                            </>
-                        )
-                    }
-                </div>
-            </div>
-            <form className='mt-20 relative' onSubmit={handleSubmit}>
+        <SectionWrapper className='mb-10'>
+            <h1 className='heading-1 text-2xl mb-10'>Share Insights About Your Present Bathroom</h1>
+            <form className='relative' onSubmit={handleSubmit}>
                 <div className={cn('absolute inset-0 bg-white/60', {
                     'hidden': !loading
                 })}></div>

@@ -1,6 +1,35 @@
 import FileInput from '@/components/custom/FileInput';
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import React from 'react';
 import { AiFillInfoCircle } from "react-icons/ai";
+
+const brands = [
+    {
+        id: 1,
+        value: 'Jaquar',
+    },
+    {
+        id: 2,
+        value: 'Hindware',
+    },
+    {
+        id: 3,
+        value: 'Parryware',
+    },
+    {
+        id: 4,
+        value: 'Kohler',
+    },
+    {
+        id: 5,
+        value: 'Roca',
+    },
+    {
+        id: 6,
+        value: 'Oyster Bath',
+    },
+];
 
 export default function Details() {
     return (
@@ -50,6 +79,17 @@ export default function Details() {
                 <label htmlFor="request" className='col-span-2'>
                     <p className='font-semibold'>*Special request</p>
                     <Input type="text" id="request" name="request" className='w-full border p-2 rounded-sm mt-1' />
+                </label>
+                <label htmlFor="brand" className='col-span-full flex flex-col gap-4 items-start w-full'>
+                    <p className='font-semibold text-lg'>Pick From Our Pool Of Brands</p>
+                    {
+                        brands.map(brand => (
+                            <div key={brand.id} className='flex gap-2 items-center justify-center text-nowrap'>
+                                <Input type='checkbox' name="brand" id={'brand' + brand.id} className={cn('w-4 h-4 accent-primary')} />
+                                <p>{brand.value}</p>
+                            </div>
+                        ))
+                    }
                 </label>
             </div>
         </>
