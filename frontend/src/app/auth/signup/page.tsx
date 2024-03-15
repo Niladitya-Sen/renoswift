@@ -16,22 +16,33 @@ export default function Signup() {
     const { toast } = useToast();
     const emailRef = useRef<HTMLInputElement>(null);
     const nameRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (otp.join("").length !== 4) {
+            toast({
+                description: 'Please enter a valid OTP',
+                variant: 'destructive'
+            });
+            return;
+        }
+
+        if (!emailRef.current?.value || !phoneRef.current?.value || !nameRef.current?.value) {
+            toast({
+                description: 'Please enter all the required fields',
+                variant: 'destructive'
+            });
+            return;
+        }
+
         setLoading(true);
         const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
         bodyContent.otp = otp.join('');
-        setTimeout(() => {
-            setLoading(false);
-            toast({
-                title: 'Signup successful!',
-            });
-            router.push('/customer/welcome');
-        }, 1000);
-        /* console.log(bodyContent);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/signup`, {
+        console.log(bodyContent);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,19 +62,21 @@ export default function Signup() {
                 variant: 'destructive'
             });
         }
-        console.log(data); */
+        console.log(data);
     };
 
     const sendOTP = async () => {
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            toast({
-                title: 'OTP sent successfully!',
-            });
-        }, 1000);
 
-        /* const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/signup/otp`, {
+        if (!emailRef.current?.value || !phoneRef.current?.value || !nameRef.current?.value) {
+            toast({
+                description: 'Please enter all the required fields',
+                variant: 'destructive'
+            });
+            return;
+        }
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup/otp`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -82,7 +95,7 @@ export default function Signup() {
                 description: data.message,
                 variant: 'destructive'
             });
-        } */
+        }
     };
 
     return (
@@ -108,7 +121,7 @@ export default function Signup() {
                 </label>
                 <label htmlFor="phone">
                     <p className='ml-1 mb-1 font-semibold'>Phone number*</p>
-                    <Input name="phone" type='text' inputMode='numeric' placeholder='Enter your phone number' maxLength={10} minLength={10} required />
+                    <Input ref={phoneRef} name="phone" type='text' inputMode='numeric' placeholder='Enter your phone number' maxLength={10} minLength={10} required />
                 </label>
                 <OTPInput value={otp} setValue={setOtp} sendOTP={sendOTP} />
                 <Button>Sign Up</Button>

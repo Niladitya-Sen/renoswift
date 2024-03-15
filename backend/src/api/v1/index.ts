@@ -1,8 +1,17 @@
 import { Router } from "express";
-import user from "./user";
+import auth from "./auth/auth";
+import customer from "./customer";
+import ot from "./ot";
+import admin from "./admin";
+import staticRouter from "./static/static";
 
 const v1 = Router();
 
-v1.use('/user', user);
+v1.use("/static", staticRouter);
+
+v1.use('/auth', auth);
+v1.use('/customer', customer);
+v1.use('/ot', ot);
+v1.use('/admin', admin);
 
 export default v1;

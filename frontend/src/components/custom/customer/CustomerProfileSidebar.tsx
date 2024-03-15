@@ -39,7 +39,7 @@ export function CustomerProfileSidebarNavLinks() {
             </Link>
             <Accordion type="single" collapsible>
                 <AccordionItem value="rfqs" className={cn('hover:bg-black/20 transition-all duration-200', {
-                    'bg-primary hover:bg-primary/80': pathname === '/customer/rfqs' || pathname.includes('/customer/rrfq') || pathname.includes('/customer/rfqs/received-quotation')
+                    'bg-primary hover:bg-primary/80': pathname === '/customer/rfqs' || pathname.includes('/customer/rfqs/rrfq') || pathname.includes('/customer/rfqs/received-quotation')
                 })}>
                     <AccordionTrigger className={cn('p-4 hover:no-underline')}>
                         <div className='flex items-center gap-8'>
@@ -51,7 +51,7 @@ export function CustomerProfileSidebarNavLinks() {
                     </AccordionTrigger>
                     <AccordionContent className={cn('flex flex-col gap-2 mt-4 ml-10')}>
                         <Link href="/customer/rfqs" className={cn('font-medium p-3 rounded-l-sm hover:bg-secondary/70 transition-colors duration-200', {
-                            'bg-secondary hover:bg-secondary': pathname === '/customer/rfqs' || pathname.includes('/customer/rrfq')
+                            'bg-secondary hover:bg-secondary': pathname === '/customer/rfqs' || pathname.includes('/customer/rfqs/rrfq')
                         })}>
                             Raised RFQ
                         </Link>

@@ -1,15 +1,16 @@
 "use client";
 
 import Image from 'next/image';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { BsPlus } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useToast } from '../ui/use-toast';
 
 export default function FileInput(props: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> & { title?: string }) {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [fileURL, setFileURL] = React.useState<string>(props.accept?.includes("image") ? "/assets/defaultImage.png" : "/assets/defaultVideo.png");
+    const [fileURL, setFileURL] = useState<string>(props.accept?.includes("image") ? "/assets/defaultImage.png" : "/assets/defaultVideo.png");
     const { toast } = useToast();
+    const [fileType, setFileType] = useState("image");
 
     const addFile = () => {
         inputRef.current?.click();
@@ -17,7 +18,9 @@ export default function FileInput(props: Omit<React.InputHTMLAttributes<HTMLInpu
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
-        if (!files) return;
+        if (!files) {
+            return;
+        }
 
         const file = files[0];
         if (file.size > 1024 * 1024 * 5) {
@@ -28,6 +31,7 @@ export default function FileInput(props: Omit<React.InputHTMLAttributes<HTMLInpu
             });
             return;
         }
+        setFileType(file.type);
         setFileURL(URL.createObjectURL(file));
     }
 
@@ -41,13 +45,22 @@ export default function FileInput(props: Omit<React.InputHTMLAttributes<HTMLInpu
     return (
         <div className='flex flex-col items-center justify-center w-full max-h-[260px]'>
             <p className='font-semibold text-lg self-start mb-2'>{props.title}</p>
-            <Image
-                src={fileURL}
-                alt="default image"
-                width={200}
-                height={200}
-                className='object-cover object-center w-full rounded-lg flex-1 max-h-[160px]'
-            />
+            {
+                fileType.includes("image") ? (
+                    <Image
+                        src={fileURL}
+                        alt="default image"
+                        width={200}
+                        height={200}
+                        className='object-cover object-center w-full rounded-lg flex-1 max-h-[160px]'
+                    />
+                ) : (
+                    <video src={fileURL}
+                        controls={false}
+                        className='rounded-lg max-h-[160px] flex-1 w-full'
+                    ></video>
+                )
+            }
             <input ref={inputRef} type="file" {...props} className='invisible w-0 h-0' onChange={handleFileChange} />
             <div className='flex items-center justify-between gap-2 mt-2 border p-2 w-[6rem] rounded-[5px]' style={{
                 boxShadow: "rgba(0, 0, 0, 0.1) 3.2px 3.2px 8px 0px inset, rgb(255, 255, 255) -3.2px -3.2px 8px 0px inset"

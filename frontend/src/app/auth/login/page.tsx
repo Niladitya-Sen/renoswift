@@ -7,74 +7,109 @@ import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useCookies } from '@/hooks/useCookies';
 
 export default function Login() {
     const [otp, setOtp] = useState(['', '', '', '']);
     const [loading, setLoading] = useState(false);
     const { toast } = useToast();
     const router = useRouter();
+    const emailRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
+    const cookies = useCookies();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true);
-        const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
-        bodyContent.otp = otp.join('');
-        setTimeout(() => {
-            setLoading(false);
-            toast({
-                description: 'Login successful!',
-            });
-            router.push("/customer");
-        }, 1000);
 
-        /* console.log(bodyContent);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bodyContent)
-        });
-        const data = await response.json();
-        setLoading(false);
-        if (response.ok) {
-            toast({
-                description: 'Login successful!',
+        try {
+            if (otp.join("").length !== 4) {
+                toast({
+                    description: 'Please enter a valid OTP',
+                    variant: 'destructive'
+                });
+                return;
+            }
+
+            if ((!emailRef.current?.value && !phoneRef.current?.value)) {
+                toast({
+                    description: 'Please enter either email or phone number',
+                    variant: 'destructive'
+                });
+                return;
+            }
+
+            setLoading(true);
+            const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
+            bodyContent.otp = otp.join('');
+
+            console.log(bodyContent);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(bodyContent)
             });
-            router.push("/customer");
-        } else {
+            const data = await response.json();
+            setLoading(false);
+            if (response.ok) {
+                toast({
+                    description: 'Login successful!',
+                });
+                cookies.set('token', data.token, 15);
+                router.push("/customer");
+            } else {
+                toast({
+                    description: 'Error logging in! Please try again later.',
+                    variant: 'destructive'
+                });
+            }
+            console.log(data);
+        } catch (error) {
+            setLoading(false);
+            console.log('Error logging in:', error);
             toast({
                 description: 'Error logging in! Please try again later.',
                 variant: 'destructive'
             });
         }
-        console.log(data); */
     };
 
     const sendOTP = async () => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            toast({
-                description: 'OTP sent successfully!',
-            });
-        }, 1000);
+        try {
+            if (!emailRef.current?.value && !phoneRef.current?.value) {
+                toast({
+                    description: 'Please enter either email or phone number',
+                    variant: 'destructive'
+                });
+                return;
+            }
 
-        /* const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/auth/login/otp`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: (document.querySelector('input[name="email"]') as HTMLInputElement).value })
-        });
-        const data = await response.json();
-        setLoading(false);
-        console.log(data);
-        toast({
-            description: data.message,
-        }); */
+            setLoading(true);
+
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login/otp`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: emailRef.current?.value })
+            });
+            const data = await response.json();
+            setLoading(false);
+            console.log(data);
+            toast({
+                description: data.message,
+            });
+        } catch (error) {
+            setLoading(false);
+            console.log('Error sending OTP:', error);
+            toast({
+                description: 'Error sending OTP! Please try again later.',
+                variant: 'destructive'
+            });
+        }
     };
 
     return (
@@ -92,7 +127,7 @@ export default function Login() {
                 <h1 className='heading-1 text-center mb-4'>Welcome back</h1>
                 <label htmlFor="email">
                     <p className='ml-1 mb-1 font-semibold'>Email ID</p>
-                    <Input name="email" type='email' inputMode='email' placeholder='Enter your email' />
+                    <Input ref={emailRef} name="email" type='email' inputMode='email' placeholder='Enter your email' />
                 </label>
                 <div className='grid grid-cols-[1fr_2rem_1fr] w-[80%] mt-4 mb-2 mx-auto'>
                     <div className='bg-black/20 w-full h-0.5 self-center' />
@@ -101,7 +136,7 @@ export default function Login() {
                 </div>
                 <label htmlFor="phone">
                     <p className='ml-1 mb-1 font-semibold'>Phone number</p>
-                    <Input name="phone" type='text' inputMode='numeric' placeholder='Enter your phone number' maxLength={10} minLength={10} />
+                    <Input ref={phoneRef} name="phone" type='text' inputMode='numeric' placeholder='Enter your phone number' maxLength={10} minLength={10} />
                 </label>
                 <OTPInput value={otp} setValue={setOtp} sendOTP={sendOTP} />
                 <Button>Log In</Button>
