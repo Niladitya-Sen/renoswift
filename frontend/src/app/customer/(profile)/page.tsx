@@ -115,7 +115,8 @@ export default function ProfileDetails() {
                 <AiOutlineLoading3Quarters className='animate-spin text-5xl text-primary' />
             </div>
             <label htmlFor='imageURL' className='block w-[200px] h-[200px] relative rounded-lg overflow-hidden'>
-                <Image src={user.image ? URL.createObjectURL(user.image) : process.env.NEXT_PUBLIC_API_URL + user.imageURL} alt='placeholder' width={200} height={200} className='w-full h-full object-cover object-center' />
+                {/* //Todo: <Image src={user.image ? URL.createObjectURL(user.image) : process.env.NEXT_PUBLIC_API_URL + user.imageURL} alt='placeholder' width={200} height={200} className='w-full h-full object-cover object-center' /> */}
+                <img src={user.image ? URL.createObjectURL(user.image) : process.env.NEXT_PUBLIC_API_URL + user.imageURL} alt='placeholder' width={200} height={200} className='w-full h-full object-cover object-center' />
                 <input disabled={readOnly} type="file" name="imageURL" id="imageURL" onChange={handleImageChange} className='invisible absolute' />
             </label>
             <div className='flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 my-10 gap-4'>
