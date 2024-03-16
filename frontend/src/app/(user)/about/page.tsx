@@ -147,7 +147,7 @@ export default function About() {
             </section>
 
             <section className="bg-secondary rounded-lg p-8 sm:p-12 mt-[4em] flex flex-col gap-12 items-start justify-between">
-                <div className="max-w-lg">
+                <div>
                     <h2 className="heading-1 text-2xl">Meet Our Team</h2>
                     <p className="mt-[1em]">
                         Our team is the heart of Renoswift®. Comprising young, enthusiastic professionals with a pulse on the market and seasoned management with over a decade of experience, we offer a perfect blend of freshness and expertise. Together, we provide you with a service that&apos;s the best of both worlds.
