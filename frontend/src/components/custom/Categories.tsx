@@ -15,7 +15,7 @@ const categories = [
     {
         title: 'Classic Tiles',
         description: 'Asthetic Design',
-        image: '/assets/product-1.jpg'
+        image: '/assets/product-3.jpg'
     },
     {
         title: 'Showers',
@@ -25,7 +25,7 @@ const categories = [
     {
         title: 'Bathroom',
         description: 'Modern Design',
-        image: '/assets/product-3.jpg'
+        image: '/assets/product-1.jpg'
     },
 ];
 

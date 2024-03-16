@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import React from "react";
+import { BsLinkedin } from "react-icons/bs";
 
 const reasons = [
     {
@@ -26,6 +27,33 @@ const reasons = [
     {
         "title": "Expertise",
         "description": "With over a decade and a half of experience in the renovation space, our expertise is unmatched. It reflects in the craftsmanship and precision we bring to every project."
+    }
+];
+
+const teamMembers = [
+    {
+        image: '/assets/team-1.png',
+        name: 'Bhavesh Dev Sanger',
+        role: 'Co-Founder & CEO',
+        description: 'He has 15+ years of Sales & Team handling experience with world-renowned brands in piping, sanitary and drainage products both in Indian and International Markets.'
+    },
+    {
+        image: '/assets/team-2.png',
+        name: 'Ambikkaa Panwar',
+        role: 'Co-Founder',
+        description: '14+ years of experience and has been instrumental in adding value to the company in the sectors of Marketing, Finance & Managing Imports.'
+    },
+    {
+        image: '/assets/team-3.png',
+        name: 'Neetu Jha',
+        role: 'CHRO',
+        description: 'She plays a pivotal role in shaping the company\'s workforce strategy and fostering a positive and inclusive work culture.'
+    },
+    {
+        image: '/assets/team-4.png',
+        name: 'Rupam Bhattacharjee',
+        role: 'CTO',
+        description: '20+ years of experience and ensuring cutting-edge solutions and transformative strategies for a tech-driven future.'
     }
 ];
 
@@ -113,35 +141,41 @@ export default function About() {
                 />
             </section>
 
-            <section className="bg-secondary rounded-lg p-8 sm:p-12 mt-[4em] flex flex-col-reverse md:flex-row gap-12 items-center justify-between">
+            <section className="bg-secondary rounded-lg p-8 sm:p-12 mt-[4em] flex flex-col gap-12 items-start justify-between">
                 <div className="max-w-lg">
                     <h2 className="heading-1 text-2xl">Meet Our Team</h2>
                     <p className="mt-[1em]">
                         Our team is the heart of Renoswift®. Comprising young, enthusiastic professionals with a pulse on the market and seasoned management with over a decade of experience, we offer a perfect blend of freshness and expertise. Together, we provide you with a service that&apos;s the best of both worlds.
                     </p>
                 </div>
-                <div className="grid grid-cols-2 gap-4 place-items-center">
-                    <Image
-                        src={'/assets/team-1.jpg'}
-                        alt={'team'}
-                        width={350}
-                        height={350}
-                        className="object-cover object-center rounded-lg row-[1/3]"
-                    />
-                    <Image
-                        src={'/assets/team-2.jpg'}
-                        alt={'team'}
-                        width={350}
-                        height={350}
-                        className="object-cover object-center rounded-lg"
-                    />
-                    <Image
-                        src={'/assets/team-3.jpg'}
-                        alt={'team'}
-                        width={350}
-                        height={350}
-                        className="object-cover object-center rounded-lg"
-                    />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 self-center">
+                    {
+                        teamMembers.map((member, index) => (
+                            <div key={index} className="max-w-[300px] bg-primary/50 p-5 rounded-lg flex flex-col gap-2 text-center items-center">
+                                <div className="bg-white rounded-full">
+                                    <Image
+                                        src={member.image}
+                                        alt={member.name}
+                                        width={200}
+                                        height={200}
+                                        className="object-cover object-center rounded-lg w-32 h-32"
+                                    />
+                                </div>
+                                <h3 className="mt-2 font-semibold text-lg">{member.name}</h3>
+                                <h4 className="font-medium -mt-1">{member.role}</h4>
+                                <p>{member.description}</p>
+                                <div className="flex-grow"></div>
+                                <div className="flex items-center justify-center gap-4 mt-4">
+                                    <button className={cn('bg-blue-500 hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center gap-2 py-3 px-4 rounded-sm')}>
+                                        <div className="bg-white rounded-sm">
+                                            <BsLinkedin size={24} className="text-[#0077b5]" />
+                                        </div>
+                                        <p className="text-white font-medium">Connect</p>
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
             </section>
 
