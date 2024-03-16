@@ -13,7 +13,7 @@ import { Button } from '../ui/button';
 
 const categories = [
     {
-        title: 'Bathtubs',
+        title: 'Classic Tiles',
         description: 'Asthetic Design',
         image: '/assets/product-1.jpg'
     },

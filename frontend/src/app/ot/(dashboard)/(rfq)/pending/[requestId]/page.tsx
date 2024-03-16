@@ -7,16 +7,53 @@ import { cn } from '@/lib/utils'
 import { IoArrowBack } from "react-icons/io5";
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useCookies } from '@/hooks/useCookies';
+import dayjs from 'dayjs';
+import { useToast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
+
+type PendingQuoteType = {
+    quoteId: string;
+    name: string;
+    email: string;
+    contactNumber: string;
+    propertyId: string;
+    createdDate: string;
+}
 
 export default function PendingDetails({ params: { requestId } }: Readonly<{ params: { requestId: string } }>) {
     const [formData, setFormData] = useState<Record<string, string | File>>();
+    const [quote, setQuote] = useState<PendingQuoteType>();
+    const cookies = useCookies();
+    const { toast } = useToast();
+    const router = useRouter();
 
     useEffect(() => {
-        console.log(formData);
-    }, [formData])
+        async function getPendingQuoteInDetail() {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/quotation/pending/${requestId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies.get('otToken')}`
+                }
+            });
+            const data = await response.json();
+            setQuote(data);
+        }
+        getPendingQuoteInDetail();
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
         if (e.target.type === 'file') {
+            if (e.target.files[0]?.size > 1024 * 1024 * 10) {
+                toast({
+                    variant: 'destructive',
+                    title: "Error",
+                    description: "File size should be less than 10MB.",
+                });
+
+                return;
+            }
+
             setFormData({
                 ...formData,
                 [e.target.name]: e.target.files[0]
@@ -25,6 +62,41 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
             setFormData({
                 ...formData,
                 [e.target.name]: e.target.value
+            });
+        }
+    }
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        console.log(Object.fromEntries(new FormData(e.currentTarget).entries()));
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/quotation/reply/${requestId}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${cookies.get('otToken')}`,
+                },
+                body: new FormData(e.currentTarget)
+            });
+            const data = await response.json();
+            if (response.ok) {
+                toast({
+                    title: "Success",
+                    description: data.message,
+                });
+                router.push('/ot/send-quotation');
+            } else {
+                toast({
+                    variant: 'destructive',
+                    title: "Error",
+                    description: "Something went wrong! Please try again later.",
+                });
+            }
+        } catch (error) {
+            toast({
+                variant: 'destructive',
+                title: "Error",
+                description: "Something went wrong! Please try again later.",
             });
         }
     }
@@ -50,14 +122,18 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
                 <TableBody>
                     <TableRow>
                         <TableCell className="font-medium">{requestId}</TableCell>
-                        <TableCell>15/02/24</TableCell>
-                        <TableCell>Rahul Sharma</TableCell>
-                        <TableCell>rahul@gmail.com</TableCell>
-                        <TableCell>7894567851</TableCell>
+                        <TableCell>{dayjs(quote?.createdDate).format("DD/MM/YYYY")}</TableCell>
+                        <TableCell>{quote?.name}</TableCell>
+                        <TableCell>{quote?.email}</TableCell>
+                        <TableCell>{quote?.contactNumber}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
-            <form className='flex flex-col sm:grid sm:grid-cols-2 mt-10 mb-5 gap-4 px-5' onChange={handleChange}>
+            <form
+                className='flex flex-col sm:grid sm:grid-cols-2 mt-10 mb-5 gap-4 px-5'
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+            >
                 <label htmlFor="designPlan">
                     <p className='font-semibold'>Remodeling Design Plan</p>
                     <div className='w-full border rounded-sm mt-1 flex items-center justify-between'>

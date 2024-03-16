@@ -78,9 +78,8 @@ quotation.post("/",
                         });
                     });
                 });
-
             });
-        })
+        });
     }
 );
 
@@ -106,7 +105,7 @@ quotation.get("/raised",
             pageNo = 1;
         }
 
-        const sql = 'SELECT quoteId, createdDate FROM Quote WHERE userId = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+        const sql = 'SELECT quoteId, createdDate FROM Quote WHERE userId = ? AND status = \'pending\' ORDER BY createdBy DESC LIMIT ? OFFSET ?';
         const values = [req.userId, limit, (pageNo - 1) * limit];
 
         db.query(sql, values, (err, result) => {
@@ -149,4 +148,5 @@ quotation.get("/raised/:quoteId", (req: UserRequest, res) => {
         });
     });
 });
+
 export default quotation;

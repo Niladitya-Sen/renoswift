@@ -3,6 +3,10 @@ import { db } from "../../../../db/db";
 
 const staticRouter = Router();
 
+staticRouter.get("/pdf/:file", (req, res) => {
+    res.sendFile(`/assets/pdf/${req.params.file}`, { root: "." });
+});
+
 staticRouter.get("/profile/image/:file", (req, res) => {
     /* const userId = req.query.userId;
     db.query('SELECT imageURL FROM User WHERE id = ?', [userId], (err, result) => {

@@ -141,7 +141,7 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                                 })}>Raised RFQs</Link>
                                 <Link href={"/admin/rfqs/send-quotation"} className={cn('font-medium p-3 rounded-l-sm hover:bg-secondary/70 transition-colors duration-200 text-sm mb-2', {
                                     'bg-primary text-white hover:bg-primary': pathname.includes('/admin/rfqs/send-quotation')
-                                })}>Operations Team</Link>
+                                })}>Send Quotation</Link>
                             </CollapsibleContent>
                         </Collapsible>
                     </li>

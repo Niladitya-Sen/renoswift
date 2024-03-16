@@ -5,14 +5,13 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { BiHeart } from "react-icons/bi";
-import { IoCart } from "react-icons/io5";
-import { Button } from "../ui/button";
 import { FaEye } from "react-icons/fa6";
+import { Button } from "../ui/button";
 
 const products = [
     {
         id: 1,
-        name: 'Bathtub',
+        name: 'Urinal',
         image: '/assets/product-10.jpg',
     },
     {

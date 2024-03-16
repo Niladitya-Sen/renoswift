@@ -8,10 +8,35 @@ import {
     TableRow
 } from "@/components/ui/table";
 import { cn } from '@/lib/utils';
+import dayjs from "dayjs";
+import { cookies } from "next/headers";
 import Link from 'next/link';
 import { FaEye } from "react-icons/fa6";
 
-export default function RFQs() {
+type QuoteType = {
+    quoteId: string;
+    createdDate: string;
+    name: string;
+    email: string;
+    contactNumber: string;
+}
+
+async function getQuotes(): Promise<QuoteType[]> {
+    const cookieStore = cookies();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/quotation/raised?limit=10&pageNo=1`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookieStore.get('adminToken')?.value}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
+export default async function RFQs() {
+    const quotes = await getQuotes();
+
     return (
         <div>
             <Table>
@@ -26,20 +51,24 @@ export default function RFQs() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>
-                        <TableCell className="font-medium">RS00R219</TableCell>
-                        <TableCell>15/02/24</TableCell>
-                        <TableCell>Rahul Sharma</TableCell>
-                        <TableCell>rahul@gmail.com</TableCell>
-                        <TableCell>7894567851</TableCell>
-                        <TableCell>
-                            <Link href={`/admin/rfqs/RS00R219`}>
-                                <Button variant={'ghost'} size={'icon'}>
-                                    <FaEye className='text-primary text-xl' />
-                                </Button>
-                            </Link>
-                        </TableCell>
-                    </TableRow>
+                    {
+                        quotes.map(quote => (
+                            <TableRow key={quote.quoteId}>
+                                <TableCell className="font-medium">{quote.quoteId}</TableCell>
+                                <TableCell>{dayjs(quote.createdDate).format("DD/MM/YYYY")}</TableCell>
+                                <TableCell>{quote.name}</TableCell>
+                                <TableCell>{quote.email}</TableCell>
+                                <TableCell>{quote.contactNumber}</TableCell>
+                                <TableCell>
+                                    <Link href={`/admin/rfqs/${quote.quoteId}`}>
+                                        <Button variant="link">
+                                            <FaEye className={cn('text-primary text-xl')} />
+                                        </Button>
+                                    </Link>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
                 </TableBody>
             </Table>
         </div>

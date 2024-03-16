@@ -5,9 +5,9 @@ import { Button } from '../ui/button';
 const inspirations = [
     {
         id: 1,
-        name: 'Modern Bathtub Design',
+        name: 'Renovation at Your Doorstep',
         btnText: 'Open up for easy living',
-        image: '/assets/product-10.jpg',
+        image: '/assets/design.jpg',
     },
     {
         id: 2,

@@ -154,7 +154,7 @@ select * from OTP;
 
 create table Quote (
 id bigint primary key auto_increment,
-quoteId varchar(100) unique not null default UUID(),
+quoteId varchar(200) unique not null,
 userId bigint not null,
 propertyId bigint not null,
 name varchar(200) not null,
@@ -166,6 +166,7 @@ address varchar(200) not null,
 specialRequest varchar(200),
 remodelingDate date not null,
 zipcode varchar(20) not null,
+status enum('raised', 'pending', 'sent') not null default 'pending',
 isValid boolean default true,
 isActive boolean default true,
 isDeleted boolean default false,
@@ -180,6 +181,11 @@ foreign key(propertyId) references UserProperty(id)
 
 select * from Quote;
 
+update Quote set status = 'pending' WHERE id = 1;
+
+INSERT INTO Quote(userId, propertyId, name, contactNumber, email, country, state, address, remodelingDate, zipcode)
+VALUES (3, 14, 'Niladitya Sen', '7478191802', 'niladityasen.2212@gmail.com', 'India', 'WB', 'XYZ', '2024-03-30', '742101');
+
 select quoteId, createdDate from Quote where userId = 3 ORDER BY createdBy DESC LIMIT 10 OFFSET 10;
 drop table Quote;
 
@@ -187,8 +193,23 @@ TRUNCATE table Quote;
 
 SELECT count(id) from Quote;
 
-SELECT q.quoteId, q.createdDate, q.propertyId, up.length, up.breadth, up.budget, up.issues, up.objective, up.style, up.timeline, up.specialRequest, q.address
-FROM Quote as q INNER JOIN UserProperty as up WHERE q.quoteId = '63f15cbd-e1ed-11ee-a72a-00155deddf31' AND q.propertyId = up.id;
+DELIMITER //
+CREATE TRIGGER generate_quoteId BEFORE INSERT ON Quote
+FOR EACH ROW
+BEGIN
+    DECLARE padded_id VARCHAR(200);
+    SET padded_id = LPAD(LAST_INSERT_ID(), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
+    SET NEW.quoteId = CONCAT('RS', padded_id);
+END;
+//
+DELIMITER ;
+
+DROP Trigger generate_quoteId;
+
+SELECT q.quoteId, q.createdDate, q.propertyId, up.length, up.breadth, 
+up.budget, up.issues, up.objective, up.style, up.timeline, up.specialRequest, q.address
+FROM Quote as q INNER JOIN UserProperty as up 
+WHERE q.quoteId = '63f15cbd-e1ed-11ee-a72a-00155deddf31' AND q.propertyId = up.id AND q.status = 'pending';
 
 SELECT id, type, url FROM UserPropertyAssets WHERE propertyId = 14;
 
@@ -215,5 +236,55 @@ foreign key (role) references UserRole(id)
 
 alter table OperationsTeam add column address varchar(200) not null;
 
+SELECT * FROM OperationsTeam where isDeleted = false;
 
-SELECT * FROM OperationsTeam;
+CREATE TABLE QuoteStatus (
+id bigint primary key auto_increment,
+quoteId varchar(200) not null,
+status enum('raised', 'pending', 'sent') not null default 'pending',
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+foreign key(quoteId) references Quote(quoteId)
+);
+
+SELECT * FROM QuoteStatus;
+drop table QuoteStatus;
+
+insert into QuoteStatus(quoteId) VALUES ('63f15cbd-e1ed-11ee-a72a-00155deddf31');
+
+CREATE TABLE QuoteReply (
+id bigint primary key auto_increment,
+quoteId varchar(200) not null,
+designPlan varchar(200) not null,
+quotation varchar(200) not null,
+timeline varchar(200) not null,
+teamRemarks varchar(200),
+customerRemarks varchar(200),
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+foreign key(quoteId) references Quote(quoteId)
+);
+
+SELECT * FROM QuoteReply;
+
+TRUNCATE table QuoteReply;
+
+update QuoteReply set designPlan = '/static/pdf/939c9798-9906-4d2a-921f-997bf9e45ea3.pdf',
+ quotation = '/static/pdf/d4b1ceaf-89e4-4730-9bf4-259b95726364.pdf' WHERE id = 1;
+
+SELECT
+q.quoteId, q.createdDate, q.name, q.email, q.contactNumber, q.propertyId, 
+r.customerRemarks, r.teamRemarks, r.timeline, r.designPlan, r.quotation 
+FROM Quote as q INNER JOIN QuoteReply as r WHERE q.quoteId = 'RS0001' AND q.quoteId = r.quoteId;
