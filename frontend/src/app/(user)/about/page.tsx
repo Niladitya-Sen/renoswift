@@ -8,6 +8,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { cn } from "@/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { BsLinkedin } from "react-icons/bs";
 
@@ -35,25 +36,29 @@ const teamMembers = [
         image: '/assets/team-1.png',
         name: 'Bhavesh Dev Sanger',
         role: 'Co-Founder & CEO',
-        description: 'He has 15+ years of Sales & Team handling experience with world-renowned brands in piping, sanitary and drainage products both in Indian and International Markets.'
+        description: 'He has 15+ years of Sales & Team handling experience with world-renowned brands in piping, sanitary and drainage products both in Indian and International Markets.',
+        linkedIn: "https://www.linkedin.com/in/bhavesh-sanger-5045051a/"
     },
     {
         image: '/assets/team-2.png',
         name: 'Ambikkaa Panwar',
         role: 'Co-Founder',
-        description: '14+ years of experience and has been instrumental in adding value to the company in the sectors of Marketing, Finance & Managing Imports.'
+        description: '14+ years of experience and has been instrumental in adding value to the company in the sectors of Marketing, Finance & Managing Imports.',
+        linkedIn: "https://www.linkedin.com/in/ambikkaa-panwar-b1125430/"
     },
     {
         image: '/assets/team-3.png',
         name: 'Neetu Jha',
         role: 'CHRO',
-        description: 'She plays a pivotal role in shaping the company\'s workforce strategy and fostering a positive and inclusive work culture.'
+        description: 'She plays a pivotal role in shaping the company\'s workforce strategy and fostering a positive and inclusive work culture.',
+        linkedIn: "#"
     },
     {
         image: '/assets/team-4.png',
         name: 'Rupam Bhattacharjee',
         role: 'CTO',
-        description: '20+ years of experience and ensuring cutting-edge solutions and transformative strategies for a tech-driven future.'
+        description: '20+ years of experience and ensuring cutting-edge solutions and transformative strategies for a tech-driven future.',
+        linkedIn: "https://www.linkedin.com/in/waysahead/"
     }
 ];
 
@@ -165,14 +170,14 @@ export default function About() {
                                 <h4 className="font-medium -mt-1">{member.role}</h4>
                                 <p>{member.description}</p>
                                 <div className="flex-grow"></div>
-                                <div className="flex items-center justify-center gap-4 mt-4">
+                                <Link href={member.linkedIn} target="_blank" className="flex items-center justify-center gap-4 mt-4">
                                     <button className={cn('bg-blue-500 hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center gap-2 py-3 px-4 rounded-sm')}>
                                         <div className="bg-white rounded-sm">
                                             <BsLinkedin size={24} className="text-[#0077b5]" />
                                         </div>
                                         <p className="text-white font-medium">Connect</p>
                                     </button>
-                                </div>
+                                </Link>
                             </div>
                         ))
                     }
