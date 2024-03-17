@@ -41,7 +41,7 @@ export default function Quotation() {
                     description: data.message,
                 });
                 localStorage.removeItem('propertyId');
-                router.push(`/customer/thank-you?qid=${data.quotationId}`);
+                router.push(`/customer/thank-you?id=${data.quotationId}`);
             } else {
                 setLoading(false);
                 toast({

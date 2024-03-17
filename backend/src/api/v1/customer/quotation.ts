@@ -105,7 +105,7 @@ quotation.get("/raised",
             pageNo = 1;
         }
 
-        const sql = 'SELECT quoteId, createdDate FROM Quote WHERE userId = ? AND status = \'pending\' ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+        const sql = 'SELECT quoteId, createdDate FROM Quote WHERE userId = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
         const values = [req.userId, limit, (pageNo - 1) * limit];
 
         db.query(sql, values, (err, result) => {
@@ -144,6 +144,67 @@ quotation.get("/raised/:quoteId", (req: UserRequest, res) => {
             res.status(200).json({
                 ...result[0],
                 assets
+            });
+        });
+    });
+});
+
+quotation.get("/received", (req: UserRequest, res) => {
+    const limitValue = req.query.limit ? parseInt(req.query.limit as string) : 10;
+    const pageNoValue = req.query.pageNo ? parseInt(req.query.pageNo as string) : 1;
+
+    const limit = limitValue < 1 ? 10 : limitValue;
+    const pageNo = pageNoValue < 1 ? 1 : pageNoValue;
+
+    const sql = 'SELECT quoteId, createdDate FROM Quote WHERE status = \'sent\' ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+    const values = [limit, (pageNo - 1) * limit];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Internal server error" });
+        }
+
+        if (result.length === 0) {
+            return res.status(200).json({ message: "No quotes found" });
+        }
+
+        res.status(200).json(result);
+    });
+});
+
+quotation.get("/received/:quoteId", (req: UserRequest, res) => {
+    const quoteId = req.params.quoteId;
+
+    const sql = "SELECT quoteId, designPlan, quotation, timeline, teamRemarks, customerRemarks, createdDate FROM QuoteReply WHERE quoteId = ?";
+    const values = [quoteId];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Internal server error" });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Quote not found" });
+        }
+
+        db.query('SELECT id FROM Payment WHERE quoteId = ? AND phase = \'design\'', [quoteId], (err, result_) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ message: "Internal server error" });
+            }
+
+            if (result_.length === 0) {
+                return res.status(200).json({
+                    ...result[0],
+                    isPaid: false
+                });
+            }
+
+            res.status(200).json({
+                ...result[0],
+                isPaid: true                
             });
         });
     });

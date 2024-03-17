@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCreditCard2Back } from "react-icons/bs";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useCookies } from "@/hooks/useCookies";
 
 export default function Pay() {
     const [cardNumber, setCardNumber] = useState("");
@@ -16,16 +20,67 @@ export default function Pay() {
     });
     const [loading, setLoading] = useState(false);
     const { toast } = useToast();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const cookies = useCookies();
+    const [amount, setAmount] = useState("");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    useEffect(() => {
+        async function getPaymentDetails() {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/payment/amount/${searchParams.get("pid")})}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies.get('token')}`
+                },
+                cache: 'no-store'
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setAmount(data.amount as string);
+            }
+        }
+        if (searchParams.get("pid")) {
+            getPaymentDetails();
+        }
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true);
-        setTimeout(() => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/payment/confirm`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies.get('token')}`
+                },
+                body: JSON.stringify({ paymentId: searchParams.get("pid") })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setLoading(false);
+                toast({
+                    title: "Payment Successful",
+                });
+                router.push(`/customer/thank-you?id=${data.paymentId}`);
+            } else {
+                setLoading(false);
+                toast({
+                    title: "Error",
+                    description: "Something went wrong",
+                    variant: "destructive"
+                });
+            }
+        } catch (error) {
             setLoading(false);
             toast({
-                title: "Payment Successful",
+                title: "Error",
+                description: "Something went wrong",
+                variant: "destructive"
             });
-        }, 2500);
+            console.error(error);
+        }
     };
 
     return (
@@ -39,7 +94,8 @@ export default function Pay() {
                     </div>
                 )
             }
-            <div className="border-green">
+
+            <div className="relative">
                 <div className="border rounded-lg p-7 md:p-14">
                     <div className="text-center ">
                         <h3 className="text-3xl font-bold">Payment Method</h3>
@@ -47,6 +103,8 @@ export default function Pay() {
                             Select your payment method and enter your payment information.
                         </p>
                     </div>
+
+                    <Button variant={"secondary"} className={cn('top-12 right-8 flex absolute')} onClick={() => { router.back() }}>back</Button>
 
                     {/* Cards */}
 
@@ -214,18 +272,10 @@ export default function Pay() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-[95%] md:w-[70%] m-auto h-[80%]  bg-[#eaf5d5] flex flex-col justify-end">
-                                <div className="py-3 px-5 flex justify-between">
-                                    <p className="text-sm font-semibold">Category</p>
-                                    <p className="text-xs font-semibold text-gray-400">Gold</p>
-                                </div>
-                                <div className="py-5 px-5 flex justify-between">
-                                    <p className="text-md font-semibold">Subscription Plan</p>
-                                    <p className="text-xs font-semibold text-blue-700">CAD 25</p>
-                                </div>
-                                <div className="py-8 px-5 border border-dashed border-t-2 flex justify-between ">
-                                    <p className="text-lg font-semibold">You Have to Pay</p>
-                                    <p className="text-sm font-semibold text-blue-700">CAD 25</p>
+                            <div className="w-[95%] md:w-[70%] m-auto h-[80%]  bg-[#7fb9cc] flex flex-col justify-end">
+                                <p className="text-center font-semibold mb-4">Amount to pay</p>
+                                <div className="py-4 px-5 border border-dashed border-t-2 flex justify-between w-full">
+                                    <p className="text-center text-lg font-semibold text-blue-700 mx-auto">INR {amount}</p>
                                 </div>
                             </div>
                         </div>

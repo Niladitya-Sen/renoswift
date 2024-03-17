@@ -18,7 +18,7 @@ export default function Error({
     }, [error])
 
     return (
-        <div className='flex items-center h-full justify-around flex-wrap'>
+        <div className='flex items-center h-screen justify-around flex-wrap'>
             <Image src="/assets/error/500.svg" alt="500" width={500} height={500} />
             <div className='max-w-lg'>
                 <h1 className="sm:text-4xl text-3xl mb-4 font-medium text-foreground">500 Internal Server Error</h1>
