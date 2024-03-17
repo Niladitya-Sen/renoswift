@@ -288,3 +288,42 @@ SELECT
 q.quoteId, q.createdDate, q.name, q.email, q.contactNumber, q.propertyId, 
 r.customerRemarks, r.teamRemarks, r.timeline, r.designPlan, r.quotation 
 FROM Quote as q INNER JOIN QuoteReply as r WHERE q.quoteId = 'RS0001' AND q.quoteId = r.quoteId;
+
+CREATE TABLE Payment (
+id bigint primary key auto_increment,
+userId bigint not null,
+paymentId varchar(200) unique not null,
+quoteId varchar(200),
+status enum('initiated', 'pending', 'done') not null default 'initiated',
+phase varchar(200) not null,
+amount float not null,
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+foreign key(quoteId) references Quote(quoteId),
+foreign key(userId) references User(id)
+);
+
+drop table Payment;
+
+SELECT * FROM Payment;
+
+delete from Payment where id = 2;
+
+DELIMITER //
+CREATE TRIGGER generate_paymentId BEFORE INSERT ON Payment
+FOR EACH ROW
+BEGIN
+    DECLARE padded_id VARCHAR(200);
+    SET padded_id = LPAD(LAST_INSERT_ID(), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
+    SET NEW.paymentId = CONCAT('RSP', padded_id);
+END;
+//
+DELIMITER ;
+
+drop trigger generate_paymentId;

@@ -8,6 +8,11 @@ const nextConfig = {
                 port: '3001',
                 pathname: '/**',
             },
+            {
+                protocol: "https",
+                hostname: "uat.renoswift.waysdatalabs.com",
+                pathname: "/**"
+            }
         ],
     },
 };
