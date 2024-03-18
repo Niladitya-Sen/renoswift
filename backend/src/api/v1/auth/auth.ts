@@ -92,7 +92,7 @@ auth.post('/login', async (req, res) => {
         }
 
         if (results.length === 0) {
-            res.status(401).json({ message: 'Invalid email' });
+            res.status(401).json({ message: 'User not found' });
             return;
         }
 
@@ -208,7 +208,7 @@ auth.post('/signup', body('name').notEmpty(), body('email').isEmail(), body('pho
                         return;
                     }
 
-                    const jwt = sign({ email, userId: results.insertId }, process.env.JWT_SECRET as string, { expiresIn: '15 days' });
+                    const jwt = sign({ email, userId: results.insertId }, process.env.JWT_SECRET as string, { expiresIn: '30 days' });
 
                     res.status(201).json({ message: 'Sign up successfull', token: jwt });
                 });

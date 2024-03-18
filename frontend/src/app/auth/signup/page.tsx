@@ -4,6 +4,7 @@ import OTPInput from '@/components/custom/OTPInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
+import { useCookies } from '@/hooks/useCookies';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -18,6 +19,7 @@ export default function Signup() {
     const nameRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+    const cookies = useCookies();
 
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -55,6 +57,7 @@ export default function Signup() {
             toast({
                 description: 'Signup successful!',
             });
+            cookies.set('token', data.token, 30);
             router.push('/customer/welcome');
         } else {
             toast({
