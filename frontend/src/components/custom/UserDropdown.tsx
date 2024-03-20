@@ -64,7 +64,7 @@ export default function UserDropdown() {
         if (cookies?.get('token') || cookies?.get('otToken') || cookies?.get('adminToken')) {
             setIsLoggedIn(true);
         }
-    }, []);
+    }, [cookies]);
 
     useEffect(() => {
         async function getProfile() {
