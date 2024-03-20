@@ -38,7 +38,7 @@ export default function Pay() {
             });
             const data = await response.json();
             if (response.ok) {
-                setAmount(data.amount as string);
+                setAmount(data.amountPaid as string);
                 setPhase(data.phase as string);
             }
         }

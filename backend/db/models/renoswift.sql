@@ -220,7 +220,7 @@ CREATE TRIGGER generate_quoteId BEFORE INSERT ON Quote
 FOR EACH ROW
 BEGIN
     DECLARE padded_id VARCHAR(200);
-    SET padded_id = LPAD(LAST_INSERT_ID(), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
+    SET padded_id = LPAD((SELECT COUNT(id) as id FROM Quote), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
     SET NEW.quoteId = CONCAT('RS', padded_id);
 END;
 //
@@ -345,13 +345,13 @@ CREATE TRIGGER generate_paymentId BEFORE INSERT ON Payment
 FOR EACH ROW
 BEGIN
     DECLARE padded_id VARCHAR(200);
-    SET padded_id = LPAD(LAST_INSERT_ID(), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
+    SET padded_id = LPAD((SELECT COUNT(id) as id FROM Payment), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
     SET NEW.paymentId = CONCAT('RSP', padded_id);
 END;
 //
 DELIMITER ;
 
-SELECT LAST_INSERT_ID() + 1 FROM Payment;
+SELECT LAST_INSERT_ID() FROM Payment;
 
 drop trigger generate_paymentId;
 
@@ -417,3 +417,5 @@ SELECT * FROM OperationsTeam WHERE id = 2 AND isDeleted = FALSE;
 
 SELECT status, remarks, createdDate, imageURL FROM OrderStatus 
 WHERE orderId = 'ORD00001' AND isCompleted = true ORDER BY createdDate DESC LIMIT 1;
+
+SELECT quoteId, createdDate FROM Quote WHERE status = 'sent' AND userId = 7 ORDER BY createdBy DESC LIMIT 10 OFFSET 0;
