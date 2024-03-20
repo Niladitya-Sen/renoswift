@@ -156,9 +156,9 @@ quotation.get("/received", (req: UserRequest, res) => {
     const limit = limitValue < 1 ? 10 : limitValue;
     const pageNo = pageNoValue < 1 ? 1 : pageNoValue;
 
-    const sql = 'SELECT quoteId, createdDate FROM Quote WHERE status = \'sent\' ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+    const sql = 'SELECT quoteId, createdDate FROM Quote WHERE status = \'sent\' AND userId = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
 
-    const values = [limit, (pageNo - 1) * limit];
+    const values = [limit, (pageNo - 1) * limit, req.userId];
 
     db.query(sql, values, (err, result) => {
         if (err) {

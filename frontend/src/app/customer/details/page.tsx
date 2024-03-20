@@ -77,7 +77,7 @@ export default function Details() {
                     <Input required type="text" id="timeline" name="timeline" className='w-full border p-2 rounded-sm mt-1' />
                 </label>
                 <label htmlFor="specialRequest" className='col-span-2'>
-                    <p className='font-semibold'>*Special specialRequest</p>
+                    <p className='font-semibold'>*Special Request</p>
                     <Input required type="text" id="specialRequest" name="specialRequest" className='w-full border p-2 rounded-sm mt-1' />
                 </label>
                 <label htmlFor="brand" className='col-span-full flex flex-col gap-4 items-start w-full'>
