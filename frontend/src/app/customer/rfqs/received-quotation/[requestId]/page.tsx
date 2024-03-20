@@ -43,6 +43,8 @@ async function getQuoteDetails(quoteId: string): Promise<QuoteDetailType> {
 export default async function ReceivedQuotationDetails({ params: { requestId } }: Readonly<{ params: { requestId: string } }>) {
     const quote = await getQuoteDetails(requestId);
 
+    console.log(quote);
+
     return (
         <div>
             <Link href={"/customer/rfqs/received-quotation"} className={cn('block ml-auto w-fit')}>

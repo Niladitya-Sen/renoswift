@@ -158,7 +158,7 @@ quotation.get("/received", (req: UserRequest, res) => {
 
     const sql = 'SELECT quoteId, createdDate FROM Quote WHERE status = \'sent\' AND userId = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
 
-    const values = [limit, (pageNo - 1) * limit, req.userId];
+    const values = [req.userId, limit, (pageNo - 1) * limit];
 
     db.query(sql, values, (err, result) => {
         if (err) {
@@ -186,11 +186,13 @@ quotation.get("/received/:quoteId", (req: UserRequest, res) => {
             return res.status(404).json({ message: "Quote not found" });
         }
 
-        db.query('SELECT id FROM Payment WHERE quoteId = ? AND phase = \'design\' OR phase = \'order\' AND status = \'done\'', [quoteId], (err, result_) => {
+        db.query('SELECT id FROM Payment WHERE quoteId = ? AND userId = ? AND (phase = \'design\' OR phase = \'order\') AND status = \'done\'', [quoteId, req.userId], (err, result_) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({ message: "Internal server error" });
             }
+
+            console.log(result_);
 
             switch (result_.length) {
                 case 0: {

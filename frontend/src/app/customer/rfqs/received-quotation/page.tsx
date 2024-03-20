@@ -26,8 +26,6 @@ async function getReceivedQuotes(): Promise<ReceivedQuotationType> {
 export default async function ReceivedQuotation() {
     const quotes = await getReceivedQuotes();
 
-    console.log(quotes);
-
     return (
         <div>
             <Table>

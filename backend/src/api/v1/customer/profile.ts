@@ -35,7 +35,7 @@ profile.get("/", (req: UserRequest, res) => {
 
         return res.status(200).json({
             ...result[0],
-            imageURL: result.imageURL ? `/static/profile/image/${result[0].imageURL.split("/").pop()}` : '/static/profile/image/defaultUser.jpg'
+            imageURL: result[0].imageURL ? `/static/profile/image/${result[0].imageURL.split("/").pop()}` : '/static/profile/image/defaultUser.jpg'
         });
     });
 });
