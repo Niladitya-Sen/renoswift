@@ -59,7 +59,11 @@ export default async function RRFQs() {
                 </TableBody>
             </Table>
             <div className='flex gap-4 items-center justify-center w-full col-span-full mt-2 mb-4'>
-                <Button size={'lg'}>Raise another RFQ</Button>
+                <Button size={'lg'} asChild>
+                    <Link href='/customer/details'>
+                        Raise another RFQ
+                    </Link>
+                </Button>
             </div>
         </div>
     )
