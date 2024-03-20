@@ -38,7 +38,7 @@ export default function Error({
                         variant={"secondary"}
                         onClick={
                             // Attempt to recover by trying to re-render the segment
-                            () => reset()
+                            () => window.location.reload()
                         }
                     >
                         Try again
