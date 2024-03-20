@@ -30,7 +30,7 @@ export default function AdminAddEmployeeDialog({ trigger }: Readonly<{ trigger: 
             const bodyContent = Object.fromEntries(new FormData(e.currentTarget).entries());
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users/operations-team`, {
                 headers: {
-                    'Authorization': `Bearer ${cookies.get('adminToken')}`,
+                    'Authorization': `Bearer ${cookies?.get('adminToken')}`,
                     'Content-Type': 'application/json'
                 },
                 method: 'POST',

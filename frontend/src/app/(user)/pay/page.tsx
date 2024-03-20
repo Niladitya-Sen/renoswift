@@ -24,6 +24,7 @@ export default function Pay() {
     const searchParams = useSearchParams();
     const cookies = useCookies();
     const [amount, setAmount] = useState("");
+    const [phase, setPhase] = useState("");
 
     useEffect(() => {
         async function getPaymentDetails() {
@@ -31,13 +32,14 @@ export default function Pay() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookies.get('token')}`
+                    'Authorization': `Bearer ${cookies?.get('token')}`
                 },
                 cache: 'no-store'
             });
             const data = await response.json();
             if (response.ok) {
                 setAmount(data.amount as string);
+                setPhase(data.phase as string);
             }
         }
         if (searchParams.get("pid")) {
@@ -49,11 +51,11 @@ export default function Pay() {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/payment/confirm`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/payment/confirm${phase === "design" ? "/design" : ""}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookies.get('token')}`
+                    'Authorization': `Bearer ${cookies?.get('token')}`
                 },
                 body: JSON.stringify({ paymentId: searchParams.get("pid") })
             });

@@ -38,7 +38,7 @@ export default function AdminLogin() {
                 toast({
                     description: 'Login successful!',
                 });
-                cookies.set('adminToken', data.token, 30);
+                cookies?.set('adminToken', data.token, 30);
                 router.push("/admin");
             } else {
                 toast({

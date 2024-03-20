@@ -8,9 +8,35 @@ import {
     TableRow
 } from "@/components/ui/table";
 import { cn } from '@/lib/utils';
+import dayjs from "dayjs";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
-export default function OrdersCS() {
+type OrderType = {
+    orderId: string;
+    createdDate: string;
+    totalAmount: number;
+    status: string;
+};
+
+async function getOrders(): Promise<OrderType[]> {
+    const cookieStore = cookies();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/order`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookieStore.get('token')?.value}`
+        },
+        cache: 'no-store'
+    });
+    const data = await response.json();
+    return data;
+}
+
+export default async function Orders() {
+    const orders = await getOrders();
+    console.log(orders);
+
     return (
         <Table>
             <TableHeader className={cn('bg-primary')}>
@@ -23,12 +49,11 @@ export default function OrdersCS() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
+                {/* <TableRow>
                     <TableCell className="font-medium">--</TableCell>
                     <TableCell>21/04/24</TableCell>
                     <TableCell>&#8377;51,677</TableCell>
-                    <TableCell>Pending</TableCell>
-                    
+                    <TableCell>Pending</TableCell>                    
                 </TableRow>
                 <TableRow>
                     <TableCell className="font-medium">ORD786856</TableCell>
@@ -41,6 +66,33 @@ export default function OrdersCS() {
                         }), 'border-primary')}>View</Link>
                     </TableCell>
                 </TableRow>
+             */}
+                {
+                    orders.map((order, index) => (
+                        <TableRow key={index}>
+                            <TableCell className="font-medium">{order.orderId ?? "--"}</TableCell>
+                            <TableCell>{dayjs(order.createdDate).format("DD/MM/YYYY")}</TableCell>
+                            <TableCell>
+                                {
+                                    order.totalAmount.toLocaleString('en-IN', {
+                                        style: 'currency',
+                                        currency: 'INR'
+                                    })
+                                }
+                            </TableCell>
+                            <TableCell>{order.status}</TableCell>
+                            {
+                                order.status === 'confirmed' && (
+                                    <TableCell className={cn('flex items-center justify-end')}>
+                                        <Link href={`/customer/order/${order.orderId}`} className={cn(buttonVariants({
+                                            variant: 'outline'
+                                        }), 'border-primary')}>View</Link>
+                                    </TableCell>
+                                )
+                            }
+                        </TableRow>
+                    ))
+                }
             </TableBody>
         </Table>
     )

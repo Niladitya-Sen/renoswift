@@ -7,7 +7,7 @@ const adminAuth = Router();
 adminAuth.post('/login', (req, res) => {
     const { email, password } = req.body;
 
-    const sql = `SELECT u.id, u.email, ur.role, u.password FROM User as u INNER JOIN UserRole as ur WHERE u.email = ? and u.role = ur.id`;
+    const sql = `SELECT id, email, password, role FROM Admin WHERE email = ?`;
     const values = [email];
 
     db.query(sql, values, (err, results) => {
@@ -18,12 +18,7 @@ adminAuth.post('/login', (req, res) => {
         }
 
         if (results.length === 0) {
-            res.status(401).json({ message: 'Invalid email' });
-            return;
-        }
-
-        if (results[0].role !== 'Admin') {
-            res.status(401).json({ message: 'You are not an admin' });
+            res.status(401).json({ message: 'User not found.' });
             return;
         }
 
@@ -32,7 +27,7 @@ adminAuth.post('/login', (req, res) => {
             return;
         }
 
-        const jwt = sign({ email: results[0].email, role: results[0].role, adminId: results[0].id }, process.env.JWT_SECRET as string, { expiresIn: '30 days' });
+        const jwt = sign({ email: results[0].email, role: 'Admin', adminId: results[0].id }, process.env.JWT_SECRET as string, { expiresIn: '30 days' });
 
         res.status(200).json({ message: 'Login successful!', token: jwt });
     });

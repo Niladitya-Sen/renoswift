@@ -19,12 +19,12 @@ export const verfiyAdmin = (req: AdminRequest, res: Response, next: NextFunction
         return res.status(401).json({ message: "Unauthorized" });
     }
 
-    db.query("SELECT * FROM User as u INNER JOIN UserRole as ur WHERE u.id = ? AND u.role = ur.id", [decoded.adminId], (err, result) => {
+    db.query("SELECT email, password, role FROM Admin WHERE id = ?", [decoded.adminId], (err, result) => {
         if (err) {
             return res.status(500).json({ message: "Internal server error" });
         }
 
-        if (result.length === 0 || result[0].role !== "Admin") {
+        if (result.length === 0) {
             return res.status(401).json({ message: "Unauthorized" });
         }
 

@@ -16,6 +16,28 @@ insert into UserRole (role) VALUES ('Customer'), ('Admin'),
 
 select * from UserRole;
 
+CREATE TABLE Admin (
+id bigint primary key auto_increment,
+name varchar(255) not null,
+email varchar(255) unique not null,
+phoneNumber varchar(20) unique not null,
+password varchar(5),
+role bigint not null default 2,
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+foreign key (role) references UserRole(id)
+);
+
+INSERT INTO Admin (name, email, phoneNumber, password) VALUES ('Admin', 'admin@renoswift.com', '1234567890', '1234');
+
+SELECT * FROM Admin;
+
 create table User (
 id bigint primary key auto_increment,
 name varchar(255) not null,
@@ -296,7 +318,10 @@ paymentId varchar(200) unique not null,
 quoteId varchar(200),
 status enum('initiated', 'pending', 'done') not null default 'initiated',
 phase varchar(200) not null,
-amount float not null,
+amountPaid double not null default 0,
+amountDue double not null,
+method varchar(200) not null,
+finalDueDate datetime,
 isValid boolean default true,
 isActive boolean default true,
 isDeleted boolean default false,
@@ -326,4 +351,69 @@ END;
 //
 DELIMITER ;
 
+SELECT LAST_INSERT_ID() + 1 FROM Payment;
+
 drop trigger generate_paymentId;
+
+SELECT q.quoteId, q.createdDate FROM Quote as q INNER JOIN Payment p 
+WHERE q.status = 'sent' AND q.quoteId = p.quoteId AND p.phase != 'order' ORDER BY q.createdBy DESC LIMIT 10 OFFSET 0;
+
+CREATE TABLE Order_ (
+id bigint primary key auto_increment,
+orderId varchar(200) unique,
+userId bigint not null,
+quoteId varchar(200),
+status enum('confirmed', 'pending') not null default 'pending',
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+foreign key(quoteId) references Quote(quoteId),
+foreign key(userId) references User(id)
+);
+
+SELECT * FROM Order_;
+
+delete from Order_ WHERE id = 2;
+
+SELECT o.orderId, o.createdDate, o.status, 
+(SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o WHERE o.userId = 3;
+
+CREATE TABLE OrderStatus (
+id bigint primary key auto_increment,
+orderId varchar(200) not null,
+status varchar(200) not null,
+remarks text not null,
+imageURL varchar(200) not null,
+isCompleted boolean default false,
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+foreign key(orderId) references Order_(orderId)
+);
+
+drop table OrderStatus;
+
+SELECT * FROM OrderStatus;
+
+SELECT count(id) FROM Payment WHERE quoteId = 'RS0001' AND phase = 'design' OR phase = 'order';
+
+SELECT * FROM OrderStatus;
+
+SELECT s.status, s.remarks, s.createdDate, 
+(SELECT imageURL FROM OrderStatusImage as i WHERE i.orderStatusId = s.id) as imageURL FROM OrderStatus as s 
+WHERE s.orderId = 'ORD00001' ORDER BY createdDate DESC LIMIT 1; 
+
+SELECT * FROM OperationsTeam WHERE id = 2 AND isDeleted = FALSE;
+
+SELECT status, remarks, createdDate, imageURL FROM OrderStatus 
+WHERE orderId = 'ORD00001' AND isCompleted = true ORDER BY createdDate DESC LIMIT 1;

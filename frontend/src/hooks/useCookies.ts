@@ -1,4 +1,8 @@
+"use client";
+
 export const useCookies = () => {
+    if (typeof window === 'undefined') return null;
+
     const set = (name: string, value: string, days: number) => {
         const date = new Date();
         date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);

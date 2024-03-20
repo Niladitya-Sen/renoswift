@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-export default function CustomerPaymentButton({ title, className, amount, size, quoteId, phase }: { title: string, className?: string, amount: number, size?: "default" | "sm" | "lg" | "icon" | null, quoteId: string, phase: string }) {
+export default function CustomerPaymentButton({ title, className, amount, size, quoteId, phase, disabled }: { title: string, className?: string, amount: number, size?: "default" | "sm" | "lg" | "icon" | null, quoteId: string, phase: string, disabled?: boolean }) {
     const cookies = useCookies();
     const router = useRouter();
     const { toast } = useToast();
@@ -18,14 +18,14 @@ export default function CustomerPaymentButton({ title, className, amount, size, 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookies.get('token')}`
+                    'Authorization': `Bearer ${cookies?.get('token')}`
                 },
                 body: JSON.stringify({ amount, quoteId, phase })
             });
             const data = await response.json();
 
             if (response.ok) {
-                router.push(`/customer/pay?pid=${data.paymentId}`);
+                router.push(`/pay?pid=${data.paymentId}`);
             }
         } catch (error) {
             toast({
@@ -38,7 +38,7 @@ export default function CustomerPaymentButton({ title, className, amount, size, 
     }
 
     return (
-        <Button size={size} className={cn(className)} onClick={initiatePayment}>
+        <Button disabled={disabled} size={size} className={cn(className)} onClick={initiatePayment}>
             {title}
         </Button>
     )

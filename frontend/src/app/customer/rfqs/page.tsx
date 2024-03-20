@@ -24,7 +24,8 @@ async function getQuotes(): Promise<QuotationType> {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${cookieStore.get('token')?.value}`
-        }
+        },
+        cache: 'no-store'
     });
     const data = await response.json();
     return data;

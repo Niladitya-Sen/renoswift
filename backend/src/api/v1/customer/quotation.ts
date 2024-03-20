@@ -157,16 +157,13 @@ quotation.get("/received", (req: UserRequest, res) => {
     const pageNo = pageNoValue < 1 ? 1 : pageNoValue;
 
     const sql = 'SELECT quoteId, createdDate FROM Quote WHERE status = \'sent\' ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+
     const values = [limit, (pageNo - 1) * limit];
 
     db.query(sql, values, (err, result) => {
         if (err) {
             console.log(err);
             return res.status(500).json({ message: "Internal server error" });
-        }
-
-        if (result.length === 0) {
-            return res.status(200).json({ message: "No quotes found" });
         }
 
         res.status(200).json(result);
@@ -189,23 +186,42 @@ quotation.get("/received/:quoteId", (req: UserRequest, res) => {
             return res.status(404).json({ message: "Quote not found" });
         }
 
-        db.query('SELECT id FROM Payment WHERE quoteId = ? AND phase = \'design\'', [quoteId], (err, result_) => {
+        db.query('SELECT id FROM Payment WHERE quoteId = ? AND phase = \'design\' OR phase = \'order\' AND status = \'done\'', [quoteId], (err, result_) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({ message: "Internal server error" });
             }
 
-            if (result_.length === 0) {
-                return res.status(200).json({
-                    ...result[0],
-                    isPaid: false
-                });
+            switch (result_.length) {
+                case 0: {
+                    return res.status(200).json({
+                        ...result[0],
+                        isPaid: false,
+                        isFullyPaid: false
+                    });
+                }
+                case 1: {
+                    return res.status(200).json({
+                        ...result[0],
+                        isPaid: true,
+                        isFullyPaid: false
+                    });
+                }
+                case 2: {
+                    return res.status(200).json({
+                        ...result[0],
+                        isPaid: true,
+                        isFullyPaid: true
+                    });
+                }
+                default: {
+                    return res.status(200).json({
+                        ...result[0],
+                        isPaid: false,
+                        isFullyPaid: false
+                    });
+                }
             }
-
-            res.status(200).json({
-                ...result[0],
-                isPaid: true                
-            });
         });
     });
 });

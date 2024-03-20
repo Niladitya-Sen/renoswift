@@ -2,28 +2,73 @@
 
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogFooter,
     DialogHeader,
-    DialogTitle
+    DialogTitle,
+    DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { useRef } from "react";
 import { Button } from "../../ui/button";
+import { useCookies } from "@/hooks/useCookies";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
-export default function OperationsTeamUpdateStatusDialog({ open, onOpenChange }: Readonly<{ open: boolean, onOpenChange: (open: boolean) => void }>) {
+export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: Readonly<{ trigger: React.ReactNode, orderId: string }>) {
     const dialogCloseRef = useRef<HTMLButtonElement>(null);
+    const cookies = useCookies();
+    const { toast } = useToast();
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('form submitted');
-        dialogCloseRef.current?.click();
+        console.log(Object.fromEntries(new FormData(e.currentTarget)));
+
+        const formData = new FormData(e.currentTarget);
+        formData.append('orderId', orderId);
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/order/update-status`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${cookies?.get('otToken')}`,
+                },
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                toast({
+                    title: 'Success',
+                    description: data.message,
+                });
+                dialogCloseRef.current?.click();
+                router.refresh();
+            } else {
+                toast({
+                    title: 'Error',
+                    description: data.message,
+                    variant: 'destructive',
+                });
+            }
+        } catch (error) {
+            console.error(error);
+
+            toast({
+                title: 'Error',
+                description: 'An error occurred while updating status',
+                variant: 'destructive',
+            });
+        }
     }
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent className={cn('max-w-screen-md')}>
                 <DialogHeader>
                     <DialogTitle>Update Status</DialogTitle>

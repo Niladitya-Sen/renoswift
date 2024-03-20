@@ -33,7 +33,7 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/quotation/pending/${requestId}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookies.get('otToken')}`
+                    'Authorization': `Bearer ${cookies?.get('otToken')}`
                 }
             });
             const data = await response.json();
@@ -74,7 +74,7 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/quotation/reply/${requestId}`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${cookies.get('otToken')}`,
+                    'Authorization': `Bearer ${cookies?.get('otToken')}`,
                 },
                 body: new FormData(e.currentTarget)
             });

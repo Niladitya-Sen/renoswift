@@ -23,6 +23,7 @@ type QuoteDetailType = {
     designPlan: string;
     quotation: string;
     isPaid: boolean;
+    isFullyPaid: boolean;
 };
 
 async function getQuoteDetails(quoteId: string): Promise<QuoteDetailType> {
@@ -127,6 +128,7 @@ export default async function ReceivedQuotationDetails({ params: { requestId } }
                         amount={10000}
                         quoteId={quote.quoteId}
                         phase='order'
+                        disabled={quote.isFullyPaid}
                     />
                 )}
             </div>

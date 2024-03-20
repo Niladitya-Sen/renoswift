@@ -178,24 +178,26 @@ quotation.post("/reply/:quoteId",
 
             db.query(sql, values, (err, result) => {
                 if (err) {
+                    console.error(err);   
                     db.rollback((err) => {
                         if (err) {
                             console.log(err);
-                            res.status(500).json({ message: "Internal server error" });
-                            return;
                         }
                     });
+                    res.status(500).json({ message: "Internal server error" });
+                    return;
                 }
 
                 db.query('UPDATE Quote SET status = ? WHERE quoteId = ?', ["sent", quoteId], (err, result) => {
                     if (err) {
+                        console.error(err);                        
                         db.rollback((err) => {
                             if (err) {
                                 console.log(err);
-                                res.status(500).json({ message: "Internal server error" });
-                                return;
                             }
                         });
+                        res.status(500).json({ message: "Internal server error" });
+                        return;
                     }
 
                     db.commit((err) => {

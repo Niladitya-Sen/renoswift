@@ -57,7 +57,7 @@ export default function Signup() {
             toast({
                 description: 'Signup successful!',
             });
-            cookies.set('token', data.token, 30);
+            cookies?.set('token', data.token, 30);
             router.push('/customer/welcome');
         } else {
             toast({

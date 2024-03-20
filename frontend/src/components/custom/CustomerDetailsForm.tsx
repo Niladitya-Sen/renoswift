@@ -95,7 +95,7 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/details`, {
                 method: "POST",
                 headers: {
-                    'Authorization': `Bearer ${cookies.get('token')}`,
+                    'Authorization': `Bearer ${cookies?.get('token')}`,
                 },
                 body: new FormData(e.currentTarget)
             });

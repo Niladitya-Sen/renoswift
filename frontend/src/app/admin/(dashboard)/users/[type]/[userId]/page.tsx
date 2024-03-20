@@ -38,7 +38,7 @@ export default function UserDetails({ params: { type, userId } }: Readonly<{ par
         async function getUsersDetail() {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users/${type}/${userId}`, {
                 headers: {
-                    'Authorization': `Bearer ${cookies.get('adminToken')}`
+                    'Authorization': `Bearer ${cookies?.get('adminToken')}`
                 }
             });
             const data = await response.json();
@@ -55,7 +55,7 @@ export default function UserDetails({ params: { type, userId } }: Readonly<{ par
             const bodyContent = Object.fromEntries(new FormData(e.currentTarget).entries());
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users/${type}/${userId}`, {
                 headers: {
-                    'Authorization': `Bearer ${cookies.get('adminToken')}`,
+                    'Authorization': `Bearer ${cookies?.get('adminToken')}`,
                     'Content-Type': 'application/json'
                 },
                 method: 'PUT',
@@ -89,7 +89,7 @@ export default function UserDetails({ params: { type, userId } }: Readonly<{ par
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users/${type}/${userId}`, {
                 headers: {
-                    'Authorization': `Bearer ${cookies.get('adminToken')}`,
+                    'Authorization': `Bearer ${cookies?.get('adminToken')}`,
                     'Content-Type': 'application/json'
                 },
                 method: 'DELETE',

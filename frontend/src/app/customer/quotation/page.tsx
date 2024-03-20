@@ -27,7 +27,7 @@ export default function Quotation() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookies.get('token')}`,
+                    'Authorization': `Bearer ${cookies?.get('token')}`,
                 },
                 body: JSON.stringify({
                     ...bodyContent,

@@ -16,7 +16,7 @@ export default function AdminDeleteUserButton({ type, id }: Readonly<{ type: "cu
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users/${type}/${id}`, {
             method: 'DELETE',
             headers: {
-                'Authorization': `Bearer ${cookies.get('adminToken')}`
+                'Authorization': `Bearer ${cookies?.get('adminToken')}`
             }
         });
         const data = await response.json();

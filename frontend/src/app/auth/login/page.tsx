@@ -58,7 +58,7 @@ export default function Login() {
                 toast({
                     description: 'Login successful!',
                 });
-                cookies.set('token', data.token, 15);
+                cookies?.set('token', data.token, 15);
                 router.push("/customer");
             } else {
                 toast({
