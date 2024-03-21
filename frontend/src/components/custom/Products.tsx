@@ -12,7 +12,7 @@ const products = [
     {
         id: 1,
         name: 'Urinal',
-        image: '/assets/product-10.jpg',
+        image: '/assets/product-13.jpg',
     },
     {
         id: 2,
