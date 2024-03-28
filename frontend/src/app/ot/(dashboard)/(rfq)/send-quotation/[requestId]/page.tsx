@@ -19,6 +19,7 @@ type QuoteDetailType = {
     timeline: string;
     designPlan: string;
     quotation: string;
+    amount: number;
 };
 
 async function getQuoteInDetail(quoteId: string): Promise<QuoteDetailType> {
@@ -93,6 +94,10 @@ export default async function SendQuotationDetails({ params: { requestId } }: Re
                 <label htmlFor="timeline">
                     <p className='font-semibold'>Delivery Timeline</p>
                     <Input readOnly type="text" id="timeline" name="timeline" className='w-full border p-2 rounded-sm mt-1' value={quote.timeline} />
+                </label>
+                <label htmlFor="amount">
+                    <p className='font-semibold'>Total Amount</p>
+                    <Input readOnly type="text" id="amount" name="amount" className='w-full border p-2 rounded-sm mt-1' value={quote.amount} />
                 </label>
                 <label htmlFor="teamRemarks" className="col-span-full">
                     <p className='font-semibold'>Remarks From Team</p>

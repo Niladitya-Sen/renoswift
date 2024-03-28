@@ -139,7 +139,9 @@ export default function UserDropdown() {
                                         </div>
                                     </Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuSeparator />
+                                <DropdownMenuSeparator className={cn({
+                                    'hidden': !isCustomer
+                                })} />
                             </React.Fragment>
                         ))
                     }

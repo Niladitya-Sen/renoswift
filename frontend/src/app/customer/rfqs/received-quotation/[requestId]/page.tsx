@@ -24,6 +24,7 @@ type QuoteDetailType = {
     quotation: string;
     isPaid: boolean;
     isFullyPaid: boolean;
+    amount: number;
 };
 
 async function getQuoteDetails(quoteId: string): Promise<QuoteDetailType> {
@@ -127,7 +128,7 @@ export default async function ReceivedQuotationDetails({ params: { requestId } }
                 {quote.isPaid && (
                     <CustomerPaymentButton
                         title='Confirm Order & Pay'
-                        amount={10000}
+                        amount={quote.amount}
                         quoteId={quote.quoteId}
                         phase='order'
                         disabled={quote.isFullyPaid}

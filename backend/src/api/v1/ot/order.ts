@@ -28,7 +28,7 @@ order.get("/", (req: OperationsTeamRequest, res) => {
 
     const offset = (pageNo - 1) * limit;
 
-    const sql = 'SELECT o.id, o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o ORDER BY o.createdDate DESC LIMIT ? OFFSET ?';
+    const sql = 'SELECT o.id, o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o WHERE o.isDeleted = FALSE ORDER BY o.createdDate DESC LIMIT ? OFFSET ?';
 
     db.query(sql, [limit, offset], (err, result) => {
         if (err) {
@@ -96,7 +96,7 @@ order.get("/:orderId",
     (req: OperationsTeamRequest, res) => {
         const orderId = req.params.orderId;
 
-        const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o WHERE o.orderId = ?';
+        const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o WHERE o.orderId = ? AND o.isDeleted = FALSE';
 
         db.query(sql, [orderId], (err, result) => {
             if (err) {
@@ -176,6 +176,89 @@ order.post("/schedule-status/:orderId",
     }
 );
 
+order.put("/schedule-status/:orderId",
+    param("orderId").notEmpty().withMessage("Order ID is required"),
+    (req: OperationsTeamRequest, res) => {
+        const { status, date } = req.body;
+        const orderId = req.params.orderId;
+
+        db.beginTransaction(async (err) => {
+            if (err) {
+                db.rollback((err) => {
+                    console.error(err);
+                });
+                console.error(err);
+                res.status(500).json({ message: "Internal server error" });
+                return;
+            }
+
+            db.query('INSERT INTO OrderStatus (orderId, status, date) VALUES (?, ?, ?)', [orderId, status, date], (err, result) => {
+                if (err) {
+                    db.rollback((err) => {
+                        console.error(err);
+                    });
+                    console.log(err);
+                    res.status(500).json({ message: "Internal server error" });
+                    return;
+                }
+
+                db.commit((err) => {
+                    if (err) {
+                        db.rollback((err) => {
+                            console.error(err);
+                        });
+                        console.error(err);
+                        res.status(500).json({ message: "Internal server error" });
+                        return;
+                    }
+
+                    res.status(200).json({ message: "Status added successfully" });
+                });
+            });
+        });
+    }
+);
+
+order.delete("/schedule-status/:orderId/:statusId",(req: OperationsTeamRequest, res) => {
+    const orderId = req.params.orderId;
+    const statusId = req.params.statusId;
+
+    db.beginTransaction((err) => {
+        if (err) {
+            db.rollback((err) => {
+                console.error(err);
+            });
+            console.error(err);
+            res.status(500).json({ message: "Internal server error" });
+            return;
+        }
+
+        db.query('UPDATE OrderStatus SET isDeleted = TRUE WHERE orderId = ? AND id = ?', [orderId, statusId], (err, result) => {
+            if (err) {
+                db.rollback((err) => {
+                    console.error(err);
+                });
+                console.log(err);
+                res.status(500).json({ message: "Internal server error" });
+                return;
+            }
+
+            db.commit((err) => {
+                if (err) {
+                    db.rollback((err) => {
+                        console.error(err);
+                    });
+                    console.error(err);
+                    res.status(500).json({ message: "Internal server error" });
+                    return;
+                }
+
+                res.status(200).json({ message: "Status deleted successfully" });
+            });
+        });
+    });
+});
+
 order.get("/track-status/:orderId",
     param("orderId").notEmpty().withMessage("Order ID is required"),
     (req: OperationsTeamRequest, res) => {
@@ -187,7 +270,7 @@ order.get("/track-status/:orderId",
 
         const orderId = req.params.orderId;
 
-        const sql = 'SELECT id, status, date, isCompleted FROM OrderStatus WHERE orderId = ? ORDER BY date ASC';
+        const sql = 'SELECT id, status, date, isCompleted FROM OrderStatus WHERE orderId = ? AND isDeleted = FALSE ORDER BY date ASC';
         const values = [orderId];
 
         db.query(sql, values, (err, result) => {
@@ -202,13 +285,17 @@ order.get("/track-status/:orderId",
 );
 
 order.get("/latest-incomplete-status/:orderId", (req: OperationsTeamRequest, res) => {
-    const sql = "SELECT id as statusId, status FROM OrderStatus WHERE orderId = ? AND isCompleted = FALSE ORDER BY date ASC LIMIT 1";
+    const sql = "SELECT id as statusId, status FROM OrderStatus WHERE orderId = ? AND isCompleted = FALSE AND isDeleted = FALSE ORDER BY date ASC LIMIT 1";
     const values = [req.params.orderId];
 
     db.query(sql, values, (err, result) => {
         if (err) {
             console.log(err);
             return res.status(500).json({ message: "Internal server error" });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Status cannot be updated as the schedule is not yet created." });
         }
 
         res.status(200).json(result[0]);

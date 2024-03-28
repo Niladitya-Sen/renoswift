@@ -176,6 +176,17 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
                     <p className='font-semibold'>Delivery Timeline</p>
                     <Input type="text" id="timeline" name="timeline" className='w-full border p-2 rounded-sm mt-1' />
                 </label>
+                <label htmlFor="amount">
+                    <p className='font-semibold'>Total Amount</p>
+                    <Input type="text"
+                        id="amount"
+                        name="amount"
+                        className='w-full border p-2 rounded-sm mt-1'
+                        placeholder="Total amount for the service"
+                        pattern='[0-9]+'
+                        inputMode='numeric'
+                    />
+                </label>
                 <label htmlFor="teamRemarks" className="col-span-full">
                     <p className='font-semibold'>Remarks From Team</p>
                     <Input type="text" id="teamRemarks" name="teamRemarks" className='w-full border p-2 rounded-sm mt-1' />

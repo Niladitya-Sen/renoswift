@@ -13,10 +13,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { useCookies } from "@/hooks/useCookies";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
-import React, { useRef, useState } from 'react';
-import { MdDelete } from "react-icons/md";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from 'react';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 
 type StatusType = {
     date?: Date;
@@ -31,6 +31,26 @@ export default function OperationsTeamStatusSchedulerDialog({ trigger, orderId }
     const [loading, setLoading] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
     const router = useRouter();
+    const [statusPresent, setStatusPresent] = useState(false);
+
+    useEffect(() => {
+        async function getStatus() {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/order/track-status/${orderId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies?.get('otToken')}`
+                },
+                cache: 'no-store'
+            });
+            const data = await response.json();
+            setData(data);
+            if (data.length > 0) {
+                setStatusPresent(true);
+            }
+        }
+        getStatus();
+    }, [dialogOpen]);
 
     function deleteStatus(index: number) {
         setData(data.filter((_, i) => i !== index));
@@ -68,7 +88,7 @@ export default function OperationsTeamStatusSchedulerDialog({ trigger, orderId }
         try {
             setLoading(true);
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/order/schedule-status/${orderId}`, {
-                method: 'POST',
+                method: statusPresent ? 'PUT' : 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${cookies?.get('otToken')}`
@@ -84,7 +104,7 @@ export default function OperationsTeamStatusSchedulerDialog({ trigger, orderId }
                     description: result.message,
                 });
                 setDialogOpen(false);
-                router.refresh();                
+                router.refresh();
             } else {
                 toast({
                     title: "Error",
@@ -106,7 +126,9 @@ export default function OperationsTeamStatusSchedulerDialog({ trigger, orderId }
 
     return (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
+            <DialogTrigger className={cn({
+                "hidden": statusPresent
+            })} asChild>
                 {trigger}
             </DialogTrigger>
             <DialogContent>

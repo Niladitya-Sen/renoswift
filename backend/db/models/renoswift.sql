@@ -299,7 +299,11 @@ DBTimeStamp datetime default NOW() not null,
 foreign key(quoteId) references Quote(quoteId)
 );
 
+ALTER TABLE QuoteReply MODIFY COLUMN amount double;
+
 SELECT * FROM QuoteReply;
+
+UPDATE QuoteReply set amount = 10000 WHERE amount = 0;
 
 TRUNCATE table QuoteReply;
 

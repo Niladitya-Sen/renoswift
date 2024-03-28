@@ -173,7 +173,7 @@ quotation.get("/received", (req: UserRequest, res) => {
 quotation.get("/received/:quoteId", (req: UserRequest, res) => {
     const quoteId = req.params.quoteId;
 
-    const sql = "SELECT quoteId, designPlan, quotation, timeline, teamRemarks, customerRemarks, createdDate FROM QuoteReply WHERE quoteId = ?";
+    const sql = "SELECT quoteId, designPlan, quotation, timeline, teamRemarks, customerRemarks, createdDate, amount FROM QuoteReply WHERE quoteId = ?";
     const values = [quoteId];
 
     db.query(sql, values, (err, result) => {

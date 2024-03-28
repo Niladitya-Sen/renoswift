@@ -21,18 +21,38 @@ export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: R
     const router = useRouter();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [status, setStatus] = useState<{ status: string, statusId: number }>();
+    const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
         async function getLatestIncompleteStatus() {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/order/latest-incomplete-status/${orderId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${cookies?.get('otToken')}`
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/order/latest-incomplete-status/${orderId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${cookies?.get('otToken')}`
+                    }
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    setStatus(data);
+                    setDisabled(false);
+                } else {
+                    toast({
+                        title: 'Error',
+                        description: data.message,
+                        variant: 'destructive',
+                    });
+                    setDisabled(true);
                 }
-            });
-            const data = await response.json();
-            setStatus(data);
+            } catch (error) {
+                console.error(error);
+                toast({
+                    title: 'Error',
+                    description: 'An error occurred while fetching status',
+                    variant: 'destructive',
+                });
+            }
         }
 
         if (dialogOpen) {
@@ -114,7 +134,7 @@ export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: R
                         <Button type="reset" size={'lg'} variant={'outline'} onClick={() => {
                             setDialogOpen(false);
                         }}>Cancel</Button>
-                        <Button size={'lg'} type="submit">Update</Button>
+                        <Button disabled={disabled} size={'lg'} type="submit">Update</Button>
                     </div>
                 </form>
             </DialogContent>

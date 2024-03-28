@@ -59,7 +59,7 @@ export function OperationsTeamSidebarNavLinks({ isOpen, setIsOpen }: Readonly<{ 
                 onOpenChange={setCollapsibleOpen}
                 className={cn('hover:bg-black/20 transition-all h-[4rem] duration-200 overflow-hidden min-w-[15rem]', {
                     'bg-primary hover:bg-primary/80': pathname === '/ot' || pathname.includes('/ot/rfq') || pathname.includes('/ot/send-quotation') || pathname.includes('/ot/pending'),
-                    'h-[12rem]': collapsibleOpen
+                    'h-[15rem]': collapsibleOpen
                 })}
             >
                 <CollapsibleTrigger className={cn('p-5 hover:no-underline w-full')} onClick={() => { setIsOpen(true) }}>

@@ -11,7 +11,7 @@
   <Connection>
     <ConnectionModel>
       <PropertyValue Name="Database">59f90733-4d68-4fdf-82a7-f0fcbf5460aa</PropertyValue>
-      <PropertyValue Name="Id">1c8c2a4a-a285-4e4c-ade2-a8549ca8b799</PropertyValue>
+      <PropertyValue Name="Id">17ea16bd-fc27-4988-8b31-75b19c419ccc</PropertyValue>
       <PropertyValue Name="ConnectionString" xml:space="preserve">User Id=RenoSwiftAppUsr;Host=103.145.51.250;Database=renoswiftappdb;Character Set=utf8</PropertyValue>
     </ConnectionModel>
     <Database>renoswiftappdb</Database>
@@ -22,5 +22,7 @@
       <Data />
     </View>
     <View Name="Data" Visible="True" />
+    <View Name="Profiler" Visible="False" />
+    <View Name="PivotGrid" Visible="False" />
   </Views>
 </Document>

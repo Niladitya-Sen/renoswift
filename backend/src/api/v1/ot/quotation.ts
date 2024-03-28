@@ -25,7 +25,7 @@ const quotation = Router();
 quotation.get("/send-quotation/:quoteId", param('quoteId').notEmpty(), (req: OperationsTeamRequest, res) => {
     const quoteId = req.params.quoteId;
 
-    const sql = "SELECT q.quoteId, q.createdDate, q.name, q.email, q.contactNumber, q.propertyId, r.customerRemarks, r.teamRemarks, r.timeline, r.designPlan, r.quotation FROM Quote as q INNER JOIN QuoteReply as r WHERE q.quoteId = ? AND q.quoteId = r.quoteId"
+    const sql = "SELECT q.quoteId, q.createdDate, q.name, q.email, q.contactNumber, q.propertyId, r.customerRemarks, r.teamRemarks, r.timeline, r.designPlan, r.quotation, r.amount FROM Quote as q INNER JOIN QuoteReply as r WHERE q.quoteId = ? AND q.quoteId = r.quoteId"
 
     db.query(sql, [quoteId], (err, result) => {
         if (err) {
@@ -133,6 +133,7 @@ quotation.post("/reply/:quoteId",
     body("customerRemarks").isString().isLength({ min: 0, max: 255 }),
     body("teamRemarks").isString().isLength({ min: 0, max: 255 }),
     body("timeline").isString().isLength({ min: 0, max: 255 }),
+    body("amount").isNumeric().withMessage("Amount should be a number"),
     (req: OperationsTeamRequest, res) => {
 
         const errors = validationResult(req);
@@ -143,7 +144,7 @@ quotation.post("/reply/:quoteId",
         }
 
         const quoteId = req.params.quoteId;
-        const { customerRemarks, teamRemarks, timeline } = req.body;
+        const { customerRemarks, teamRemarks, timeline, amount } = req.body;
 
         let filePaths: {
             designPlan: string;
@@ -166,8 +167,8 @@ quotation.post("/reply/:quoteId",
             return;
         }
 
-        const sql = 'INSERT INTO QuoteReply (quoteId, customerRemarks, teamRemarks, timeline, designPlan, quotation) VALUES (?, ?, ?, ?, ?, ?)';
-        const values = [quoteId, customerRemarks, teamRemarks, timeline, filePaths.designPlan, filePaths.quotation];
+        const sql = 'INSERT INTO QuoteReply (quoteId, customerRemarks, teamRemarks, timeline, designPlan, quotation, amount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        const values = [quoteId, customerRemarks, teamRemarks, timeline, filePaths.designPlan, filePaths.quotation, amount];
 
         db.beginTransaction((err) => {
             if (err) {
