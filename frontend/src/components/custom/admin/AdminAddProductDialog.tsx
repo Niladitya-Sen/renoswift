@@ -31,7 +31,7 @@ export default function AdminAddProductDialog({ trigger }: Readonly<{ trigger: R
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(Object.fromEntries(new FormData(e.currentTarget).entries()));
+        
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/products`, {
                 method: 'POST',

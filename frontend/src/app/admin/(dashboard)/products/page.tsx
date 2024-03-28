@@ -48,7 +48,7 @@ export default async function Products() {
                 <TableBody>
                     {
                         products.map(product => (
-                            <TableRow>
+                            <TableRow key={product.productId}>
                                 <TableCell className="font-medium">{product.productId}</TableCell>
                                 <TableCell>{product.name}</TableCell>
                                 <TableCell>{product.category.charAt(0).toUpperCase() + product.category.slice(1)}</TableCell>

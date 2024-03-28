@@ -12,15 +12,15 @@ type BrandType = {
 type PropType = {
     defaultValue?: number[],
     readOnly?: boolean,
-    name: string,
-    id: string,
+    name?: string,
+    id?: string,
     placeholder?: string,
     required?: boolean,
     readonly?: boolean,
     isMulti?: boolean,
 }
 
-export default function AdminBrandSelect({ defaultValue, readOnly, name, id, isMulti, placeholder, readonly, required }: PropType) {
+export default function AdminBrandSelect({ defaultValue, readOnly, name, id, isMulti, placeholder }: Readonly<PropType>) {
     const [brands, setBrands] = useState<BrandType[]>([]);
     const cookies = useCookies();
     const [selectedBrands, setSelectedBrands] = useState<any[]>([]);

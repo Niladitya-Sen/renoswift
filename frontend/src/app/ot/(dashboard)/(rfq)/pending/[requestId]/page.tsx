@@ -68,7 +68,6 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(Object.fromEntries(new FormData(e.currentTarget).entries()));
 
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/quotation/reply/${requestId}`, {

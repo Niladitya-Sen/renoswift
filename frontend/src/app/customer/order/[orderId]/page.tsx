@@ -46,8 +46,6 @@ async function getOrderDetails(orderId: string): Promise<OrderDetailsType> {
 export default async function OrderDetails({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
     const order = await getOrderDetails(orderId);
 
-    console.log(order);
-
     return (
         <section>
             <Link href={"/customer/order"} className={cn('ml-auto block w-fit')}>

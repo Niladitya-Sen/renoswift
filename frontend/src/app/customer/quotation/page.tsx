@@ -21,7 +21,6 @@ export default function Quotation() {
         setLoading(true);
         const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
 
-        console.log(bodyContent);
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/quotation`, {
                 method: 'POST',

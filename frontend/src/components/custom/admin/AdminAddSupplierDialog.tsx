@@ -27,7 +27,6 @@ export default function AdminAddSupplierDialog({ trigger }: { trigger: React.Rea
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(Object.fromEntries(new FormData(e.currentTarget).entries()));
 
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/suppliers`, {

@@ -56,9 +56,7 @@ export default function ProductDetails({ params: { productId } }: Readonly<{ par
 
     async function updateProductDetails(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-
-        console.log(Object.fromEntries(new FormData(e.currentTarget).entries()));
-        
+                
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/products/${productId}`, {
                 method: 'PUT',

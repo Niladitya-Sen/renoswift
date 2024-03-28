@@ -24,7 +24,6 @@ export default function AdminLogin() {
             setLoading(true);
             const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
 
-            console.log(bodyContent);
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -52,7 +51,7 @@ export default function AdminLogin() {
                     variant: 'destructive'
                 });
             }
-            console.log(data);
+            
         } catch (error) {
             setLoading(false);
             console.log('Error logging in:', error);

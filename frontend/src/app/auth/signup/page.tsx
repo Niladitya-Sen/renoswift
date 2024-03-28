@@ -43,7 +43,6 @@ export default function Signup() {
         setLoading(true);
         const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
         bodyContent.otp = otp.join('');
-        console.log(bodyContent);
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
             method: 'POST',
             headers: {
@@ -71,7 +70,6 @@ export default function Signup() {
                 variant: 'destructive'
             });
         }
-        console.log(data);
     };
 
     const sendOTP = async () => {
@@ -94,7 +92,6 @@ export default function Signup() {
         });
         const data = await response.json();
         setLoading(false);
-        console.log(data);
         if (response.ok) {
             toast({
                 description: data.message,

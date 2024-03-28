@@ -28,7 +28,6 @@ export default function CustomerConnectWithTeam({ trigger }: { trigger: React.Re
                 <form
                     onSubmit={async (e) => {
                         e.preventDefault();
-                        console.log('submitted');
                         setDialogOpen(false);
                     }}
                     onReset={() => {

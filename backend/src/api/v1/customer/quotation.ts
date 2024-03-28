@@ -18,7 +18,6 @@ quotation.post("/",
     (req: UserRequest, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            console.log(errors.array());
             return res.status(400).json({ errors: errors.array() });
         }
 
@@ -90,7 +89,6 @@ quotation.get("/raised",
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            console.log(errors.array());
             return res.status(400).json({ errors: errors.array().map(err => err.msg) });
         }
 
@@ -191,8 +189,6 @@ quotation.get("/received/:quoteId", (req: UserRequest, res) => {
                 console.log(err);
                 return res.status(500).json({ message: "Internal server error" });
             }
-
-            console.log(result_);
 
             switch (result_.length) {
                 case 0: {

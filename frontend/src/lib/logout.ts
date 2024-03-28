@@ -1,11 +1,7 @@
-import { useCookies } from "@/hooks/useCookies";
-
 export default function logout() {
-    const cookies = useCookies();
-
-    cookies?.remove("token");
-    cookies?.remove("adminToken");
-    cookies?.remove("otToken");
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "adminToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "otToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
     if (window.location.pathname === "/") {
         window.location.reload();

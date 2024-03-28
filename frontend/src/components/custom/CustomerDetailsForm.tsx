@@ -33,7 +33,6 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
         e.preventDefault();
         const formData = Object.fromEntries(new FormData(e.currentTarget).entries());
         const bodyContents: { [key: string]: any } = {};
-        console.log(formData)
         setLoading(true);
 
         for (const [key, value] of Object.entries(formData)) {
@@ -53,8 +52,6 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
                 bodyContents[key] = value;
             }
         }
-
-        console.log(bodyContents);
 
         let count = 0;
 
@@ -101,8 +98,6 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
             });
 
             const data = await response.json();
-
-            console.log(data);
 
             if (response.ok) {
                 toast({

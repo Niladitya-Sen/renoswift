@@ -45,7 +45,6 @@ export default function ProfileDetails() {
                     },
                 });
                 const data = await response.json();
-                console.log(data);
                 setUser(data);
                 setIsPageLoading(false);
             } catch (err) {

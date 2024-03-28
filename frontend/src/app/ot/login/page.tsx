@@ -43,7 +43,6 @@ export default function Login() {
             const bodyContent = Object.fromEntries(new FormData(e.currentTarget));
             bodyContent.otp = otp.join('');
 
-            console.log(bodyContent);
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -71,7 +70,6 @@ export default function Login() {
                     variant: 'destructive'
                 });
             }
-            console.log(data);
         } catch (error) {
             setLoading(false);
             console.log('Error logging in:', error);
@@ -103,7 +101,6 @@ export default function Login() {
             });
             const data = await response.json();
             setLoading(false);
-            console.log(data);
             toast({
                 description: data.message,
             });

@@ -28,7 +28,6 @@ export default function AdminConnectWithTeam({ trigger }: { trigger: React.React
                 <form
                     onSubmit={async (e) => {
                         e.preventDefault();
-                        console.log('submitted');
                         setDialogOpen(false);
                     }}
                     onReset={() => {
