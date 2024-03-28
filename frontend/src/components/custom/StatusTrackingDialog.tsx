@@ -10,19 +10,11 @@ import {
 import { useCookies } from "@/hooks/useCookies";
 import { cn } from "@/lib/utils";
 import dayjs from "dayjs";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { useToast } from "../ui/use-toast";
 
@@ -149,7 +141,9 @@ export default function StatusTrackingDialog({ trigger, orderId, role }: Readonl
                             Plan is not scheduled yet.
                         </p>
                     ) : (
-                        <div className="mt-4 grid grid-cols-[1fr_0.3fr_1fr_0.3fr_0.3fr] gap-x-4 mx-auto max-h-[calc(100svh-10rem)] overflow-y-auto">
+                        <div className={cn("mt-4 grid grid-cols-[1fr_0.3fr_1fr] gap-x-4 mx-auto max-h-[calc(100svh-10rem)] overflow-y-auto", {
+                            "grid-cols-[1fr_0.3fr_1fr_0.3fr_0.3fr]": role === "ot"
+                        })}>
                             {
                                 data.map((item, index) => (
                                     <React.Fragment key={item.id}>
