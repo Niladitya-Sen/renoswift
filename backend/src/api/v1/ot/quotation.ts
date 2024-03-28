@@ -69,7 +69,7 @@ quotation.get("/:type",
             pageNo = 1;
         }
 
-        const sql = 'SELECT quoteId, createdDate, name, email, contactNumber FROM Quote WHERE status = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+        const sql = 'SELECT quoteId, createdDate, name, email, contactNumber FROM Quote WHERE status = ? ORDER BY createdBy DESC ';
         const values = [type, limit, (pageNo - 1) * limit];
 
         db.query(sql, values, (err, result) => {

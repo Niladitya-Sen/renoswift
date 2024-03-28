@@ -10,7 +10,7 @@ users.get('/customers', (req: AdminRequest, res) => {
     const limitValue = limit ? parseInt(limit as string) : 10;
     const pageNoValue = pageNo ? parseInt(pageNo as string) : 1;
 
-    const sql = `SELECT u.id, u.name, u.email, u.phoneNumber, u.isActive FROM User as u INNER JOIN UserRole as ur WHERE u.role = ur.id AND ur.role = 'Customer' AND u.isDeleted = false LIMIT ? OFFSET ?`;
+    const sql = `SELECT u.id, u.name, u.email, u.phoneNumber, u.isActive FROM User as u INNER JOIN UserRole as ur WHERE u.role = ur.id AND ur.role = 'Customer' AND u.isDeleted = false `;
     const values = [limitValue, (pageNoValue - 1) * limitValue];
 
     db.query(sql, values, (err, results) => {
@@ -65,7 +65,7 @@ users.get('/operations-team', (req: AdminRequest, res) => {
     const limitValue = limit ? parseInt(limit as string) : 10;
     const pageNoValue = pageNo ? parseInt(pageNo as string) : 1;
 
-    const sql = `SELECT id, name, email, phoneNumber, isActive FROM OperationsTeam WHERE isDeleted = false LIMIT ? OFFSET ?`;
+    const sql = `SELECT id, name, email, phoneNumber, isActive FROM OperationsTeam WHERE isDeleted = false `;
     const values = [limitValue, (pageNoValue - 1) * limitValue];
 
     db.query(sql, values, (err, results) => {

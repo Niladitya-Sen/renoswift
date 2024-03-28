@@ -12,7 +12,7 @@ order.get("/", (req: UserRequest, res) => {
     const offset = (pageNo - 1) * limit;
 
 
-    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o WHERE o.userId = ? ORDER BY o.createdDate DESC LIMIT ? OFFSET ?';
+    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o WHERE o.userId = ? ORDER BY o.createdDate DESC ';
 
     db.query(sql, [req.userId, limit, offset], (err, result) => {
         if (err) {

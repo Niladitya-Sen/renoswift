@@ -16,7 +16,7 @@ suppliers.get("/", (req: AdminRequest, res) => {
         return;
     }
 
-    db.query('SELECT supplierId, name, email, phoneNumber, isActive FROM ProductSuppliers ORDER BY createdDate DESC LIMIT ? OFFSET ?', [limitValue, offsetValue], (err, result) => {
+    db.query('SELECT supplierId, name, email, phoneNumber, isActive FROM ProductSuppliers ORDER BY createdDate DESC ', [limitValue, offsetValue], (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).json({ message: "Internal Server Error" });

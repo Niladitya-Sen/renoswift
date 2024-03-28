@@ -22,7 +22,7 @@ quotation.get("/raised",
             return res.status(400).json({ message: "Invalid query parameters" });
         }
 
-        const sql = 'SELECT quoteId, createdDate, name, email, contactNumber FROM Quote WHERE status = \'pending\' ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+        const sql = 'SELECT quoteId, createdDate, name, email, contactNumber FROM Quote WHERE status = \'pending\' ORDER BY createdBy DESC ';
         const values = [limit, (pageNo - 1) * limit];
 
         db.query(sql, values, (err, result) => {
@@ -102,7 +102,7 @@ quotation.get("/send-quotation",
             return res.status(400).json({ message: "Invalid query parameters" });
         }
 
-        const sql = 'SELECT quoteId, createdDate, name, email, contactNumber FROM Quote WHERE status = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+        const sql = 'SELECT quoteId, createdDate, name, email, contactNumber FROM Quote WHERE status = ? ORDER BY createdBy DESC ';
         const values = ['sent', limitValue, (pageNo - 1) * limitValue];
 
         db.query(sql, values, (err, result) => {

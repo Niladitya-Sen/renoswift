@@ -11,7 +11,7 @@ order.get("/", (req: AdminRequest, res) => {
 
     const offset = (pageNo - 1) * limit;
 
-    const sql = 'SELECT o.id, o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o ORDER BY o.createdDate DESC LIMIT ? OFFSET ?';
+    const sql = 'SELECT o.id, o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as totalAmount FROM Order_ as o ORDER BY o.createdDate DESC ';
 
     db.query(sql, [limit, offset], (err, result) => {
         if (err) {

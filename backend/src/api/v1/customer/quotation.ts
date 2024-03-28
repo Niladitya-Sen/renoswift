@@ -103,7 +103,7 @@ quotation.get("/raised",
             pageNo = 1;
         }
 
-        const sql = 'SELECT quoteId, createdDate FROM Quote WHERE userId = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+        const sql = 'SELECT quoteId, createdDate FROM Quote WHERE userId = ? ORDER BY createdBy DESC ';
         const values = [req.userId, limit, (pageNo - 1) * limit];
 
         db.query(sql, values, (err, result) => {
@@ -154,7 +154,7 @@ quotation.get("/received", (req: UserRequest, res) => {
     const limit = limitValue < 1 ? 10 : limitValue;
     const pageNo = pageNoValue < 1 ? 1 : pageNoValue;
 
-    const sql = 'SELECT quoteId, createdDate FROM Quote WHERE status = \'sent\' AND userId = ? ORDER BY createdBy DESC LIMIT ? OFFSET ?';
+    const sql = 'SELECT quoteId, createdDate FROM Quote WHERE status = \'sent\' AND userId = ? ORDER BY createdBy DESC ';
 
     const values = [req.userId, limit, (pageNo - 1) * limit];
 

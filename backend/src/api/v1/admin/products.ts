@@ -67,7 +67,7 @@ products.get("/", (req: AdminRequest, res) => {
         return;
     }
 
-    const sql = 'SELECT p.productId, p.name, (SELECT t.type FROM ProductType as t WHERE t.id = p.category) as category, (SELECT b.name FROM Brand as b WHERE b.id = p.brandId) as brand, p.isActive FROM Products as p WHERE isDeleted = FALSE ORDER BY createdDate DESC LIMIT ? OFFSET ?';
+    const sql = 'SELECT p.productId, p.name, (SELECT t.type FROM ProductType as t WHERE t.id = p.category) as category, (SELECT b.name FROM Brand as b WHERE b.id = p.brandId) as brand, p.isActive FROM Products as p WHERE isDeleted = FALSE ORDER BY createdDate DESC ';
     const values = [limitValue, offsetValue];
 
     db.query(sql, values, (err, result) => {
