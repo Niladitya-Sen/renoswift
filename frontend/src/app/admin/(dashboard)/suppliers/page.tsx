@@ -2,12 +2,37 @@ import AdminAddSupplierDialog from '@/components/custom/admin/AdminAddSupplierDi
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { FaEye } from "react-icons/fa";
 
-export default function Suppliers() {
+type SupplierType = {
+    supplierId: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    isActive: boolean;
+}
+
+async function getSuppliers(): Promise<SupplierType[]> {
+    const cookiesStore = cookies();
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/suppliers`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookiesStore.get('adminToken')?.value}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
+export default async function Suppliers() {
+    const suppliers = await getSuppliers();
+
     return (
-        <>            
+        <>
             <Table>
                 <TableHeader className={cn('bg-primary')}>
                     <TableRow>
@@ -21,17 +46,17 @@ export default function Suppliers() {
                 </TableHeader>
                 <TableBody>
                     {
-                        [1, 2, 3].map(e => (
-                            <TableRow key={e}>
-                                <TableCell className="font-medium">{"pdkfuh1256"}</TableCell>
-                                <TableCell>Rahul Sharma</TableCell>
-                                <TableCell>rahul@gmail.com</TableCell>
-                                <TableCell>7894567851</TableCell>
-                                <TableCell>Active</TableCell>
+                        suppliers.map(supplier => (
+                            <TableRow key={supplier.supplierId}>
+                                <TableCell className="font-medium">{supplier.supplierId}</TableCell>
+                                <TableCell>{supplier.name}</TableCell>
+                                <TableCell>{supplier.email}</TableCell>
+                                <TableCell>{supplier.phoneNumber}</TableCell>
+                                <TableCell>{supplier.isActive ? "Active" : "Inactive"}</TableCell>
                                 <TableCell>
-                                    <Link href={`/admin/suppliers/${"pdkfuh1256"}`} className='flex gap-4 items-center justify-end'>
+                                    <Link href={`/admin/suppliers/${supplier.supplierId}`} className='flex gap-4 items-center justify-end'>
                                         <Button variant={'ghost'} size={'icon'}>
-                                            <FaEye className='text-sky-500' />
+                                            <FaEye className='text-primary text-xl' />
                                         </Button>
                                     </Link>
                                 </TableCell>

@@ -65,7 +65,7 @@ order.get("/track-status/:orderId",
         const orderId = req.params.orderId;
         const userId = req.userId;
 
-        const sql = 'SELECT id, status, createdDate, isCompleted FROM OrderStatus WHERE orderId = ? ORDER BY createdDate ASC';
+        const sql = 'SELECT id, status, date, isCompleted FROM OrderStatus WHERE orderId = ? ORDER BY date ASC';
         const values = [orderId, userId];
 
         db.query(sql, values, (err, result) => {

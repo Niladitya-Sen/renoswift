@@ -38,6 +38,12 @@ export default function AdminLogin() {
                 toast({
                     description: 'Login successful!',
                 });
+                
+                // Remove all cookies
+                cookies?.remove('token');
+                cookies?.remove("adminToken");
+                cookies?.remove("otToken");
+                
                 cookies?.set('adminToken', data.token, 30);
                 router.push("/admin");
             } else {

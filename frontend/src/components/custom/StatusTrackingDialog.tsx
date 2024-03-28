@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 
 type StatusType = {
     id: number;
-    createdDate: string;
+    date: string;
     status: string;
     isCompleted: boolean;
 };
@@ -58,25 +58,33 @@ export default function StatusTrackingDialog({ trigger, orderId, role }: Readonl
                 <DialogHeader>
                     <DialogTitle>Track Progress</DialogTitle>
                 </DialogHeader>
-                <div className="mt-4 grid grid-cols-[1fr_0.3fr_1fr] gap-x-4 mx-auto max-h-[calc(100svh-10rem)] overflow-y-auto">
-                    {
-                        data.map((item, index) => (
-                            <React.Fragment key={item.id}>
-                                <p className="font-medium justify-self-end">{dayjs(item.createdDate).format("DD/MM/YYYY")}</p>
-                                <div className="flex flex-col items-center justify-center mx-auto h-[4rem]">
-                                    <div className={cn("aspect-square w-4 h-5 rounded-full bg-green-500", {
-                                        "bg-gray-300": !item.isCompleted
-                                    })} />
-                                    <div className={cn("h-full w-[2.5px] bg-green-500 rounded-full", {
-                                        "bg-gray-300": !item.isCompleted,
-                                        "invisible": index === data.length - 1
-                                    })} />
-                                </div>
-                                <p>{item.status}</p>
-                            </React.Fragment>
-                        ))
-                    }
-                </div>
+                {
+                    data.length === 0 ? (
+                        <p className="text-gray-500">
+                            Plan is not scheduled yet.
+                        </p>
+                    ) : (
+                        <div className="mt-4 grid grid-cols-[1fr_0.3fr_1fr] gap-x-4 mx-auto max-h-[calc(100svh-10rem)] overflow-y-auto">
+                            {
+                                data.map((item, index) => (
+                                    <React.Fragment key={item.id}>
+                                        <p className="font-medium justify-self-end">{dayjs(item.date).format("DD/MM/YYYY")}</p>
+                                        <div className="flex flex-col items-center justify-center mx-auto h-[4rem]">
+                                            <div className={cn("aspect-square w-4 h-5 rounded-full bg-green-500", {
+                                                "bg-gray-300": !item.isCompleted
+                                            })} />
+                                            <div className={cn("h-full w-[2.5px] bg-green-500 rounded-full", {
+                                                "bg-gray-300": !item.isCompleted,
+                                                "invisible": index === data.length - 1
+                                            })} />
+                                        </div>
+                                        <p>{item.status}</p>
+                                    </React.Fragment>
+                                ))
+                            }
+                        </div>
+                    )
+                }
             </DialogContent>
         </Dialog>
     )

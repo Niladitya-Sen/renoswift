@@ -1,15 +1,48 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import dayjs from 'dayjs';
+import { useCookies } from '@/hooks/useCookies';
+import AdminBrandSelect from '@/components/custom/admin/AdminBrandSelect';
+
+type SupplierType = {
+    supplierId: string,
+    name: string,
+    email: string,
+    phoneNumber: string,
+    isActive: boolean,
+    spoc: string,
+    createdDate: string,
+    yearsInOperation: string,
+    brands: { brandId: number }[],
+    address: string
+};
 
 export default function SupplierDetails({ params: { supplierId } }: Readonly<{ params: { supplierId: string } }>) {
     const [readOnly, setReadOnly] = useState(true);
+    const [supplier, setSupplier] = useState<SupplierType>();
+    const cookies = useCookies();
+
+    useEffect(() => {
+        async function getSupplier() {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/suppliers/${supplierId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies?.get('adminToken')}`
+                }
+            });
+            const data = await response.json();
+            setSupplier(data);
+        }
+        getSupplier();
+    }, [supplierId]);
 
     return (
         <div className='relative space-y-6'>
@@ -29,11 +62,11 @@ export default function SupplierDetails({ params: { supplierId } }: Readonly<{ p
                 </TableHeader>
                 <TableBody>
                     <TableRow>
-                        <TableCell className="font-medium">{supplierId}</TableCell>
-                        <TableCell>Rahul Sharma</TableCell>
-                        <TableCell>rahul@gmail.com</TableCell>
-                        <TableCell>7894567851</TableCell>
-                        <TableCell>Active</TableCell>
+                        <TableCell className="font-medium">{supplier?.supplierId}</TableCell>
+                        <TableCell>{supplier?.name}</TableCell>
+                        <TableCell>{supplier?.email}</TableCell>
+                        <TableCell>{supplier?.phoneNumber}</TableCell>
+                        <TableCell>{supplier?.isActive ? "Active" : "Inactive"}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>
@@ -41,23 +74,23 @@ export default function SupplierDetails({ params: { supplierId } }: Readonly<{ p
             <form className='grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8'>
                 <label htmlFor="spoc">
                     <p className='font-medium mb-1'>SPOC</p>
-                    <Input readOnly={readOnly} type="text" id="spoc" placeholder="SPOC" required />
+                    <Input readOnly={readOnly} value={supplier?.spoc} type="text" id="spoc" placeholder="SPOC" required />
                 </label>
                 <label htmlFor="date">
                     <p className='font-medium mb-1'>Date Joined</p>
-                    <Input readOnly={readOnly} type="date" id="date" placeholder="date" required />
+                    <Input readOnly={readOnly} value={dayjs(supplier?.createdDate).format("YYYY-MM-DD")} type="date" id="date" placeholder="date" required />
                 </label>
                 <label htmlFor="yearOperation">
                     <p className='font-medium mb-1'>Years in Operation</p>
-                    <Input readOnly={readOnly} type="text" id="yearOperation" placeholder="Years in Operation" required />
+                    <Input readOnly={readOnly} defaultValue={supplier?.yearsInOperation} type="text" id="yearOperation" placeholder="Years in Operation" required />
                 </label>
                 <label htmlFor="brandDealings" className='col-span-2'>
                     <p className='font-medium mb-1'>Brand Dealings</p>
-                    <Input readOnly={readOnly} type="text" id="yearOperatiobrandDealings" placeholder="Brand Dealings" required />
+                    <AdminBrandSelect defaultValue={supplier?.brands.map(e => e.brandId)} readOnly={readOnly} />
                 </label>
                 <label htmlFor="address" className='col-span-full'>
                     <p className='font-medium mb-1'>Address</p>
-                    <Textarea readOnly={readOnly} id="address" placeholder="Address" required rows={5} />
+                    <Textarea readOnly={readOnly} defaultValue={supplier?.address} id="address" placeholder="Address" required rows={5} />
                 </label>
             </form>
 

@@ -1,10 +1,36 @@
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
+import dayjs from 'dayjs';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { FaEye } from "react-icons/fa6";
 
-export default function Orders() {
+type OrderType = {
+    id: number;
+    orderId: string;
+    createdDate: string;
+    totalAmount: number;
+    status: string;
+};
+
+async function getOrders(): Promise<OrderType[]> {
+    const cookieStore = cookies();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/order`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookieStore.get('adminToken')?.value}`
+        },
+        cache: 'no-store'
+    });
+    const data = await response.json();
+    return data;
+}
+
+export default async function Orders() {
+    const orders = await getOrders();
+
     return (
         <Table>
             <TableHeader className={cn('bg-primary')}>
@@ -18,17 +44,21 @@ export default function Orders() {
             </TableHeader>
             <TableBody>
                 {
-                    [1, 2, 3].map(e => (
-                        <TableRow key={e}>
-                            <TableCell className="font-medium">RS012588</TableCell>
-                            <TableCell>21/02/24</TableCell>
-                            <TableCell>{(51200).toLocaleString('en-IN', {
-                                currency: 'INR',
-                                style: 'currency'
-                            })}</TableCell>
-                            <TableCell>Confirmed</TableCell>
+                    orders.map(order => (
+                        <TableRow key={order.id}>
+                            <TableCell className="font-medium">{order.orderId ?? "--"}</TableCell>
+                            <TableCell>{dayjs(order.createdDate).format("DD/MM/YYYY")}</TableCell>
                             <TableCell>
-                                <Link href={`/admin/orders/${"pdkfuh1256"}`} className='flex gap-4 items-center justify-end'>
+                                {
+                                    order.totalAmount.toLocaleString('en-IN', {
+                                        style: 'currency',
+                                        currency: 'INR'
+                                    })
+                                }
+                            </TableCell>
+                            <TableCell>{order.status}</TableCell>
+                            <TableCell>
+                                <Link href={`/admin/orders/${order.orderId}`} className='flex gap-4 items-center justify-end'>
                                     <Button variant={'ghost'} size={'icon'}>
                                         <FaEye className='text-primary text-xl' />
                                     </Button>

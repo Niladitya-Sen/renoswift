@@ -2,33 +2,50 @@
 
 import {
     Dialog,
-    DialogClose,
     DialogContent,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { useRef } from "react";
-import { Button } from "../../ui/button";
-import { useCookies } from "@/hooks/useCookies";
 import { useToast } from "@/components/ui/use-toast";
+import { useCookies } from "@/hooks/useCookies";
+import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Button } from "../../ui/button";
 
 export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: Readonly<{ trigger: React.ReactNode, orderId: string }>) {
-    const dialogCloseRef = useRef<HTMLButtonElement>(null);
     const cookies = useCookies();
     const { toast } = useToast();
     const router = useRouter();
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [status, setStatus] = useState<{ status: string, statusId: number }>();
+
+    useEffect(() => {
+        async function getLatestIncompleteStatus() {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/order/latest-incomplete-status/${orderId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies?.get('otToken')}`
+                }
+            });
+            const data = await response.json();
+            setStatus(data);
+        }
+
+        if (dialogOpen) {
+            getLatestIncompleteStatus();
+        }
+    }, [dialogOpen, orderId]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(Object.fromEntries(new FormData(e.currentTarget)));
 
         const formData = new FormData(e.currentTarget);
         formData.append('orderId', orderId);
+        formData.append('statusId', status?.statusId + "");
 
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/order/update-status`, {
@@ -46,7 +63,7 @@ export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: R
                     title: 'Success',
                     description: data.message,
                 });
-                dialogCloseRef.current?.click();
+                setDialogOpen(false);
                 router.refresh();
             } else {
                 toast({
@@ -67,7 +84,7 @@ export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: R
     }
 
     return (
-        <Dialog>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent className={cn('max-w-screen-md')}>
                 <DialogHeader>
@@ -77,7 +94,7 @@ export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: R
                     <div className="flex items-center gap-4 w-full">
                         <label htmlFor="currentStatus" className="w-full">
                             <p className='font-medium'>Current Status</p>
-                            <Input type="text" id="currentStatus" name="currentStatus" className={cn('w-full border p-3 h-12 rounded-sm mt-1')} />
+                            <Input type="text" id="currentStatus" name="currentStatus" className={cn('w-full border p-3 h-12 rounded-sm mt-1')} value={status?.status} />
                         </label>
                         <label htmlFor="image" className="w-full">
                             <p className='font-semibold'>Updated Photos</p>
@@ -95,15 +112,12 @@ export default function OperationsTeamUpdateStatusDialog({ trigger, orderId }: R
                     </label>
                     <div className="flex items-center justify-center gap-4">
                         <Button type="reset" size={'lg'} variant={'outline'} onClick={() => {
-                            dialogCloseRef.current?.click();
+                            setDialogOpen(false);
                         }}>Cancel</Button>
                         <Button size={'lg'} type="submit">Update</Button>
                     </div>
                 </form>
             </DialogContent>
-            <DialogFooter>
-                <DialogClose ref={dialogCloseRef} />
-            </DialogFooter>
         </Dialog>
     )
 }

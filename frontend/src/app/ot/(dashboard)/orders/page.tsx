@@ -38,8 +38,6 @@ async function getOrders(): Promise<OrderType[]> {
 export default async function Orders() {
     const orders = await getOrders();
 
-    console.log(orders);
-
     return (
         <Table>
             <TableHeader className={cn('bg-primary')}>

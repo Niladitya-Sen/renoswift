@@ -92,7 +92,7 @@ order.put("/generate",
 );
 
 order.get("/:orderId",
-    body("orderId").notEmpty().withMessage("Order ID is required"),
+    param("orderId").notEmpty().withMessage("Order ID is required"),
     (req: OperationsTeamRequest, res) => {
         const orderId = req.params.orderId;
 
@@ -120,6 +120,62 @@ order.get("/:orderId",
     }
 );
 
+order.post("/schedule-status/:orderId",
+    param("orderId").notEmpty().withMessage("Order ID is required"),
+    (req: OperationsTeamRequest, res) => {
+        const { status } = req.body;
+        const orderId = req.params.orderId;
+
+        db.beginTransaction(async (err) => {
+            if (err) {
+                db.rollback((err) => {
+                    console.error(err);
+                });
+                console.error(err);
+                res.status(500).json({ message: "Internal server error" });
+                return;
+            }
+
+            try {
+                for (const item of status) {
+                    await new Promise((resolve, reject) => {
+                        const sql = 'INSERT INTO OrderStatus (orderId, status, date) VALUES (?, ?, ?)';
+                        const values = [orderId, item.status, item.date];
+
+                        db.query(sql, values, (err, result) => {
+                            if (err) {
+                                db.rollback((err) => {
+                                    console.error(err);
+                                });
+                                reject(err);
+                            }
+
+                            resolve(result);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+                res.status(500).json({ message: "Internal server error" });
+                return;
+            }
+
+            db.commit((err) => {
+                if (err) {
+                    db.rollback((err) => {
+                        console.error(err);
+                    });
+                    console.error(err);
+                    res.status(500).json({ message: "Internal server error" });
+                    return;
+                }
+
+                res.status(200).json({ message: "Schedule added successfully" });
+            });
+        });
+    }
+);
+
 order.get("/track-status/:orderId",
     param("orderId").notEmpty().withMessage("Order ID is required"),
     (req: OperationsTeamRequest, res) => {
@@ -131,7 +187,7 @@ order.get("/track-status/:orderId",
 
         const orderId = req.params.orderId;
 
-        const sql = 'SELECT id, status, createdDate, isCompleted FROM OrderStatus WHERE orderId = ? ORDER BY createdDate ASC';
+        const sql = 'SELECT id, status, date, isCompleted FROM OrderStatus WHERE orderId = ? ORDER BY date ASC';
         const values = [orderId];
 
         db.query(sql, values, (err, result) => {
@@ -145,11 +201,26 @@ order.get("/track-status/:orderId",
     }
 );
 
+order.get("/latest-incomplete-status/:orderId", (req: OperationsTeamRequest, res) => {
+    const sql = "SELECT id as statusId, status FROM OrderStatus WHERE orderId = ? AND isCompleted = FALSE ORDER BY date ASC LIMIT 1";
+    const values = [req.params.orderId];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Internal server error" });
+        }
+
+        res.status(200).json(result[0]);
+    });
+});
+
 order.post("/update-status",
     upload.single("image"),
     body("orderId").notEmpty().withMessage("Order ID is required"),
     body("currentStatus").notEmpty().withMessage("Status is required"),
     body("remarks").notEmpty().withMessage("Remarks are required"),
+    body("statusId").notEmpty().withMessage("Status ID is required"),
     (req: OperationsTeamRequest, res) => {
         const errors = validationResult(req);
 
@@ -161,7 +232,7 @@ order.post("/update-status",
             return res.status(400).json({ message: "Image is required" });
         }
 
-        const { orderId, currentStatus, remarks } = req.body;
+        const { remarks, statusId } = req.body;
 
         db.beginTransaction((err) => {
             if (err) {
@@ -173,8 +244,8 @@ order.post("/update-status",
                 return;
             }
 
-            const sql = 'INSERT INTO OrderStatus (orderId, status, remarks, imageURL, isCompleted) VALUES (?, ?, ?, ?, ?)';
-            const values = [orderId, currentStatus, remarks, "/static/images/" + req.file?.filename, true];
+            const sql = 'UPDATE OrderStatus SET remarks = ?, imageURL = ?, isCompleted = TRUE WHERE id = ?';
+            const values = [remarks, "/static/images/" + req.file?.filename, statusId];
 
             db.query(sql, values, (err, result) => {
                 if (err) {

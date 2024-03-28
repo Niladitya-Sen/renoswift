@@ -5,8 +5,33 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { FaEye } from "react-icons/fa6";
 import AdminAddProductDialog from '@/components/custom/admin/AdminAddProductDialog';
+import { cookies } from 'next/headers';
 
-export default function Products() {
+type ProductsType = {
+    productId: string;
+    name: string;
+    category: string;
+    brand: string;
+    isActive: boolean;
+}
+
+async function getProducts(): Promise<ProductsType[]> {
+    const cookieStore = cookies();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/products`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookieStore.get('adminToken')?.value}`
+        }
+    });
+    const data = await response.json();
+    return data;
+
+}
+
+export default async function Products() {
+    const products = await getProducts();
+
     return (
         <>
             <Table>
@@ -21,48 +46,24 @@ export default function Products() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>
-                        <TableCell className="font-medium">RS012588</TableCell>
-                        <TableCell>Relaxa Acrylic Bathtub</TableCell>
-                        <TableCell>Bathtub</TableCell>
-                        <TableCell>Hindware</TableCell>
-                        <TableCell>In Stock</TableCell>
-                        <TableCell>
-                            <Link href={`/admin/products/${"pdkfuh1256"}`} className='flex gap-4 items-center justify-end'>
-                                <Button variant={'ghost'} size={'icon'}>
-                                    <FaEye className='text-primary text-xl' />
-                                </Button>
-                            </Link>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="font-medium">RS012588</TableCell>
-                        <TableCell>Relaxa Acrylic Bathtub</TableCell>
-                        <TableCell>Bathtub</TableCell>
-                        <TableCell>Hindware</TableCell>
-                        <TableCell>In Stock</TableCell>
-                        <TableCell>
-                            <Link href={`/admin/suppliers/${"pdkfuh1256"}`} className='flex gap-4 items-center justify-end'>
-                                <Button variant={'ghost'} size={'icon'}>
-                                    <FaEye className='text-primary text-xl' />
-                                </Button>
-                            </Link>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell className="font-medium">RS012588</TableCell>
-                        <TableCell>Relaxa Acrylic Bathtub</TableCell>
-                        <TableCell>Bathtub</TableCell>
-                        <TableCell>Hindware</TableCell>
-                        <TableCell>In Stock</TableCell>
-                        <TableCell>
-                            <Link href={`/admin/suppliers/${"pdkfuh1256"}`} className='flex gap-4 items-center justify-end'>
-                                <Button variant={'ghost'} size={'icon'}>
-                                    <FaEye className='text-primary text-xl' />
-                                </Button>
-                            </Link>
-                        </TableCell>
-                    </TableRow>
+                    {
+                        products.map(product => (
+                            <TableRow>
+                                <TableCell className="font-medium">{product.productId}</TableCell>
+                                <TableCell>{product.name}</TableCell>
+                                <TableCell>{product.category.charAt(0).toUpperCase() + product.category.slice(1)}</TableCell>
+                                <TableCell>{product.brand}</TableCell>
+                                <TableCell>{product.isActive ? "In Stock" : "Out of stock"}</TableCell>
+                                <TableCell>
+                                    <Link href={`/admin/products/${product.productId}`} className='flex gap-4 items-center justify-end'>
+                                        <Button variant={'ghost'} size={'icon'}>
+                                            <FaEye className='text-primary text-xl' />
+                                        </Button>
+                                    </Link>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
                 </TableBody>
             </Table>
 

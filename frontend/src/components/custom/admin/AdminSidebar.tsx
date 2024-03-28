@@ -5,18 +5,19 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import logout from "@/lib/logout";
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BsGiftFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaRegListAlt } from "react-icons/fa";
+import { FaAngleDown } from "react-icons/fa6";
 import { FiLogOut, FiPackage } from "react-icons/fi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlinePayments, MdOutlineSpaceDashboard } from "react-icons/md";
 import { TiDocumentText } from "react-icons/ti";
-import { FaAngleDown } from "react-icons/fa6";
 
 export default function AdminSidebar({ className }: Readonly<{ className?: string }>) {
     const pathname = usePathname();
@@ -186,12 +187,12 @@ export default function AdminSidebar({ className }: Readonly<{ className?: strin
                         </Link>
                     </li>
                     <li>
-                        <Link href="/" className={cn('flex gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200')}>
+                        <button className={cn('flex w-full gap-4 px-4 py-3 border-b-2 hover:bg-secondary transition-colors duration-200')} onClick={logout}>
                             <FiLogOut className='text-2xl' />
                             <span className={cn('font-medium hidden md:inline', {
                                 "inline": clicked
                             })}>Logout</span>
-                        </Link>
+                        </button>
                     </li>
                 </ul>
             </nav>

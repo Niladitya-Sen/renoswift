@@ -19,6 +19,7 @@ import { MdOutlinePayments, MdOutlineShoppingCart } from "react-icons/md";
 import { TiDocumentText } from "react-icons/ti";
 import { FaAngleDown } from "react-icons/fa6";
 import Link from "next/link";
+import logout from "@/lib/logout";
 
 const customerLinks = [
     {
@@ -124,13 +125,13 @@ export default function UserDropdown() {
                         )
                     }
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className={cn('w-[14rem]', {
-                    'hidden': !isCustomer
-                })}>
+                <DropdownMenuContent className={cn('w-[14rem]')}>
                     {
                         customerLinks.map((link, index) => (
                             <React.Fragment key={index}>
-                                <DropdownMenuItem asChild>
+                                <DropdownMenuItem asChild className={cn({
+                                    'hidden': !isCustomer
+                                })}>
                                     <Link href={link.url}>
                                         <div className="w-full flex gap-2 items-center justify-start">
                                             {link.icon}
@@ -143,10 +144,10 @@ export default function UserDropdown() {
                         ))
                     }
                     <DropdownMenuItem>
-                        <div className="w-full flex gap-2 items-center justify-start">
+                        <button className="w-full flex gap-2 items-center justify-start" onClick={logout}>
                             <FiLogOut className='text-xl' />
                             <p>Log Out</p>
-                        </div>
+                        </button>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

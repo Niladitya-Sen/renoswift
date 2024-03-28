@@ -4,8 +4,8 @@ import {
     SheetTrigger
 } from "@/components/ui/sheet";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { OperationsTeamSidebarNavLinks } from "./ot/OperationsTeamSidebar";
-import { CustomerProfileSidebarNavLinks } from "./customer/CustomerProfileSidebar";
+import { CustomerProfileMobileSidebarNavLinks } from "./customer/CustomerProfileSidebar";
+import { OperationsTeamMobileSidebarNavLinks } from "./ot/OperationsTeamSidebar";
 
 
 
@@ -13,9 +13,9 @@ export default function MobileSidebar({ role }: Readonly<{ role: "ot" | "custome
     let navLinks: React.JSX.Element;
 
     if (role === "ot") {
-        navLinks = <OperationsTeamSidebarNavLinks />;
+        navLinks = <OperationsTeamMobileSidebarNavLinks />;
     } else {
-        navLinks = <CustomerProfileSidebarNavLinks />;
+        navLinks = <CustomerProfileMobileSidebarNavLinks />;
     }
 
     return (

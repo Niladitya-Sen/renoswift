@@ -1,4 +1,5 @@
 import StatusTrackingDialog from "@/components/custom/StatusTrackingDialog";
+import OperationsTeamStatusSchedulerDialog from "@/components/custom/ot/OperationsTeamStatusSchedulerDialog";
 import OperationsTeamUpdateStatusDialog from "@/components/custom/ot/OperationsTeamUpdateStatusDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,8 +48,6 @@ async function getOrderDetails(orderId: string): Promise<OrderDetailsType> {
 export default async function OrderDetails({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
     const order = await getOrderDetails(orderId);
 
-    console.log(order)
-
     return (
         <section>
             <Link href={"/ot/orders"} className={cn('ml-auto block w-fit')}>
@@ -80,7 +79,17 @@ export default async function OrderDetails({ params: { orderId } }: Readonly<{ p
                             }
                         </TableCell>
                         <TableCell>{order.status}</TableCell>
-                        <TableCell className={cn('flex items-center justify-end')}>
+                        <TableCell className={cn('flex gap-4 items-center justify-end')}>
+                            <OperationsTeamStatusSchedulerDialog
+                                orderId={orderId}
+                                trigger={
+                                    <Button variant={"outline"} className={cn('border-primary border-2')}>
+                                        <TbProgress className="text-lg" />
+                                        <span className="ml-2">Schedule Plan</span>
+                                    </Button>
+                                }
+                            />
+
                             <StatusTrackingDialog
                                 orderId={orderId}
                                 trigger={

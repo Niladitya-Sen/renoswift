@@ -387,8 +387,9 @@ CREATE TABLE OrderStatus (
 id bigint primary key auto_increment,
 orderId varchar(200) not null,
 status varchar(200) not null,
-remarks text not null,
-imageURL varchar(200) not null,
+remarks text,
+date date not null,
+imageURL varchar(200),
 isCompleted boolean default false,
 isValid boolean default true,
 isActive boolean default true,
@@ -419,3 +420,143 @@ SELECT status, remarks, createdDate, imageURL FROM OrderStatus
 WHERE orderId = 'ORD00001' AND isCompleted = true ORDER BY createdDate DESC LIMIT 1;
 
 SELECT quoteId, createdDate FROM Quote WHERE status = 'sent' AND userId = 7 ORDER BY createdBy DESC LIMIT 10 OFFSET 0;
+
+CREATE TABLE ProductSuppliers (
+id bigint primary key auto_increment,
+supplierId varchar(200) not null unique,
+name varchar(255) not null,
+email varchar(255) unique not null,
+phoneNumber varchar(20) unique not null,
+address varchar(255) not null,
+spoc varchar(255) not null,
+yearsInOperation int not null,
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null
+);
+
+drop table ProductSuppliers;
+
+CREATE TRIGGER generate_supplierId BEFORE INSERT ON ProductSuppliers
+FOR EACH ROW
+BEGIN
+    DECLARE padded_id VARCHAR(200);
+    SET padded_id = LPAD((SELECT COUNT(id) as id FROM ProductSuppliers), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
+    SET NEW.supplierId = CONCAT('SP', padded_id);
+END;
+
+SELECT * FROM ProductSuppliers;
+
+SELECT supplierId, name, email, phoneNumber, isActive FROM ProductSuppliers ORDER BY createdDate DESC LIMIT 10 OFFSET 0;
+
+CREATE TABLE Brand (
+id int primary key auto_increment,
+name varchar(200) not null unique,
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null
+);
+
+INSERT INTO Brand(name) VALUES ('Oyster LifeStyle'), ('Jaquar'), ('Cera'), ('Hindware'), ('Parryware'), ('Johnson Bathrooms'),
+('Kohler'), ('Grohe'), ('Toto'), ('Duravit'), ('Roca');
+
+SELECT * FROM Brand;
+
+CREATE TABLE ProductSupplierBrands (
+    id bigint primary key auto_increment,
+    supplierId varchar(200) not null,
+    brandId int not null,
+    isValid boolean default true,
+    isActive boolean default true,
+    isDeleted boolean default false,
+    createdBy varchar(255),
+    modifiedBy varchar(255),
+    createdDate datetime default NOW() not null,
+    modifiedDate datetime default NOW() not null,
+    DBTimeStamp datetime default NOW() not null,
+    foreign key(brandId) references Brand(id),
+    foreign key(supplierId) references ProductSuppliers(supplierId)
+    -- TODO: add foreign key for supplierId which was giving error
+);
+
+select * from ProductSupplierBrands;
+
+CREATE TABLE Products (
+  id bigint primary key auto_increment,
+  productId varchar(200) unique not null,
+  supplierId varchar(200) not null,
+  name varchar(200) not null,
+  category int not null,
+  brandId int not null,
+  price double not null,
+  details text not null,
+  isValid boolean default true,
+  isActive boolean default true,
+  isDeleted boolean default false,
+  createdBy varchar(255),
+  modifiedBy varchar(255),
+  createdDate datetime default NOW() not null,
+  modifiedDate datetime default NOW() not null,
+  DBTimeStamp datetime default NOW() not null,
+  foreign key(brandId) references Brand(id),
+  foreign key(supplierId) references ProductSuppliers(supplierId),
+  foreign key(category) references ProductType(id)
+);
+
+CREATE TRIGGER generate_paymentId BEFORE INSERT ON Payment
+FOR EACH ROW
+BEGIN
+    DECLARE padded_id VARCHAR(200);
+    SET padded_id = LPAD((SELECT COUNT(id) as id FROM Payment), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
+    SET NEW.paymentId = CONCAT('RSP', padded_id);
+END;
+
+CREATE TRIGGER generateProductId BEFORE INSERT ON Products FOR EACH ROW 
+BEGIN
+    DECLARE padded_id VARCHAR(200);
+    SET padded_id = LPAD((SELECT COUNT(id) as id FROM Products), 4, '0'); -- Ensure at least 4 digits, padding with zeros if necessary
+    SET NEW.productId = CONCAT('RSO', padded_id);
+END;
+
+CREATE TABLE ProductImages (
+  id bigint primary key auto_increment,
+  productId varchar(200) not null,
+  url varchar(200) not null,
+  isValid boolean default true,
+  isActive boolean default true,
+  isDeleted boolean default false,
+  createdBy varchar(255),
+  modifiedBy varchar(255),
+  createdDate datetime default NOW() not null,
+  modifiedDate datetime default NOW() not null,
+  DBTimeStamp datetime default NOW() not null,
+  foreign key(productId) references Products(productId)
+);
+
+drop table ProductImages;
+
+SELECT * FROM Products, ProductImages;
+
+SELECT DISTINCT supplierId, name FROM ProductSuppliers;
+
+SELECT p.productId, p.name, (SELECT t.type FROM ProductType as t WHERE t.id = p.category) as category, 
+(SELECT b.name FROM Brand as b WHERE b.id = p.brandId) as brand, p.isActive 
+FROM Products as p WHERE isDeleted = FALSE;
+
+SELECT p.productId, p.name, (SELECT t.type FROM ProductType as t WHERE t.id = p.category) as category, 
+(SELECT b.name FROM Brand as b WHERE b.id = p.brandId) as brand, p.isActive, 
+(SELECT s.name FROM ProductSuppliers as s WHERE s.supplierId = p.supplierId) as supplier, p.price, p.details 
+FROM Products as p WHERE isDeleted = FALSE AND p.productId = 'RSO0000';
+
+SELECT id as statusId, status FROM OrderStatus WHERE orderId = 'ORD00005' 
+AND isCompleted = FALSE ORDER BY date ASC LIMIT 1;
