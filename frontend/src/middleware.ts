@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
 
     const response = NextResponse.next();
 
-    if (request.nextUrl.pathname.includes("/customer") && !request.nextUrl.pathname.includes("/login")) {
+    if (request.nextUrl.pathname.includes("/customer") && !request.nextUrl.pathname.includes("/login") && !request.nextUrl.pathname.includes("/admin") && !request.nextUrl.pathname.includes("/ot")) {
         if (!token) {
             return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/auth/login`);
         }
