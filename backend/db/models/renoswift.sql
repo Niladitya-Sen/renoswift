@@ -564,3 +564,5 @@ FROM Products as p WHERE isDeleted = FALSE AND p.productId = 'RSO0000';
 
 SELECT id as statusId, status FROM OrderStatus WHERE orderId = 'ORD00005' 
 AND isCompleted = FALSE ORDER BY date ASC LIMIT 1;
+
+SELECT * FROM Order_ o;

@@ -5,8 +5,8 @@ import { PiHandshake } from "react-icons/pi";
 
 export default function Working() {
     return (
-        <section>
-            <h1 className='heading-1'>Our Working Process</h1>
+        <section id="working">
+            <h1 className='heading-1'>Our <span className='text-primary'>Working Process</span></h1>
             <div className='bg-primary/40 rounded-lg p-8 mt-6 grid sm:grid-cols-2 md:grid-cols-4 gap-4 place-content-center sm:npjustify-between'>
                 <div className='bg-white rounded-lg p-4 max-w-[16rem] hover:scale-105 hover:shadow-md transition-all duration-200'>
                     <FaPencilRuler className='text-5xl text-primary ml-2 mt-2 mb-6' />

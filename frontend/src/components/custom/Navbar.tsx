@@ -44,23 +44,20 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                         <Link href={"/"}>
                             <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                         </Link>
-                        <Link href={"/about"}>
-                            <Button variant={pathname === '/about' ? 'default' : 'ghost'} size={'sm'}>About Us</Button>
+                        <Link href={"#about"}>
+                            <Button variant={'ghost'} size={'sm'}>About Us</Button>
                         </Link>
-                        <Link href={"/"}>
-                            <Button variant={pathname === '/services' ? 'default' : 'ghost'} size={'sm'}>Services</Button>
+                        <Link href={"#category"}>
+                            <Button variant={'ghost'} size={'sm'}>Categories</Button>
                         </Link>
-                        <Link href={"/"}>
-                            <Button variant={pathname === '/packages' ? 'default' : 'ghost'} size={'sm'}>Packages</Button>
+                        <Link href={"#inspiration"}>
+                            <Button variant={'ghost'} size={'sm'}>Inspiration</Button>
                         </Link>
-                        <Link href={"/"}>
-                            <Button variant={pathname === '/blogs' ? 'default' : 'ghost'} size={'sm'}>Blogs</Button>
+                        <Link href={"#working"}>
+                            <Button variant={'ghost'} size={'sm'}>Our Process</Button>
                         </Link>
-                        <Link href={"/"}>
-                            <Button variant={pathname === '/testimonials' ? 'default' : 'ghost'} size={'sm'}>Testimonials</Button>
-                        </Link>
-                        <Link href={"/"}>
-                            <Button variant={pathname === '/presence' ? 'default' : 'ghost'} size={'sm'}>Our Presence</Button>
+                        <Link href={"#testimonials"}>
+                            <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
                         </Link>
                         <Link href={"/contact"}>
                             <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
@@ -82,23 +79,20 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                                 <Link href={"/"}>
                                     <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                                 </Link>
-                                <Link href={"/about"}>
-                                    <Button variant={pathname === '/about' ? 'default' : 'ghost'} size={'sm'}>About Us</Button>
+                                <Link href={"#about"}>
+                                    <Button variant={'ghost'} size={'sm'}>About Us</Button>
                                 </Link>
-                                <Link href={"/"}>
-                                    <Button variant={pathname === '/services' ? 'default' : 'ghost'} size={'sm'}>Services</Button>
+                                <Link href={"#category"}>
+                                    <Button variant={'ghost'} size={'sm'}>Categories</Button>
                                 </Link>
-                                <Link href={"/"}>
-                                    <Button variant={pathname === '/packages' ? 'default' : 'ghost'} size={'sm'}>Packages</Button>
+                                <Link href={"#inspiration"}>
+                                    <Button variant={'ghost'} size={'sm'}>Inspiration</Button>
                                 </Link>
-                                <Link href={"/"}>
-                                    <Button variant={pathname === '/blogs' ? 'default' : 'ghost'} size={'sm'}>Blogs</Button>
+                                <Link href={"#working"}>
+                                    <Button variant={'ghost'} size={'sm'}>Our Process</Button>
                                 </Link>
-                                <Link href={"/"}>
-                                    <Button variant={pathname === '/testimonials' ? 'default' : 'ghost'} size={'sm'}>Testimonials</Button>
-                                </Link>
-                                <Link href={"/"}>
-                                    <Button variant={pathname === '/presence' ? 'default' : 'ghost'} size={'sm'}>Our Presence</Button>
+                                <Link href={"#testimonials"}>
+                                    <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
                                 </Link>
                                 <Link href={"/contact"}>
                                     <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
@@ -118,3 +112,51 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
         </nav>
     )
 }
+
+/*
+<div className='hidden lg:flex items-center gap-2'>
+                        <Link href={"/"}>
+                            <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
+                        </Link>
+                        <Link href={"/about"}>
+                            <Button variant={'ghost'} size={'sm'}>About Us</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={pathname === '/services' ? 'default' : 'ghost'} size={'sm'}>Services</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={pathname === '/packages' ? 'default' : 'ghost'} size={'sm'}>Packages</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={pathname === '/blogs' ? 'default' : 'ghost'} size={'sm'}>Blogs</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={pathname === '/testimonials' ? 'default' : 'ghost'} size={'sm'}>Testimonials</Button>
+                        </Link>
+                        <Link href={"/"}>
+                            <Button variant={pathname === '/presence' ? 'default' : 'ghost'} size={'sm'}>Our Presence</Button>
+                        </Link>
+                        <Link href={"/contact"}>
+                            <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
+                        </Link>
+                    </div>
+
+                    <Link href={"/about"}>
+                                    <Button variant={'ghost'} size={'sm'}>About Us</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={pathname === '/services' ? 'default' : 'ghost'} size={'sm'}>Services</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={pathname === '/packages' ? 'default' : 'ghost'} size={'sm'}>Packages</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={pathname === '/blogs' ? 'default' : 'ghost'} size={'sm'}>Blogs</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={pathname === '/testimonials' ? 'default' : 'ghost'} size={'sm'}>Testimonials</Button>
+                                </Link>
+                                <Link href={"/"}>
+                                    <Button variant={pathname === '/presence' ? 'default' : 'ghost'} size={'sm'}>Our Presence</Button>
+                                </Link>
+*/

@@ -56,7 +56,7 @@ function ChooseUsCard({ title, description, index }: Readonly<{ title: string, d
 
 export default function ChooseUs() {
     return (
-        <section className='my-20 hidden'>
+        <section className='my-20'>
             <h2 className='heading-1'>Why Choose Renoswift®?</h2>
             <div className='grid gap-8 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] mt-8'>
                 {

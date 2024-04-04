@@ -48,8 +48,8 @@ function InspirationCard({ name, btnText, image, className }: Readonly<{ name: s
 
 export default function Inspiration() {
     return (
-        <section className='my-20'>
-            <h1 className='heading-1 mb-2'>Interior inspiration</h1>
+        <section id="inspiration" className='my-20'>
+            <h1 className='heading-1 mb-2'>Interior <span className='text-primary'>inspiration</span></h1>
             <p className='text-foreground/80 mb-8'>Create an inviting space for yourself and family.</p>
             <div className='grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] md:grid-cols-3 gap-4'>
                 {
