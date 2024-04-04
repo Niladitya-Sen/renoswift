@@ -28,6 +28,14 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
         }
     }, [cookies])
 
+    function navigateTo(id: string) {
+        if (pathname === '/') {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.location.href = `/#${id}`;
+        }
+    }
+
     return (
         <nav className={cn('sticky top-0 z-50 bg-background', {
             'hidden': pathname === '/auth/login' || pathname === '/auth/signup'
@@ -44,21 +52,11 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                         <Link href={"/"}>
                             <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                         </Link>
-                        <Link href={"#about"}>
-                            <Button variant={'ghost'} size={'sm'}>About Us</Button>
-                        </Link>
-                        <Link href={"#category"}>
-                            <Button variant={'ghost'} size={'sm'}>Categories</Button>
-                        </Link>
-                        <Link href={"#inspiration"}>
-                            <Button variant={'ghost'} size={'sm'}>Inspiration</Button>
-                        </Link>
-                        <Link href={"#working"}>
-                            <Button variant={'ghost'} size={'sm'}>Our Process</Button>
-                        </Link>
-                        <Link href={"#testimonials"}>
-                            <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
-                        </Link>
+                        <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('about') }}>About Us</Button>
+                        <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('category') }}>Categories</Button>
+                        <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('inspiration') }}>Inspiration</Button>
+                        <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('working') }}>Our Process</Button>
+                        <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('testimonials') }}>Testimonials</Button>
                         <Link href={"/contact"}>
                             <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
                         </Link>
@@ -79,21 +77,11 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                                 <Link href={"/"}>
                                     <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                                 </Link>
-                                <Link href={"#about"}>
-                                    <Button variant={'ghost'} size={'sm'}>About Us</Button>
-                                </Link>
-                                <Link href={"#category"}>
-                                    <Button variant={'ghost'} size={'sm'}>Categories</Button>
-                                </Link>
-                                <Link href={"#inspiration"}>
-                                    <Button variant={'ghost'} size={'sm'}>Inspiration</Button>
-                                </Link>
-                                <Link href={"#working"}>
-                                    <Button variant={'ghost'} size={'sm'}>Our Process</Button>
-                                </Link>
-                                <Link href={"#testimonials"}>
-                                    <Button variant={'ghost'} size={'sm'}>Testimonials</Button>
-                                </Link>
+                                <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('about') }}>About Us</Button>
+                                <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('category') }}>Categories</Button>
+                                <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('inspiration') }}>Inspiration</Button>
+                                <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('working') }}>Our Process</Button>
+                                <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('testimonials') }}>Testimonials</Button>
                                 <Link href={"/contact"}>
                                     <Button variant={pathname === '/contact' ? 'default' : 'ghost'} size={'sm'}>Contact</Button>
                                 </Link>
