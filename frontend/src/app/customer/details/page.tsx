@@ -1,3 +1,4 @@
+import CustomerDetailsForm from '@/components/custom/CustomerDetailsForm';
 import FileInput from '@/components/custom/FileInput';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -33,7 +34,7 @@ const brands = [
 
 export default function Details() {
     return (
-        <>
+        <CustomerDetailsForm>
             <div className='grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] md:grid-cols-5 gap-y-4 gap-x-2'>
                 <div className='col-span-full flex items-center justify-between'>
                     <p className='font-semibold text-lg'>* Add Photos (min 5)</p>
@@ -92,6 +93,6 @@ export default function Details() {
                     }
                 </label>
             </div>
-        </>
+        </CustomerDetailsForm>
     )
 }

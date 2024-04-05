@@ -12,22 +12,26 @@ export const verfiyUser = (req: Request & { userId?: string }, res: Response, ne
         return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
+    try {
+        const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
 
-    if (!decoded) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
-
-    db.query("SELECT * FROM User WHERE id = ?", [decoded.userId], (err, result) => {
-        if (err) {
-            return res.status(500).json({ message: "Internal server error" });
-        }
-
-        if (result.length === 0) {
+        if (!decoded) {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        req.userId = decoded.userId;
-        next();
-    });
+        db.query("SELECT * FROM User WHERE id = ?", [decoded.userId], (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Internal server error" });
+            }
+
+            if (result.length === 0) {
+                return res.status(401).json({ message: "Unauthorized" });
+            }
+
+            req.userId = decoded.userId;
+            next();
+        });
+    } catch (error) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
 }

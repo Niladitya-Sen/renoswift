@@ -13,22 +13,26 @@ export const verfiyAdmin = (req: AdminRequest, res: Response, next: NextFunction
         return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
+    try {
+        const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
 
-    if (!decoded) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
-
-    db.query("SELECT email, password, role FROM Admin WHERE id = ?", [decoded.adminId], (err, result) => {
-        if (err) {
-            return res.status(500).json({ message: "Internal server error" });
-        }
-
-        if (result.length === 0) {
+        if (!decoded) {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        req.adminId = decoded.adminId;
-        next();
-    });
+        db.query("SELECT email, password, role FROM Admin WHERE id = ?", [decoded.adminId], (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Internal server error" });
+            }
+
+            if (result.length === 0) {
+                return res.status(401).json({ message: "Unauthorized" });
+            }
+
+            req.adminId = decoded.adminId;
+            next();
+        });
+    } catch (error) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
 }

@@ -13,23 +13,27 @@ export const verfiyOperationsTeam = (req: OperationsTeamRequest, res: Response, 
         return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
+    try {
+        const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
 
-    if (!decoded) {
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        db.query("SELECT * FROM OperationsTeam WHERE id = ? AND isDeleted = false", [decoded.otId], (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Internal server error" });
+            }
+
+            if (result.length === 0) {
+                res.status(401).json({ message: "Unauthorized" });
+                return;
+            }
+
+            req.otId = decoded.otId;
+            next();
+        });
+    } catch (error) {
         return res.status(401).json({ message: "Unauthorized" });
     }
-
-    db.query("SELECT * FROM OperationsTeam WHERE id = ? AND isDeleted = false", [decoded.otId], (err, result) => {
-        if (err) {
-            return res.status(500).json({ message: "Internal server error" });
-        }
-
-        if (result.length === 0) {
-            res.status(401).json({ message: "Unauthorized" });
-            return;
-        }
-
-        req.otId = decoded.otId;
-        next();
-    });
 }
