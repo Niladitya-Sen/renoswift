@@ -50,7 +50,7 @@ async function verifyAdmin(token: string): Promise<{ verified: boolean, message:
 }
 
 export async function middleware(request: NextRequest) {
-    const token = request.cookies.get('token')?.value;
+    /* const token = request.cookies.get('token')?.value;
     const adminToken = request.cookies.get('adminToken')?.value;
     const otToken = request.cookies.get('otToken')?.value;
 
@@ -94,7 +94,9 @@ export async function middleware(request: NextRequest) {
         }
     } else {
         return response;
-    }
+    } */
+
+    return NextResponse.next();
 }
 
 export const config = {
