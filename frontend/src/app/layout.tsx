@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "@/context/AuthContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -178,9 +177,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(poppins.className)}>
         <AdminChangeColorScheme />
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        {children}
         <Toaster />
       </body>
     </html>
