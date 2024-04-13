@@ -3,11 +3,12 @@ import Image from 'next/image'
 import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
-import { IoArrowBack } from "react-icons/io5";
+import { IoArrowBack, IoCloseOutline } from "react-icons/io5";
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import dayjs from 'dayjs'
+import { FaEquals } from 'react-icons/fa'
 
 type Asset = {
     id: number;
@@ -21,6 +22,10 @@ type QuoteDetailsType = {
     propertyId: number;
     length: number;
     breadth: number;
+    height: number;
+    area: number;
+    doors: number;
+    windows: number;
     budget: string;
     issues: string;
     objective: string;
@@ -92,9 +97,49 @@ export default async function RRFQDetails({ params: { requestId } }: Readonly<{ 
                 }
             </div>
             <div className='flex flex-col sm:grid sm:grid-cols-3 my-10 gap-4'>
-                <label htmlFor="dimensions">
-                    <p className='font-semibold'>Dimensions</p>
-                    <Input readOnly value={quoteDetails.length + "X" + quoteDetails.breadth} type="text" id="dimensions" name="dimensions" className='w-full border p-2 rounded-sm mt-1' />
+                <label htmlFor="area">
+                    <p className='font-semibold'>*Dimensions (L &#x2715; B &#x2715; H)</p>
+                    <div className="grid gap-2 grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] place-items-center">
+                        <Input
+                            required
+                            readOnly
+                            type="text"
+                            id="length"
+                            name="length"
+                            value={quoteDetails.length}
+                            className='w-full border p-2 rounded-sm mt-1'
+                        />
+                        <IoCloseOutline className='text-xl' />
+                        <Input
+                            required
+                            readOnly
+                            type="text"
+                            id="breadth"
+                            name="breadth"
+                            value={quoteDetails.breadth}
+                            className='w-full border p-2 rounded-sm mt-1'
+                        />
+                        <IoCloseOutline className='text-xl' />
+                        <Input
+                            required
+                            readOnly
+                            type="text"
+                            id="height"
+                            name="height"
+                            value={quoteDetails.height}
+                            className='w-full border p-2 rounded-sm mt-1'
+                        />
+                        <FaEquals className='text-xl' />
+                        <Input
+                            required
+                            readOnly
+                            value={quoteDetails.area}
+                            type="text"
+                            id="area"
+                            name="area"
+                            className='w-full border p-2 rounded-sm mt-1'
+                        />
+                    </div>
                 </label>
                 <label htmlFor="budget">
                     <p className='font-semibold'>Budget(INR)</p>
@@ -103,6 +148,14 @@ export default async function RRFQDetails({ params: { requestId } }: Readonly<{ 
                 <label htmlFor="issues">
                     <p className='font-semibold'>Functional Issues</p>
                     <Input readOnly value={quoteDetails.issues} type="text" id="issues" name="issues" className='w-full border p-2 rounded-sm mt-1' />
+                </label>
+                <label htmlFor="doors">
+                    <p className='font-semibold'>*Number of doors</p>
+                    <Input readOnly value={quoteDetails.doors} type="text" id="doors" name="doors" className='w-full border p-2 rounded-sm mt-1' />
+                </label>
+                <label htmlFor="windows">
+                    <p className='font-semibold'>*Number of windows</p>
+                    <Input readOnly value={quoteDetails.windows} type="text" id="windows" name="windows" className='w-full border p-2 rounded-sm mt-1' />
                 </label>
                 <label htmlFor="objective">
                     <p className='font-semibold'>Objective for Remodeling</p>

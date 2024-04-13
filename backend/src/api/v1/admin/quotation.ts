@@ -39,7 +39,7 @@ quotation.get("/raised",
 quotation.get("/raised/:quoteId", (req: AdminRequest, res) => {
     const quoteId = req.params.quoteId;
 
-    const sql = "SELECT q.quoteId, q.createdDate, q.name, q.email, q.contactNumber, q.propertyId, up.length, up.breadth, up.budget, up.issues, up.objective, up.style, up.timeline, up.specialRequest, q.address FROM Quote as q INNER JOIN UserProperty as up WHERE q.quoteId = ? AND q.propertyId = up.id";
+    const sql = "SELECT q.quoteId, q.createdDate, q.name, q.email, q.contactNumber, q.propertyId, up.length, up.breadth, up.budget, up.height, up.area, up.doors, up.windows, up.issues, up.objective, up.style, up.timeline, up.specialRequest, q.address FROM Quote as q INNER JOIN UserProperty as up WHERE q.quoteId = ? AND q.propertyId = up.id";
     const values = [quoteId];
 
     db.query(sql, values, (err, result) => {

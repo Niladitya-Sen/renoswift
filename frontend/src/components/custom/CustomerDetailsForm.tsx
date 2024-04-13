@@ -123,7 +123,7 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
 
     return (
         <SectionWrapper className='mb-10'>
-            <h1 className='heading-1 text-2xl mb-10'>Share Insights About Your Present Bathroom</h1>
+            <h1 className='heading-1 text-2xl mb-10'>For estimate kindly upload your current bathroom pictures & videos</h1>
             <form className='relative' onSubmit={handleSubmit}>
                 <div className={cn('absolute inset-0 bg-white/60', {
                     'hidden': !loading

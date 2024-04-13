@@ -51,7 +51,7 @@ auth.post('/login/otp', async (req, res) => {
             } else {
                 await insertOTPInDBByPhoneNumber(otp.toString(), phone);
             }
-            res.status(200).json({ message: 'OTP sent successfully!' });
+            res.status(200).json({ message: 'OTP sent successfully on your registered Email ID!' });
         } catch (error) {
             res.status(500).json({ message: 'Internal Server Error' });
             throw error;

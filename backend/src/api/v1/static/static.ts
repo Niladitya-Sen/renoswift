@@ -32,7 +32,11 @@ staticRouter.get("/profile/image/:file", (req, res) => {
 });
 
 staticRouter.get("/:type/:file", (req, res) => {
-    res.sendFile(`/assets/${req.params.type}/${req.params.file}`, { root: "." });
+    res.sendFile(`/assets/${req.params.type}/${req.params.file}`, { root: "." }, (err) => {
+        if (err) {
+            res.status(404).json({ message: "File not found" });
+        }
+    });
 });
 
 

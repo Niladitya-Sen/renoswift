@@ -114,7 +114,16 @@ foreign key (type) references ProductType(id)
 alter table UserProperty add column brands text not null;
 alter table UserProperty modify column specialRequest text;
 
+ALTER TABLE UserProperty ADD COLUMN windows int not null;
+ALTER TABLE UserProperty ADD COLUMN doors int not null;
+ALTER TABLE UserProperty ADD COLUMN height float not null;
+ALTER TABLE UserProperty ADD COLUMN area float not null;
+
+ALTER TABLE UserProperty MODIFY COLUMN specialRequest text;
+
 desc UserProperty;
+
+SELECT * FROM  UserProperty up;
 
 select * from UserProperty;
 
@@ -566,3 +575,5 @@ SELECT id as statusId, status FROM OrderStatus WHERE orderId = 'ORD00005'
 AND isCompleted = FALSE ORDER BY date ASC LIMIT 1;
 
 SELECT * FROM Order_ o;
+
+SELECT * FROM Quote q;
