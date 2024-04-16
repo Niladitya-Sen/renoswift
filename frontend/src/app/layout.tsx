@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -179,6 +180,7 @@ export default function RootLayout({
         <AdminChangeColorScheme />
         {children}
         <Toaster />
+        <GoogleAnalytics gaId={process.env.GAID as string} />
       </body>
     </html>
   );
