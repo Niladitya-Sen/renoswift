@@ -205,7 +205,11 @@ export default function About() {
             <section className="text-center space-y-4 text-xl font-medium mt-20 bg-secondary rounded-lg p-8 sm:p-12">
                 <p>We Create A Home Space Of Your Dreams</p>
                 <p>We use products of renowned national and international brands for our projects.</p>
-                <Button size={"lg"}>REQUEST A QUOTE</Button>
+                <Button size={"lg"} asChild>
+                    <Link href="/auth/login">
+                        REQUEST A QUOTE
+                    </Link>
+                </Button>
             </section>
         </SectionWrapper>
     )

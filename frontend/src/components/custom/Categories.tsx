@@ -9,38 +9,43 @@ import {
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
+import Link from "next/link";
 
 
 const categories = [
     {
-        title: 'Classic Tiles',
-        description: 'Asthetic Design',
-        image: '/assets/product-3.jpg'
+        title: 'Essence',
+        description: 'Affordable & Functional',
+        image: '/assets/product-3.png'
     },
     {
-        title: 'Showers',
-        description: 'New Collection',
-        image: '/assets/product-2.jpg'
+        title: 'Elegance',
+        description: 'Balanced & Comprehensive',
+        image: '/assets/product-2.png'
     },
     {
-        title: 'Bathroom',
-        description: 'Modern Design',
-        image: '/assets/product-1.jpg'
+        title: 'Luxe',
+        description: 'Customized & Exclusive',
+        image: '/assets/product-1.png'
     },
 ];
 
 function CategoryCard({ title, description, image }: Readonly<{ title: string, description: string, image: string }>) {
     return (
         <Card className={cn('bg-cover bg-center bg-no-repeat aspect-video overflow-hidden transition-all duration-500 group hover:scale-[0.95] cursor-pointer')} style={{ backgroundImage: `url('${image}')` }}>
-            <CardHeader className='bg-gradient-to-b from-black/50 from-[30%] to-transparent h-full'>
-                <CardDescription className={cn('text-white/80')}>{description}</CardDescription>
-                <CardTitle className={cn('text-white')}>{title}</CardTitle>
+            <CardHeader className='bg-gradient-to-tr from-black/60 from-[30%] to-transparent h-full'>
                 <motion.div
                     className='flex flex-col items-center justify-center flex-1 translate-y-20 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500'
                 >
                     <div className='flex-grow'></div>
-                    <Button>Request Quote</Button>
+                    <Button asChild>
+                        <Link href="/auth/login">
+                            Request Quote
+                        </Link>
+                    </Button>
                 </motion.div>
+                <CardTitle className={cn('text-primary')}>{title}</CardTitle>
+                <CardDescription className={cn('text-white/80')}>{description}</CardDescription>
             </CardHeader>
         </Card>
 
@@ -50,8 +55,8 @@ function CategoryCard({ title, description, image }: Readonly<{ title: string, d
 export default function Categories() {
     return (
         <section id="category" className='my-20'>
-            <h1 className='heading-1 mb-2'>Featured <span className="text-primary">Categories</span></h1>
-            <p className='text-foreground/80 mb-8'>We keep things minimal.</p>
+            <h1 className='heading-1 mb-2'>Featured <span className="text-primary">Packages</span></h1>
+            <p className='text-foreground/80 mb-8'>Explore our spectrum of plans to meet all your needs.</p>
             <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4'>
                 {
                     categories.map((category, index) => (
