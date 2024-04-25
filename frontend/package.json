@@ -29,7 +29,7 @@
     "embla-carousel-react": "^8.0.0-rc21",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.316.0",
-    "next": "^14.2.0",
+    "next": "^14.2.2",
     "nextjs-toploader": "^1.6.6",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

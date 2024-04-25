@@ -15,6 +15,14 @@ const nextConfig = {
             }
         ],
     },
+    rewrites: async () => {
+        return [
+            {
+                source: '/vr/:path*',
+                destination: '/html/:path*',
+            },
+        ];
+    },
 };
 
 export default nextConfig;

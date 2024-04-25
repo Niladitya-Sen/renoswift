@@ -347,9 +347,26 @@ foreign key(quoteId) references Quote(quoteId),
 foreign key(userId) references User(id)
 );
 
+ALTER TABLE Payment ADD COLUMN receipt varchar(200) not null;
+
 drop table Payment;
 
 SELECT * FROM Payment;
+SELECT * FROM QuoteReply qr;
+
+SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = 'RS0009' ORDER BY p.createdDate DESC LIMIT 1;
+
+UPDATE Payment p SET p.status = 'done', 
+p.finalDueDate = STR_TO_DATE((SELECT qr.timeline FROM QuoteReply qr WHERE qr.quoteId = p.quoteId), '%d/%m/%Y') 
+WHERE p.id = 17 AND p.userId = 3;
+
+SELECT o.orderId, o.createdDate, o.status, 
+(SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as amountPaid,
+(SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId) as amountDue
+ FROM Order_ as o 
+WHERE o.userId = 3 ORDER BY o.createdDate DESC;
+
+UPDATE Payment p SET p.amountDue = 0;
 
 delete from Payment where id = 2;
 

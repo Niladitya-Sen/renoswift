@@ -8,9 +8,34 @@ import {
     TableRow
 } from "@/components/ui/table";
 import { cn } from '@/lib/utils';
+import dayjs from "dayjs";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
-export default function Payments() {
+type PaymentType = {
+    orderId: string;
+    amountPaid: number;
+    amountDue: number;
+    finalDueDate: string;
+    paymentMethod: string;
+}
+
+async function getPayments(): Promise<PaymentType[]> {
+    const cookieStore = cookies();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/payment`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookieStore.get('otToken')?.value}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
+export default async function Payments() {
+
+    const payments = await getPayments();
+
     return (
         <Table>
             <TableHeader className={cn('bg-primary')}>
@@ -24,18 +49,22 @@ export default function Payments() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
-                    <TableCell className="font-medium">ORD786856</TableCell>
-                    <TableCell>&#8377;51,677</TableCell>
-                    <TableCell>&#8377;1,71,704</TableCell>
-                    <TableCell>21/04/24</TableCell>
-                    <TableCell>Visa Card</TableCell>
-                    <TableCell className={cn('flex items-center justify-end')}>
-                        <Link href="/ot/payments/ORD786856" className={cn(buttonVariants({
-                            variant: 'outline'
-                        }), 'border-primary')}>View</Link>
-                    </TableCell>
-                </TableRow>
+                {
+                    payments.map(payment => (
+                        <TableRow key={payment.orderId}>
+                            <TableCell className="font-medium">{payment.orderId}</TableCell>
+                            <TableCell>&#8377;{payment.amountPaid}</TableCell>
+                            <TableCell>&#8377;{payment.amountDue}</TableCell>
+                            <TableCell>{dayjs(payment.finalDueDate).format("DD/MM/YYYY")}</TableCell>
+                            <TableCell>Visa Card</TableCell>
+                            <TableCell className={cn('flex items-center justify-end')}>
+                                <Link href={`/ot/payments/${payment.orderId}`} className={cn(buttonVariants({
+                                    variant: 'outline'
+                                }), 'border-primary')}>View</Link>
+                            </TableCell>
+                        </TableRow>
+                    ))
+                }
             </TableBody>
         </Table>
     )

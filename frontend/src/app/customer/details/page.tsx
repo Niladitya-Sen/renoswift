@@ -61,10 +61,6 @@ export default function Details() {
     const dimensionValue = dimensions?.length * dimensions?.breadth * dimensions?.height;
     const [date, setDate] = useState<Date | undefined>();
 
-    React.useEffect(() => {
-        console.log(date)
-    }, [date])
-
     return (
         <CustomerDetailsForm>
             <div className='grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] md:grid-cols-5 gap-y-4 gap-x-2'>

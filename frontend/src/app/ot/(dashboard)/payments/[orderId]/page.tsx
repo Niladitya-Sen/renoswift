@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Table,
     TableBody,
@@ -8,173 +8,59 @@ import {
     TableRow
 } from "@/components/ui/table";
 import { cn } from '@/lib/utils';
+import dayjs from "dayjs";
+import { cookies } from "next/headers";
 import Link from "next/link";
-import { IoArrowBack } from "react-icons/io5";
 
-const payments = [
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/04/24',
-        status: 'Paid'
-    },
-];
+type PaymentType = {
+    orderId: string;
+    amountPaid: number;
+    amountDue: number;
+    finalDueDate: string;
+    paymentMethod: string;
+    payments: {
+        phase: string;
+        amount: number;
+        dueDate: string;
+        status: string;
+    }[];
+}
 
-function PaymentTableRow({ phase, amount, dueDate, status }: { phase: string, amount: number, dueDate: string, status: string }) {
+function PaymentTableRow({ phase, amount, dueDate, status }: Readonly<{ phase: string, amount: number, dueDate: string, status: string }>) {
     return (
         <TableRow>
-            <TableCell>{phase}</TableCell>
-            <TableCell>&#8377;{amount}</TableCell>
-            <TableCell>{dueDate}</TableCell>
-            <TableCell>{status}</TableCell>
+            <TableCell>{phase.charAt(0).toUpperCase() + phase.slice(1)}</TableCell>
+            <TableCell>{amount.toLocaleString('en-IN', {
+                style: 'currency',
+                currency: 'INR'
+            })}</TableCell>
+            <TableCell>{dayjs(dueDate).format("DD/MM/YYYY")}</TableCell>
+            <TableCell>{status === "done" ? "Paid" : "Pending"}</TableCell>
         </TableRow>
     )
 }
 
-export default function PaymentDetails({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
+async function getPayments(orderId: string): Promise<PaymentType> {
+    const cookieStore = cookies();
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ot/payment/${orderId}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${cookieStore.get('otToken')?.value}`
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
+export default async function PaymentDetails({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
+    const payment = await getPayments(orderId);
+    const totalAmount = payment.payments.reduce((acc, curr) => acc + curr.amount, 0);
+
     return (
-        <>
-            <Link href={"/ot/payments"} className={cn('ml-auto block w-fit mb-4')}>
-                <Button variant={"link"}>
-                    <IoArrowBack className='mr-2 text-lg' />
+        <div className="relative">
+            <Link href={"/admin/payments"} className={cn('absolute -top-14 right-2')}>
+                <Button variant={"outline"} className={cn('border-primary text-primary hover:text-primary')}>
                     <span title='back'>back</span>
                 </Button>
             </Link>
@@ -190,10 +76,16 @@ export default function PaymentDetails({ params: { orderId } }: Readonly<{ param
                 </TableHeader>
                 <TableBody>
                     <TableRow>
-                        <TableCell className="font-medium">ORD786856</TableCell>
-                        <TableCell>&#8377;51,677</TableCell>
-                        <TableCell>&#8377;1,71,704</TableCell>
-                        <TableCell>21/04/24</TableCell>
+                        <TableCell className="font-medium">{payment.orderId}</TableCell>
+                        <TableCell>{payment.amountPaid.toLocaleString('en-IN', {
+                            style: 'currency',
+                            currency: 'INR'
+                        })}</TableCell>
+                        <TableCell>{payment.amountDue.toLocaleString('en-IN', {
+                            style: 'currency',
+                            currency: 'INR'
+                        })}</TableCell>
+                        <TableCell>{dayjs(payment.finalDueDate).format("DD/MM/YYYY")}</TableCell>
                         <TableCell>Visa Card</TableCell>
                     </TableRow>
                 </TableBody>
@@ -209,12 +101,19 @@ export default function PaymentDetails({ params: { orderId } }: Readonly<{ param
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {payments.map((payment, index) => (
+                        {payment.payments.map((payment, index) => (
                             <PaymentTableRow key={index} {...payment} />
                         ))}
+                        <TableRow className="bg-gray-200">
+                            <TableCell className="font-semibold">Total:</TableCell>
+                            <TableCell colSpan={3} className="font-semibold">{totalAmount.toLocaleString('en-IN', {
+                                style: 'currency',
+                                currency: 'INR'
+                            })}</TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </div>
-        </>
+        </div>
     )
 }

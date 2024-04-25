@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
     Table,
@@ -14,122 +14,62 @@ import { cn } from '@/lib/utils';
 import Link from "next/link";
 import { IoArrowBack } from "react-icons/io5";
 import PopupComponent from '@/components/custom/customer/Popup'
+import { useCookies } from '@/hooks/useCookies';
+import dayjs from 'dayjs';
 
+type PaymentType = {
+    orderId: string;
+    amountPaid: number;
+    amountDue: number;
+    finalDueDate: string;
+    paymentMethod: string;
+    payments: {
+        phase: string;
+        amount: number;
+        dueDate: string;
+        status: string;
+    }[];
+}
 
-const payments = [
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/02/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '21/02/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/02/24',
-        status: 'Paid'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '21/02/24',
-        status: 'Pending'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Dismanlting',
-        amount: 20000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Piping',
-        amount: 15000,
-        dueDate: '26/04/24',
-        status: 'Upcoming'
-    },
-    {
-        phase: 'Finishing',
-        amount: 246300,
-        dueDate: '26/04/24',
-        status: ('Upcoming')
-    },
-    
-];
-
-function PaymentTableRow({ phase, amount, dueDate, status }: { phase: string, amount: number, dueDate: string, status: string }) {
-   
-
+function PaymentTableRow({ phase, amount, dueDate, status }: Readonly<{ phase: string, amount: number, dueDate: string, status: string }>) {
     return (
         <TableRow>
-            <TableCell>{phase}</TableCell>
-            <TableCell>&#8377;{amount}</TableCell>
-            <TableCell>{dueDate}</TableCell>
-            <TableCell>{status}</TableCell>
+            <TableCell>{phase.charAt(0).toUpperCase() + phase.slice(1)}</TableCell>
+            <TableCell>{amount.toLocaleString('en-IN', {
+                style: 'currency',
+                currency: 'INR'
+            })}</TableCell>
+            <TableCell>{dayjs(dueDate).format("DD/MM/YYYY")}</TableCell>
+            <TableCell>{status === "done" ? "Paid" : "Pending"}</TableCell>
         </TableRow>
     )
 }
 
-export default function PaymentDetailsCS({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
-    const totalAmount: number = payments.reduce((acc, payment) => acc + payment.amount, 0);
+export default function PaymentDetails({ params: { orderId } }: Readonly<{ params: { orderId: string } }>) {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const cookies = useCookies();
+    const [payment, setPayment] = useState<PaymentType>();
+    const [totalAmount, setTotalAmount] = useState<number>(0);
 
     const togglePopup = () => {
         setIsPopupVisible(!isPopupVisible);
     };
+
+    useEffect(() => {
+        async function getPayments() {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/payment/${orderId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${cookies?.get('token')}`
+                }
+            });
+            const data: PaymentType = await response.json();
+            setPayment(data);
+            setTotalAmount(data.payments.reduce((acc, curr) => acc + curr.amount, 0));
+            console.log(data)
+        }
+        getPayments();
+    }, [orderId])
 
     return (
         <>
@@ -151,10 +91,16 @@ export default function PaymentDetailsCS({ params: { orderId } }: Readonly<{ par
                 </TableHeader>
                 <TableBody>
                     <TableRow>
-                        <TableCell className="font-medium">ORD786856</TableCell>
-                        <TableCell>&#8377;51,677</TableCell>
-                        <TableCell>&#8377;1,71,704</TableCell>
-                        <TableCell>21/04/24</TableCell>
+                        <TableCell className="font-medium">{payment?.orderId}</TableCell>
+                        <TableCell>{payment?.amountPaid?.toLocaleString('en-IN', {
+                            style: 'currency',
+                            currency: 'INR'
+                        })}</TableCell>
+                        <TableCell>{payment?.amountDue?.toLocaleString('en-IN', {
+                            style: 'currency',
+                            currency: 'INR'
+                        })}</TableCell>
+                        <TableCell>{dayjs(payment?.finalDueDate).format("DD/MM/YYYY")}</TableCell>
                         <TableCell>Visa Card</TableCell>
                     </TableRow>
                 </TableBody>
@@ -170,25 +116,25 @@ export default function PaymentDetailsCS({ params: { orderId } }: Readonly<{ par
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {payments.map((payment, index) => (
+                        {payment?.payments.map((payment, index) => (
                             <PaymentTableRow key={index} {...payment} />
                         ))}
                         <TableRow className="bg-gray-200">
-                            <TableCell colSpan={2} className="font-semibold">Total:</TableCell>
-                            <TableCell className="font-semibold">&#8377;{totalAmount.toLocaleString()}</TableCell>
-                            <TableCell></TableCell>
+                            <TableCell className="font-semibold">Total:</TableCell>
+                            <TableCell colSpan={3} className="font-semibold">{totalAmount.toLocaleString('en-IN', {
+                                style: 'currency',
+                                currency: 'INR'
+                            })}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
-                <div className='flex gap-4 items-center justify-center w-full col-span-full mt-4 mb-8'> 
-                <Button variant={'outline'} onClick={togglePopup} className={cn('border-2 border-primary text-primary hover:text-primary')}>
-        CONNECT WITH TEAM
-    </Button>
-    <Button className={cn('w-[160px]')}>PAY NOW</Button>
-</div>
-<PopupComponent isVisible={isPopupVisible} togglePopup={togglePopup} sendMessage={() => {/* handle send message */}} />
-
-                
+                <div className='flex gap-4 items-center justify-center w-full col-span-full mt-4 mb-8'>
+                    <Button variant={'outline'} onClick={togglePopup} className={cn('border-2 border-primary text-primary hover:text-primary')}>
+                        CONNECT WITH TEAM
+                    </Button>
+                    <Button className={cn('w-[160px]')}>PAY NOW</Button>
+                </div>
+                <PopupComponent isVisible={isPopupVisible} togglePopup={togglePopup} sendMessage={() => {/* handle send message */ }} />
             </div>
         </>
     )

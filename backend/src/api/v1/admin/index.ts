@@ -7,6 +7,7 @@ import profile from "./profile";
 import suppliers from "./suppliers";
 import products from "./products";
 import order from "./order";
+import payment from "./payment";
 
 const admin = Router();
 
@@ -19,5 +20,6 @@ admin.use("/quotation", quotation);
 admin.use("/suppliers", suppliers);
 admin.use("/products", products);
 admin.use("/order", order);
+admin.use("/payment", payment);
 
 export default admin;

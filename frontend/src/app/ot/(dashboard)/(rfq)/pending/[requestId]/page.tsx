@@ -1,16 +1,23 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { cn } from '@/lib/utils'
-import { IoArrowBack } from "react-icons/io5";
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { useCookies } from '@/hooks/useCookies';
-import dayjs from 'dayjs';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from '@/components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/components/ui/use-toast';
+import { useCookies } from '@/hooks/useCookies';
+import { cn } from '@/lib/utils';
+import dayjs from 'dayjs';
+import { Calendar as CalendarIcon } from "lucide-react";
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { IoArrowBack } from "react-icons/io5";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 
 type PendingQuoteType = {
     quoteId: string;
@@ -27,6 +34,7 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
     const cookies = useCookies();
     const { toast } = useToast();
     const router = useRouter();
+    const [date, setDate] = useState<Date | undefined>();
 
     useEffect(() => {
         async function getPendingQuoteInDetail() {
@@ -136,7 +144,7 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
                 <label htmlFor="designPlan">
                     <p className='font-semibold'>Remodeling Design Plan</p>
                     <div className='w-full border rounded-sm mt-1 flex items-center justify-between'>
-                        <Input type="file" accept='application/pdf' id="designPlan" name="designPlan" className={cn('border-0')} />
+                        <Input type="file" required accept='application/pdf' id="designPlan" name="designPlan" className={cn('border-0')} />
                         {
                             formData?.designPlan ? (
                                 <Link href={URL.createObjectURL(formData?.designPlan as File)} target="_blank" className="m-1 text-sm border border-blue-500 text-blue-500 rounded-sm px-4 py-2 hover:bg-secondary transition-colors duration-200">
@@ -157,7 +165,7 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
                 <label htmlFor="quotation">
                     <p className='font-semibold'>Quotation</p>
                     <div className='w-full border rounded-sm mt-1 flex items-center justify-between'>
-                        <Input type="file" accept='application/pdf' id="quotation" name="quotation" className={cn('border-0')} />
+                        <Input type="file" required accept='application/pdf' id="quotation" name="quotation" className={cn('border-0')} />
                         {
                             formData?.quotation ? (
                                 <Link href={URL.createObjectURL(formData?.quotation as File)} target="_blank" className="m-1 text-sm border border-blue-500 text-blue-500 rounded-sm px-4 py-2 hover:bg-secondary transition-colors duration-200">
@@ -173,11 +181,42 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
                 </label>
                 <label htmlFor="timeline">
                     <p className='font-semibold'>Delivery Timeline</p>
-                    <Input type="text" id="timeline" name="timeline" className='w-full border p-2 rounded-sm mt-1' />
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <div
+                                className={cn(
+                                    buttonVariants({
+                                        variant: 'outline'
+                                    }),
+                                    "gap-2 w-full mt-1"
+                                )}
+                            >
+                                <CalendarIcon className='w-4 h-4' />
+                                <input
+                                    required
+                                    readOnly
+                                    value={date ? dayjs(date).format("DD/MM/YYYY") : "Pick a date"}
+                                    type="text"
+                                    id="timeline"
+                                    name="timeline"
+                                    className={cn('w-full border-0 outline-0 bg-transparent')}
+                                />
+                            </div>
+                        </PopoverTrigger>
+                        <PopoverContent className={cn('w-auto p-0')}>
+                            <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={setDate}
+                                initialFocus
+                            />
+                        </PopoverContent>
+                    </Popover>
                 </label>
                 <label htmlFor="amount">
                     <p className='font-semibold'>Total Amount</p>
                     <Input type="text"
+                        required
                         id="amount"
                         name="amount"
                         className='w-full border p-2 rounded-sm mt-1'
