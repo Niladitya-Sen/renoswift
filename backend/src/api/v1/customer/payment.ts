@@ -309,7 +309,7 @@ payment.post("/success", async (req: UserRequest, res) => {
                     })
                 }
 
-                db.query('UPDATE Payment SET status = ?, amountPaid = ?, amountDue = 0 WHERE id = ? AND userId = ?', ['done', amount, paymentId, userId], (err, result) => {
+                db.query("UPDATE Payment p SET p.status = ?, p.amountPaid = ?, p.amountDue = 0, p.finalDueDate = STR_TO_DATE((SELECT qr.timeline FROM QuoteReply qr WHERE qr.quoteId = p.quoteId), '%d/%m/%Y') WHERE p.id = ? AND p.userId = ?", ['done', amount, paymentId, userId], (err, result) => {
                     if (err) {
                         db.rollback((err) => {
                             if (err) {
@@ -427,7 +427,7 @@ payment.post("/success", async (req: UserRequest, res) => {
 });
 
 payment.get("/", (req: UserRequest, res) => {
-    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId) as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? ORDER BY o.createdDate DESC; ';
+    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? ORDER BY o.createdDate DESC; ';
 
     db.query(sql, [req.userId], (err, result) => {
         if (err) {
@@ -440,7 +440,7 @@ payment.get("/", (req: UserRequest, res) => {
 });
 
 payment.get("/:orderId", (req: UserRequest, res) => {
-    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId) as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId) as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? AND o.orderId = ? ORDER BY o.createdDate DESC;';
+    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? AND o.orderId = ? ORDER BY o.createdDate DESC;';
 
     db.query(sql, [req.userId, req.params.orderId], (err, result) => {
         if (err) {
