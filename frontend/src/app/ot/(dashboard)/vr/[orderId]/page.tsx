@@ -126,7 +126,7 @@ function ZipInput(props: Readonly<{ name: string, orderId: string, zipURL?: stri
                             {
                                 changed && <Button disabled={loading} className={cn("flex mx-auto mt-2")} onClick={handleSave}>
                                     {
-                                        loading && <AiOutlineLoading3Quarters className='animate-spin' />
+                                        loading && <AiOutlineLoading3Quarters className='animate-spin mr-2' />
                                     }
                                     Save & Submit
                                 </Button>
