@@ -606,7 +606,7 @@ CREATE TABLE vr (
   zipURL varchar(200) NOT null,
   url varchar(200),
   isValid boolean default true,
-  isActive boolean default true,
+  isActive boolean default false,
   isDeleted boolean default false,
   createdBy varchar(255),
   modifiedBy varchar(255),
@@ -617,6 +617,7 @@ CREATE TABLE vr (
 );
 
 SELECT * FROM vr;
+DROP TABLE vr;
 
 
 CREATE TABLE Review (
@@ -647,7 +648,6 @@ name varchar(255) not null,
 email varchar(255) unique not null,
 phoneNumber varchar(20) unique not null,
 role bigint not null,
-profilePhoto varchar(255),
 isValid boolean default true,
 isActive boolean default true,
 isDeleted boolean default false,
@@ -659,3 +659,10 @@ DBTimeStamp datetime default NOW() not null,
 foreign key (role) references UserRole(id),
 CHECK (role = 6)
 );
+
+ALTER TABLE Developer ADD COLUMN password varchar(200) not null;
+
+INSERT INTO Developer (name, email, phoneNumber, role, password) 
+VALUES ('Developer', 'dev@renoswift.com', '9876543210', 6, '1234');
+
+SELECT * FROM Developer d;
