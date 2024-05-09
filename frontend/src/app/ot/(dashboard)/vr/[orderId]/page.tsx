@@ -82,6 +82,7 @@ function ZipInput(props: Readonly<{ name: string, orderId: string, zipURL?: stri
     const [loading, setLoading] = useState(false);
 
     async function handleSave() {
+        setLoading(true);
         const formData = new FormData();
         const file = (document.getElementById(props.name) as HTMLInputElement).files?.[0];
         if (!file) return;
@@ -105,6 +106,7 @@ function ZipInput(props: Readonly<{ name: string, orderId: string, zipURL?: stri
             setEdit(false);
             router.refresh();
         }
+        setLoading(false);
     }
 
     return (
