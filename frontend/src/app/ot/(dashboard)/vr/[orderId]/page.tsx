@@ -104,6 +104,7 @@ function ZipInput(props: Readonly<{ name: string, orderId: string, zipURL?: stri
             });
             setEdit(false);
             router.refresh();
+            window.location.reload();
         }
         setLoading(false);
     }
