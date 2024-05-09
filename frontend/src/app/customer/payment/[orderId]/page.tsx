@@ -66,7 +66,6 @@ export default function PaymentDetails({ params: { orderId } }: Readonly<{ param
             const data: PaymentType = await response.json();
             setPayment(data);
             setTotalAmount(data.payments.reduce((acc, curr) => acc + curr.amount, 0));
-            console.log(data)
         }
         getPayments();
     }, [orderId])

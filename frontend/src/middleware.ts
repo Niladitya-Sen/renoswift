@@ -49,10 +49,28 @@ async function verifyAdmin(token: string): Promise<{ verified: boolean, message:
     }
 }
 
+async function verifyDev(token: string): Promise<{ verified: boolean, message: string }> {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verify/dev`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        return { verified: false, message: "User not verified" };
+    }
+}
+
+
 export async function middleware(request: NextRequest) {
     const token = request.cookies.get('token')?.value;
     const adminToken = request.cookies.get('adminToken')?.value;
     const otToken = request.cookies.get('otToken')?.value;
+    const devToken = request.cookies.get('devToken')?.value;
 
     const response = NextResponse.next();
 
@@ -89,6 +107,18 @@ export async function middleware(request: NextRequest) {
 
         if (!verified.verified) {
             return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/ot/login`);
+        } else {
+            return response;
+        }
+    } else if (request.nextUrl.pathname.includes("/dev") && !request.nextUrl.pathname.includes("/login")) {
+        if (!devToken) {
+            return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/dev/login`);
+        }
+
+        const verified = await verifyDev(devToken);
+
+        if (!verified.verified) {
+            return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/dev/login`);
         } else {
             return response;
         }

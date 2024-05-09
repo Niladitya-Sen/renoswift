@@ -62,6 +62,7 @@ export default function Login() {
                 cookies?.remove('token');
                 cookies?.remove("adminToken");
                 cookies?.remove("otToken");
+                cookies?.remove("devId");
 
                 cookies?.set('token', data.token, 15);
                 router.push("/customer");

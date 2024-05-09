@@ -56,12 +56,13 @@ export default function Signup() {
             toast({
                 description: 'Signup successful!',
             });
-            
+
             // Remove all cookies
             cookies?.remove('token');
             cookies?.remove("adminToken");
             cookies?.remove("otToken");
-            
+            cookies?.remove("devId");
+
             cookies?.set('token', data.token, 30);
             router.push('/customer/welcome');
         } else {

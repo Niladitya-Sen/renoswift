@@ -37,12 +37,13 @@ export default function AdminLogin() {
                 toast({
                     description: 'Login successful!',
                 });
-                
+
                 // Remove all cookies
                 cookies?.remove('token');
                 cookies?.remove("adminToken");
                 cookies?.remove("otToken");
-                
+                cookies?.remove("devId");
+
                 cookies?.set('adminToken', data.token, 30);
                 router.push("/admin");
             } else {
@@ -51,7 +52,7 @@ export default function AdminLogin() {
                     variant: 'destructive'
                 });
             }
-            
+
         } catch (error) {
             setLoading(false);
             console.log('Error logging in:', error);

@@ -62,14 +62,14 @@ export default function UserDropdown() {
     const [isCustomer, setIsCustomer] = useState(false);
 
     useEffect(() => {
-        if (cookies?.get('token') || cookies?.get('otToken') || cookies?.get('adminToken')) {
+        if (cookies?.get('token') || cookies?.get('otToken') || cookies?.get('adminToken') || cookies?.get('devToken')) {
             setIsLoggedIn(true);
         }
     }, [cookies]);
 
     useEffect(() => {
         async function getProfile() {
-            let role: "customer" | "ot" | "admin" = "customer";
+            let role: "customer" | "ot" | "admin" | "dev" = "customer";
             let token = cookies?.get('token');
 
             if (cookies?.get('otToken')) {
@@ -78,6 +78,9 @@ export default function UserDropdown() {
             } else if (cookies?.get('adminToken')) {
                 role = "admin";
                 token = cookies?.get('adminToken');
+            } else if (cookies?.get('devToken')) {
+                role = "dev";
+                token = cookies?.get('devToken');
             } else {
                 setIsCustomer(true);
             }
@@ -98,7 +101,7 @@ export default function UserDropdown() {
         if (isLoggedIn) {
             getProfile();
         }
-    }, [cookies?.get('token'), isLoggedIn]);
+    }, [isLoggedIn]);
 
     return (
         <div className={cn('block', {

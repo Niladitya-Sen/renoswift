@@ -14,6 +14,8 @@ DBTimeStamp datetime default NOW() not null
 insert into UserRole (role) VALUES ('Customer'), ('Admin'), 
 ('Internal Team for Quotes'), ('Supervisor'), ('Procurement');
 
+INSERT INTO UserRole (role) VALUES ('Developer');
+
 select * from UserRole;
 
 CREATE TABLE Admin (
@@ -354,6 +356,8 @@ drop table Payment;
 SELECT * FROM Payment;
 SELECT * FROM QuoteReply qr;
 
+DELETE FROM Payment WHERE id = 23;
+
 SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = 'RS0009' ORDER BY p.createdDate DESC LIMIT 1;
 
 UPDATE Payment p SET p.status = 'done', 
@@ -594,3 +598,64 @@ AND isCompleted = FALSE ORDER BY date ASC LIMIT 1;
 SELECT * FROM Order_ o;
 
 SELECT * FROM Quote q;
+
+CREATE TABLE vr (
+  id bigint AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  orderId varchar(200) NOT NULL,
+  type enum('before', 'after', 'during') NOT NULL,
+  zipURL varchar(200) NOT null,
+  url varchar(200),
+  isValid boolean default true,
+  isActive boolean default true,
+  isDeleted boolean default false,
+  createdBy varchar(255),
+  modifiedBy varchar(255),
+  createdDate datetime default NOW() not null,
+  modifiedDate datetime default NOW() not null,
+  DBTimeStamp datetime default NOW() not null,
+  FOREIGN KEY (orderId) REFERENCES Order_(orderId)
+);
+
+SELECT * FROM vr;
+
+
+CREATE TABLE Review (
+  id bigint AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  customerId bigint NOT NULL,
+  rate int NOT NULL,
+  feedback text,
+  isValid boolean default true,
+  isActive boolean default true,
+  isDeleted boolean default false,
+  createdBy varchar(255),
+  modifiedBy varchar(255),
+  createdDate datetime default NOW() not null,
+  modifiedDate datetime default NOW() not null,
+  DBTimeStamp datetime default NOW() not null,
+  FOREIGN KEY (customerId) REFERENCES User(id),
+  CHECK(rate <= 5)
+);
+
+ALTER TABLE Review ADD COLUMN orderId varchar(200) NOT NULL REFERENCES Order_(orderId);
+ALTER TABLE Review RENAME COLUMN rate TO rating;
+
+SELECT * FROM Review r;
+
+create table Developer (
+id bigint primary key auto_increment,
+name varchar(255) not null,
+email varchar(255) unique not null,
+phoneNumber varchar(20) unique not null,
+role bigint not null,
+profilePhoto varchar(255),
+isValid boolean default true,
+isActive boolean default true,
+isDeleted boolean default false,
+createdBy varchar(255),
+modifiedBy varchar(255),
+createdDate datetime default NOW() not null,
+modifiedDate datetime default NOW() not null,
+DBTimeStamp datetime default NOW() not null,
+foreign key (role) references UserRole(id),
+CHECK (role = 6)
+);

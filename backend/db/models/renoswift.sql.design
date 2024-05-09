@@ -11,8 +11,8 @@
   <Connection>
     <ConnectionModel>
       <PropertyValue Name="Database">59f90733-4d68-4fdf-82a7-f0fcbf5460aa</PropertyValue>
-      <PropertyValue Name="Id">17ea16bd-fc27-4988-8b31-75b19c419ccc</PropertyValue>
-      <PropertyValue Name="ConnectionString" xml:space="preserve">User Id=RenoSwiftAppUsr;Host=103.145.51.250;Database=renoswiftappdb;Character Set=utf8</PropertyValue>
+      <PropertyValue Name="Id">2a66a624-da59-468c-96f4-31d9deb92654</PropertyValue>
+      <PropertyValue Name="ConnectionString" xml:space="preserve">User Id=RenoSwiftAppUsr;Host=103.239.89.99;Database=renoswiftappdb;Character Set=utf8</PropertyValue>
     </ConnectionModel>
     <Database>renoswiftappdb</Database>
   </Connection>

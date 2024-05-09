@@ -15,17 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", api);
 
-app.get('/', (req, res) => {
-    db.query('SELECT * FROM UserRole', (err, results) => {
-        if (err) {
-            console.log('Error fetching data:', err);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        res.status(200).json(results);
-    });
-});
-
 app.listen(PORT, () => {
     db.connect((err) => {
         if (err) {

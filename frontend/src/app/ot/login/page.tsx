@@ -56,12 +56,13 @@ export default function Login() {
                 toast({
                     description: 'Login successful!',
                 });
-                
+
                 // Remove all cookies
                 cookies?.remove('token');
                 cookies?.remove("adminToken");
                 cookies?.remove("otToken");
-                
+                cookies?.remove("devId");
+
                 cookies?.set('otToken', data.token, 15);
                 router.push("/ot");
             } else {

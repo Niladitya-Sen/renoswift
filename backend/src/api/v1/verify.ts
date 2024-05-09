@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { AdminRequest, OperationsTeamRequest, UserRequest } from "../../types/types";
+import { AdminRequest, DeveloperRequest, OperationsTeamRequest, UserRequest } from "../../types/types";
 import { verfiyUser } from "../../middleware/verifyUser";
 import { verfiyOperationsTeam } from "../../middleware/verifyOperationsTeam";
 import { verfiyAdmin } from "../../middleware/verifyAdmin";
+import { verfiyDeveloper } from "../../middleware/verifyDeveloper";
 
 const verify = Router();
 
@@ -32,6 +33,17 @@ verify.get("/admin",
     verfiyAdmin,
     (req: AdminRequest, res) => {
         if (req.adminId) {
+            return res.status(200).json({ verified: true });
+        } else {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+    }
+);
+
+verify.get("/dev",
+    verfiyDeveloper,
+    (req: DeveloperRequest, res) => {
+        if (req.devId) {
             return res.status(200).json({ verified: true });
         } else {
             return res.status(401).json({ message: "Unauthorized" });

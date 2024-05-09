@@ -95,6 +95,16 @@ export function OperationsTeamSidebarNavLinks({ isOpen, setIsOpen }: Readonly<{ 
                     'hidden': !isOpen
                 })}>Orders</p>
             </Link>
+            <Link href="/ot/vr" className={cn('p-4 flex items-center gap-8 hover:bg-black/20 transition-all duration-200', {
+                'bg-primary hover:bg-primary/80': pathname.includes('/ot/vr')
+            })}>
+                <svg width="25" height="25" viewBox="0 0 42 44" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.32968 9.23027L19.9172 1.43652V8.5217L12.8319 12.0643L21.7276 16.5122L30.6233 12.0643L23.5384 8.52189V1.43672L39.1255 9.23027C40.199 9.767 40.877 10.8642 40.877 12.0643V30.8978L34.5399 27.2391V17.1912L24.8962 22.0131V34.3332L32.7678 30.3974L39.335 34.189C39.267 34.2297 39.1971 34.268 39.1255 34.3038L23.1446 42.2942C22.2526 42.7402 21.2026 42.7402 20.3106 42.2942L4.32968 34.3038C4.25774 34.2678 4.18758 34.2293 4.11929 34.1885L10.6864 30.3969L18.559 34.3333V22.0131L8.9153 17.1912V27.238L2.57812 30.8968V12.0643C2.57812 10.8642 3.25621 9.767 4.32968 9.23027Z" stroke="white" strokeWidth="1.35797" strokeLinecap="round" strokeLinejoin="round" className="fill-black" />
+                </svg>
+                <p className={cn({
+                    'hidden': !isOpen
+                })}>VR 360&deg;</p>
+            </Link>
             <Link href="/ot/payments" className={cn('p-5 flex items-center gap-8 hover:bg-black/20 transition-all duration-200 min-w-[15rem]', {
                 'bg-primary hover:bg-primary/80': pathname.includes('/ot/payments')
             })}>
@@ -159,6 +169,14 @@ export function OperationsTeamMobileSidebarNavLinks() {
             })}>
                 <HiOutlineShoppingCart className='text-xl md:text-2xl' />
                 <p>Orders</p>
+            </Link>
+            <Link href="/ot/vr" className={cn('p-4 flex items-center gap-8 hover:bg-black/20 transition-all duration-200', {
+                'bg-primary hover:bg-primary/80': pathname.includes('/ot/vr')
+            })}>
+                <svg width="25" height="25" viewBox="0 0 42 44" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.32968 9.23027L19.9172 1.43652V8.5217L12.8319 12.0643L21.7276 16.5122L30.6233 12.0643L23.5384 8.52189V1.43672L39.1255 9.23027C40.199 9.767 40.877 10.8642 40.877 12.0643V30.8978L34.5399 27.2391V17.1912L24.8962 22.0131V34.3332L32.7678 30.3974L39.335 34.189C39.267 34.2297 39.1971 34.268 39.1255 34.3038L23.1446 42.2942C22.2526 42.7402 21.2026 42.7402 20.3106 42.2942L4.32968 34.3038C4.25774 34.2678 4.18758 34.2293 4.11929 34.1885L10.6864 30.3969L18.559 34.3333V22.0131L8.9153 17.1912V27.238L2.57812 30.8968V12.0643C2.57812 10.8642 3.25621 9.767 4.32968 9.23027Z" stroke="white" strokeWidth="1.35797" strokeLinecap="round" strokeLinejoin="round" className="fill-black" />
+                </svg>
+                <p>VR 360&deg;</p>
             </Link>
             <Link href="/ot/payments" className={cn('p-5 flex items-center gap-8 hover:bg-black/20 transition-all duration-200', {
                 'bg-primary hover:bg-primary/80': pathname.includes('/ot/payments')

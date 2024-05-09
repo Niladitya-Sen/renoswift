@@ -5,6 +5,8 @@ import profile from "./profile";
 import quotation from "./quotation";
 import payment from "./payment";
 import order from "./order";
+import vr from "./vr";
+import review from "./review";
 
 const customer = Router();
 
@@ -14,5 +16,7 @@ customer.use("/quotation", quotation);
 customer.use("/profile", profile);
 customer.use("/payment", payment);
 customer.use("/order", order);
+customer.use("/vr", vr);
+customer.use("/review", review);
 
 export default customer;

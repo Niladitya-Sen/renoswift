@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
     Table,
     TableBody,
@@ -48,24 +48,6 @@ export default async function Orders() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {/* <TableRow>
-                    <TableCell className="font-medium">--</TableCell>
-                    <TableCell>21/04/24</TableCell>
-                    <TableCell>&#8377;51,677</TableCell>
-                    <TableCell>Pending</TableCell>                    
-                </TableRow>
-                <TableRow>
-                    <TableCell className="font-medium">ORD786856</TableCell>
-                    <TableCell>21/04/24</TableCell>
-                    <TableCell>&#8377;51,677</TableCell>
-                    <TableCell>Confirmed</TableCell>
-                    <TableCell className={cn('flex items-center justify-end')}>
-                        <Link href="/customer/order/ORD786856" className={cn(buttonVariants({
-                            variant: 'outline'
-                        }), 'border-primary')}>View</Link>
-                    </TableCell>
-                </TableRow>
-             */}
                 {
                     orders.map((order, index) => (
                         <TableRow key={index}>
