@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from '@/components/ui/textarea';
 import { FaCircleCheck } from 'react-icons/fa6';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 
 type DataType = {
@@ -78,6 +79,7 @@ function ZipInput(props: Readonly<{ name: string, orderId: string, zipURL?: stri
     const cookies = useCookies();
     const { toast } = useToast();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     async function handleSave() {
         const formData = new FormData();
@@ -121,7 +123,12 @@ function ZipInput(props: Readonly<{ name: string, orderId: string, zipURL?: stri
                         <>
                             <Input id={props.name} name={props.name} type='file' accept='application/zip' onChange={() => setChanged(true)} />
                             {
-                                changed && <Button className={cn("flex mx-auto mt-2")} onClick={handleSave}>Save & Submit</Button>
+                                changed && <Button disabled={loading} className={cn("flex mx-auto mt-2")} onClick={handleSave}>
+                                    {
+                                        loading && <AiOutlineLoading3Quarters className='animate-spin' />
+                                    }
+                                    Save & Submit
+                                </Button>
                             }
                         </>
                     )
