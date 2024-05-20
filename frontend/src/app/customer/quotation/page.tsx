@@ -98,7 +98,7 @@ export default function Quotation() {
                 </label>
                 <label htmlFor="remodelingDate" className='border-secondary-foreground/20 border-2 block rounded-lg py-2 px-4'>
                     <p className='text-secondary-foreground/50 font-medium'>Expected Remodeling Date</p>
-                    <input name="remodelingDate" type="date" id="remodelingDate" className='outline-none w-full' />
+                    <input name="remodelingDate" type="date" id="remodelingDate" className='outline-none w-full' min={new Date().toISOString().split('T')[0]}  />
                 </label>
                 <label htmlFor="zipcode" className='border-secondary-foreground/20 border-2 block rounded-lg py-2 px-4'>
                     <p className='text-secondary-foreground/50 font-medium'>Zip Code</p>

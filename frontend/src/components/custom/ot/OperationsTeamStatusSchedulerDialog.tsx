@@ -158,7 +158,7 @@ export default function OperationsTeamStatusSchedulerDialog({ trigger, orderId }
                     }
                 </div>
                 <form ref={formRef} className="flex gap-4 items-center justify-center" onSubmit={handleAddStatus}>
-                    <Input type="date" name="date" id="date" className={cn("w-full")} placeholder="Please select date" />
+                    <Input type="date" name="date" id="date" className={cn("w-full")} placeholder="Please select date" min={new Date().toISOString().split('T')[0]} />
                     <Input type="text" name="status" id="status" className={cn("w-full")} placeholder="Please enter status" />
                     <Button variant={"secondary"} size={"sm"}>Add</Button>
                 </form>

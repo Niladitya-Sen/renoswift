@@ -218,6 +218,9 @@ export default function Details() {
                                 selected={date}
                                 onSelect={setDate}
                                 initialFocus
+                                disabled={{
+                                    before: new Date()
+                                }}
                             />
                         </PopoverContent>
                     </Popover>

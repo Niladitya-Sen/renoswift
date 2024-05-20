@@ -209,6 +209,9 @@ export default function PendingDetails({ params: { requestId } }: Readonly<{ par
                                 selected={date}
                                 onSelect={setDate}
                                 initialFocus
+                                disabled={{
+                                    before: new Date()
+                                }}
                             />
                         </PopoverContent>
                     </Popover>

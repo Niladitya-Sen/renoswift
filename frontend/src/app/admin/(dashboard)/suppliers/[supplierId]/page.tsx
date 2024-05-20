@@ -78,7 +78,7 @@ export default function SupplierDetails({ params: { supplierId } }: Readonly<{ p
                 </label>
                 <label htmlFor="date">
                     <p className='font-medium mb-1'>Date Joined</p>
-                    <Input readOnly={readOnly} value={dayjs(supplier?.createdDate).format("YYYY-MM-DD")} type="date" id="date" placeholder="date" required />
+                    <Input readOnly={readOnly} value={dayjs(supplier?.createdDate).format("YYYY-MM-DD")} type="date" id="date" placeholder="date" required  />
                 </label>
                 <label htmlFor="yearOperation">
                     <p className='font-medium mb-1'>Years in Operation</p>
