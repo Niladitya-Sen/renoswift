@@ -68,11 +68,11 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
             count++;
         }
 
-        if ((bodyContents.video as File).size === 0 || (bodyContents.floorplan as File).size === 0 || count !== 5) {
+        if ((bodyContents.video as File).size === 0  || count !== 5) {
             setLoading(false);
             toast({
                 title: "Error!",
-                description: "Please upload all the required files and try again.",
+                description: "Please upload all the required files and try againn.",
                 variant: "destructive"
             });
             return;
