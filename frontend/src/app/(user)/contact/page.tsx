@@ -1,44 +1,43 @@
-import SectionWrapper from '@/components/custom/SectionWrapper'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { FaPhoneVolume } from "react-icons/fa6"
-import { HiOutlineMailOpen } from "react-icons/hi"
+"use client"
+import { useState } from 'react';
+import SectionWrapper from '@/components/custom/SectionWrapper';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { FaPhoneVolume } from "react-icons/fa6";
+import { HiOutlineMailOpen } from "react-icons/hi";
+import { useToast } from '@/components/ui/use-toast';
 
 export default function Contact() {
+    const { toast } = useToast();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [info, setInfo] = useState('');
+
+    const handleSubmit = () => {
+        // Handle form submission here (e.g., send data to backend)
+
+        // Show toast notification
+        toast({
+            description: 'Form submitted successfully! We will connect with you soon.',
+        });
+
+        // Clear input fields
+        setName('');
+        setEmail('');
+        setPhone('');
+        setInfo('');
+    };
+
     return (
         <SectionWrapper className="relative flex flex-col-reverse sm:flex-row gap-4 items-center mt-10 w-full h-[80svh]">
-            {/* <div className="absolute inset-0 rounded-lg overflow-hidden">
-                <iframe
-                    title='map'
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d223960.2906516919!2d77.3597857!3d28.7082013!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ceff8a4bf2d6f%3A0xcac8cca1b277fdcc!2sRenoswift!5e0!3m2!1sen!2sin!4v1706711828654!5m2!1sen!2sin"
-                    width="100%"
-                    height="100%"
-                    allowFullScreen={false}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-            </div> */}
-            {/* <div className="container px-5 py-24 mx-auto flex">
-                <div className="lg:w-1/3 md:w-1/2 bg-secondary rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
-                    <h2 className="text-secondary-foreground text-lg mb-8 font-medium">Contact Us</h2>
-                    <div>
-                        <label htmlFor="email" className="leading-7 text-sm text-secondary-foreground/80">Email</label>
-                        <Input type="email" id="email" name="email" placeholder='Enter your email' />
-                    </div>
-                    <div>
-                        <label htmlFor="message" className="leading-7 text-sm text-secondary-foreground/80">Message</label>
-                        <Textarea id="message" name="message" placeholder='Enter your message'></Textarea>
-                    </div>
-                    <Button>Send</Button>
-                </div>
-            </div> */}
             <div className='flex flex-col gap-4 w-full'>
                 <h2 className="heading-1">Get in <span className='text-primary'>Touch</span></h2>
-                <Input type="text" id="name" name="name" placeholder='Name*' />
-                <Input type="email" id="email" name="email" placeholder='Email*' />
-                <Input type="text" id="phone" name="phone" placeholder='Phone Number*' />
-                <Input type="text" id="info" name="info" placeholder='How did you find us ?*' />
-                <Button>Send</Button>
+                <Input type="text" id="name" name="name" placeholder='Name*' value={name} onChange={(e) => setName(e.target.value)}  />
+                <Input type="email" id="email" name="email" placeholder='Email*' value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input type="text" id="phone" name="phone" placeholder='Phone Number*' value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <Input type="text" id="info" name="info" placeholder='How did you find us ?*' value={info} onChange={(e) => setInfo(e.target.value)} />
+                <Button onClick={handleSubmit}>Send</Button>
                 <div className='flex flex-wrap gap-4'>
                     <div className='flex gap-4 items-center'>
                         <FaPhoneVolume className='text-2xl' />
@@ -84,5 +83,5 @@ export default function Contact() {
                 <div className='w-1/2 h-full bg-primary ml-auto'></div>
             </div>
         </SectionWrapper>
-    )
+    );
 }
