@@ -31,7 +31,9 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
     function navigateTo(id: string) {
         if (pathname === '/') {
             document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-        } else {
+        } 
+       
+        else {
             window.location.href = `/#${id}`;
         }
     }
@@ -52,8 +54,10 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                         <Link href={"/"}>
                             <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                         </Link>
-                        <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('about') }}>About Us</Button>
-                        <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('category') }}>Categories</Button>
+                    <Link href={"/about"} >
+                        <Button variant={pathname === '/about' ? 'default' : 'ghost'} size={'sm'}>About Us</Button>
+                    </Link>
+                        <Button variant={pathname === '/#feature' ? 'default' : 'ghost'} size={'sm'} onClick={() => { navigateTo('feature') }}>Feature</Button>
                         <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('inspiration') }}>Inspiration</Button>
                         <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('working') }}>Our Process</Button>
                         <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('testimonials') }}>Testimonials</Button>
@@ -77,7 +81,9 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                                 <Link href={"/"}>
                                     <Button variant={pathname === '/' ? 'default' : 'ghost'} size={'sm'}>Home</Button>
                                 </Link>
-                                <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('about') }}>About Us</Button>
+                                <Link href={"/about"} >
+                        <Button variant={pathname === '/about' ? 'default' : 'ghost'} size={'sm'} onClick={() => { navigateTo('about') }}>About Us</Button>
+                    </Link>
                                 <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('category') }}>Categories</Button>
                                 <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('inspiration') }}>Inspiration</Button>
                                 <Button variant={'ghost'} size={'sm'} onClick={() => { navigateTo('working') }}>Our Process</Button>

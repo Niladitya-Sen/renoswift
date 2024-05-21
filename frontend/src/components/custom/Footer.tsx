@@ -10,6 +10,9 @@ import { MdMail } from "react-icons/md";
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import SectionWrapper from './SectionWrapper';
+import facebookSvg from '../../../public/assets/logos_facebook - Copy.svg'
+import linkedinSvg from "../../../public/assets/devicon_linkedin.svg"
+import instagramSVG from "../../../public/assets/skill-icons_instagram.svg"
 
 export default function Footer() {
     const pathname = usePathname();
@@ -19,13 +22,13 @@ export default function Footer() {
             <footer className={cn('bg-primary/20 dark:bg-primary/50 mb-10 rounded-lg py-12 px-10 sm:px-20 w-full', {
                 'hidden': pathname === '/auth/login' || pathname === '/auth/signup'
             })}>
-                <div className='flex items-center justify-center w-full mb-4'>
+                {/* <div className='flex items-center justify-center w-full mb-4'>
                     <Image src='/assets/logo.jpg' alt='logo' width={200} height={100} />
-                </div>
+                </div> */}
                 <hr />
-                <section className='flex flex-wrap gap-8 items-start justify-center md:justify-between mt-5'>
-                    <div className='flex flex-col sm:flex-row gap-8 justify-center text-center sm:text-start sm:justify-between w-full sm:w-auto'>
-                        <div>
+                <section className='flex flex-wrap gap-4 items-start justify-center md:justify-between mt-5'>
+                    <div className='flex flex-col sm:flex-row gap-12 justify-center text-center sm:text-start sm:justify-between w-full sm:w-auto'>
+                        {/* <div>
                             <h5 className='mb-2 font-semibold'>Browse by</h5>
                             <ul className='text-foreground/80 flex flex-col gap-2'>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
@@ -44,17 +47,46 @@ export default function Footer() {
                                     <Link href="#">Sales</Link>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
+                         <div className='flex flex-col items-center justify-center w-full mb-4 '>
+                    <Image src='/assets/logo.jpg' alt='logo' width={300} height={100} />
+                    <div className="sm:max-w-xs text-center sm:text-start">
+
+                    <p className='italic text-sm mt-1 text-foreground/80 flex flex-col gap-2 mt-6 '>Embark on a journey with us to turn your vision into reality.
+</p>
+                    </div>
+
+                    <div className='flex items-center justify-start gap-8 mt-6 sm:max-w-xs text-center sm:text-start'>
+                    <Link href="https://www.linkedin.com/company/78811632/admin/notifications/all/" legacyBehavior>
+        <a target="_blank" rel="noopener noreferrer">
+          <Image src={linkedinSvg} alt="LinkedIn Logo" className="h-8 w-8 transition-transform duration-300 hover:translate-x-2" />
+        </a>
+      </Link>
+      <Link href="https://www.instagram.com/renoswift/" legacyBehavior>
+        <a target="_blank" rel="noopener noreferrer">
+          <Image src={instagramSVG} alt="Instagram Logo" className="h-8 w-8 transition-transform duration-300 hover:translate-x-2" />
+        </a>
+      </Link>
+      <Link href="https://www.facebook.com/ChooseRenoswift" legacyBehavior>
+        <a target="_blank" rel="noopener noreferrer">
+          <Image src={facebookSvg} alt="Facebook Logo" className="h-8 w-8 transition-transform duration-300 hover:translate-x-2" />
+        </a>
+      </Link>
+    </div>
+
+
+                    
+                </div>
                         <div>
-                            <h5 className='mb-2 font-semibold'>Quick links</h5>
+                            <h5 className='mb-2 font-semibold lg:w-24'>Quick links</h5>
                             <ul className='text-foreground/80 flex flex-col gap-2'>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
-                                    <Link href="#">In-Store Pickup</Link>
+                                    <Link href="/about">About Us</Link>
                                 </li>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
-                                    <Link href="#">Gift Cards</Link>
+                                    <Link href="/contact">Contact</Link>
                                 </li>
-                                <li className="transition-transform duration-300 hover:translate-x-4">
+                                {/* <li className="transition-transform duration-300 hover:translate-x-4">
                                     <Link href="#">Afterpay</Link>
                                 </li>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
@@ -62,10 +94,10 @@ export default function Footer() {
                                 </li>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
                                     <Link href="#">FAQ</Link>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
-                        <div>
+                        {/* <div>
                             <h5 className='mb-2 font-semibold'>Order info</h5>
                             <ul className='text-foreground/80 flex flex-col gap-2'>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
@@ -84,10 +116,10 @@ export default function Footer() {
                                     <Link href="#">Order history</Link>
                                 </li>
                             </ul>
-                        </div>
-                        <div>
+                        </div> */}
+                        <div >
                             <h5 className='mb-2 font-semibold'>Contact Us</h5>
-                            <ul className='text-foreground/80 flex flex-col gap-2'>
+                            <ul className='text-foreground/80 flex flex-col gap-2 '>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
                                     <Link href="#">
                                         <IoIosCall className='inline-block mr-2 text-lg' />
@@ -106,13 +138,18 @@ export default function Footer() {
                                         +919205022725
                                     </Link>
                                 </li>
-                                <li className="transition-transform duration-300 hover:translate-x-4">
+                                
+                            </ul>
+
+                            <div
+                             className=" flex items-center justify-center  transition-transform duration-300 hover:translate-x-4 mt-2">
+                                <MdMail className='inline-block mr-2 text-lg' />
                                     <Link href="mailto:info@renoswift.com">
-                                        <MdMail className='inline-block mr-2 text-lg' />
+        
                                         info@renoswift.com
                                     </Link>
-                                </li>
-                            </ul>
+                                
+                            </div>
                         </div>
                     </div>
                     <div className="sm:max-w-xs text-center sm:text-start">

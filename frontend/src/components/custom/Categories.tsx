@@ -54,7 +54,7 @@ function CategoryCard({ title, description, image }: Readonly<{ title: string, d
 
 export default function Categories() {
     return (
-        <section id="category" className='my-20'>
+        <section id="feature" className='my-20'>
             <h1 className='heading-1 mb-2'>Featured <span className="text-primary">Packages</span></h1>
             <p className='text-foreground/80 mb-8'>Explore our spectrum of plans to meet all your needs.</p>
             <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4'>
