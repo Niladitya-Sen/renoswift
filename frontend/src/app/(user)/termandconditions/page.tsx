@@ -32,13 +32,13 @@ const Terms: NextPage = () => {
         <section className="mb-4">
           <h2 className="text-2xl font-semibold mb-2">4. Your Content</h2>
           <p className="text-gray-700 mb-2">
-            In these Website Standard Terms and Conditions, "Your Content" shall mean any audio, video text, images, or other material you choose to display on this Website.
+            In these Website Standard Terms and Conditions,Your Content shall mean any audio, video text, images, or other material you choose to display on this Website.
           </p>
         </section>
         <section className="mb-4">
           <h2 className="text-2xl font-semibold mb-2">5. No warranties</h2>
           <p className="text-gray-700 mb-2">
-            This Website is provided "as is," with all faults, and we express no representations or warranties, of any kind related to this Website or the materials contained on this Website.
+            This Website is provided as is, with all faults, and we express no representations or warranties, of any kind related to this Website or the materials contained on this Website.
           </p>
         </section>
         <section className="mb-4">
