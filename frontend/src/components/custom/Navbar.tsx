@@ -48,7 +48,7 @@ export default function Navbar({ className }: Readonly<{ className?: string }>) 
                 </Link>
                 <div className="flex-grow"></div>
                 <div className={cn('hidden', {
-                    'flex items-center gap-2': pathname === "/" || pathname === "/about" || pathname === "/services" || pathname === "/packages" || pathname === "/blogs" || pathname === "/testimonials" || pathname === "/presence" || pathname === "/contact"
+                    'flex items-center gap-2': pathname === "/" || pathname === "/about" || pathname === "/services" || pathname === "/packages" || pathname === "/blogs" || pathname === "/testimonials" || pathname === "/presence" || pathname === "/contact" || pathname === "/cookiespolicy" || pathname === "/termandconditions" || pathname === "/privacypolicy"
                 })}>
                     <div className='hidden lg:flex items-center gap-2'>
                         <Link href={"/"}>

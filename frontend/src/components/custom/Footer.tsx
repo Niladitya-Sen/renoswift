@@ -78,7 +78,7 @@ export default function Footer() {
                     
                 </div>
                         <div>
-                            <h5 className='mb-2 font-semibold lg:w-24'>Quick links</h5>
+                            <h5 className='mb-2 font-semibold lg:w-36'>Quick links</h5>
                             <ul className='text-foreground/80 flex flex-col gap-2'>
                                 <li className="transition-transform duration-300 hover:translate-x-4">
                                     <Link href="/about">About Us</Link>
@@ -86,6 +86,18 @@ export default function Footer() {
                                 <li className="transition-transform duration-300 hover:translate-x-4">
                                     <Link href="/contact">Contact</Link>
                                 </li>
+                               
+
+                                <li className="transition-transform duration-300 hover:translate-x-4">
+                                    <Link href="/cookiespolicy">Cookies Policy</Link>
+                                </li>
+                                <li className="transition-transform duration-300 hover:translate-x-4">
+                                    <Link href="/privacypolicy">Privacy Policy</Link>
+                                </li>
+                                <li className="transition-transform duration-300 hover:translate-x-4">
+                                    <Link href="/termandconditions">Term & Conditions</Link>
+                                </li>
+
                                 {/* <li className="transition-transform duration-300 hover:translate-x-4">
                                     <Link href="#">Afterpay</Link>
                                 </li>
