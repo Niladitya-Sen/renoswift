@@ -8,10 +8,12 @@ import order from "./order";
 import vr from "./vr";
 import review from "./review";
 import subscriptionEmail from "./emailsubscriptions";
+import ContactSubmissions from "./contactsubmissions";
 
 const customer = Router();
 
 customer.use("/subscriptionemail", subscriptionEmail)
+customer.use("/contactsubmissions", ContactSubmissions)
 customer.use(verfiyUser);
 customer.use("/details", details);
 customer.use("/quotation", quotation);

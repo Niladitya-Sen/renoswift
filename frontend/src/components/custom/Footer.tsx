@@ -22,7 +22,7 @@ export default function Footer() {
 
     const handleSubscribe = async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/v1/customer/subscriptionemail', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/customer/subscriptionemail`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
