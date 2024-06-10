@@ -36,4 +36,5 @@ ContactSubmissions.get('/', async (req, res) => {
     );
 });
 
+
 export default ContactSubmissions;
