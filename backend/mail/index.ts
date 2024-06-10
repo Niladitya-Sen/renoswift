@@ -31,6 +31,19 @@ class MailService {
             console.log(e);
         }
     }
+
+    async sendSubscriptionConfirmation({ to }: { to: string }) {
+        try {
+            await this.transporter.sendMail({
+                from: process.env.EMAIL_USER,
+                to,
+                subject: 'Thank You for Subscribing!',
+                html : await ejs.renderFile("mail/templates/subscribe.ejs")
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }
 
 export default MailService;

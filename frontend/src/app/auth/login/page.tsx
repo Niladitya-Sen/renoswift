@@ -94,7 +94,7 @@ export default function Login() {
 
             setLoading(true);
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login/otp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
