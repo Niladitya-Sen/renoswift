@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import Image from 'next/image'
@@ -13,10 +13,45 @@ import SectionWrapper from './SectionWrapper';
 import facebookSvg from '../../../public/assets/logos_facebook - Copy.svg'
 import linkedinSvg from "../../../public/assets/devicon_linkedin.svg"
 import instagramSVG from "../../../public/assets/skill-icons_instagram.svg"
-
+import { useToast } from '../ui/use-toast';
 export default function Footer() {
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const {toast} = useToast();
     const pathname = usePathname();
 
+    const handleSubscribe = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/v1/customer/subscriptionemail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+            const result = await response.json();
+            if (response.ok) {
+                toast({
+                    title: result.message,
+                });
+               
+            } else if (response.status === 400) {
+                toast({
+                    title: result.message,
+                });
+            }
+           
+            else {
+                toast({
+                    title: "Something Goes Wrong, Try again Please",
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "something goes wrong",
+            });
+        }
+    };
     return (
         <SectionWrapper className={cn('w-full mt-10')}>
             <footer className={cn('bg-primary/20 dark:bg-primary/50 mb-10 rounded-lg py-12 px-10 sm:px-20 w-full', {
@@ -73,9 +108,7 @@ export default function Footer() {
         </a>
       </Link>
     </div>
-
-
-                    
+                   
                 </div>
                         <div>
                             <h5 className='mb-2 font-semibold lg:w-36'>Quick links</h5>
@@ -168,9 +201,14 @@ export default function Footer() {
                         <h5 className='font-semibold mb-2'>Sign up for our newsletter</h5>
                         <p className='italic text-sm mt-1 text-foreground/80 flex flex-col gap-2'>Add your email address to sign up for our monthly emails and to receive promotional offers.</p>
                         <div className="flex flex-wrap sm:flex-nowrap gap-2 w-full mt-2">
-                            <Input placeholder="Email address" />
-                            <Button>Subscribe</Button>
+                        <Input
+                                placeholder="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <Button onClick={handleSubscribe}>Subscribe</Button>
                         </div>
+                         {message && <p className="mt-2 text-sm text-foreground/80">{message}</p>}
                     </div>
                 </section>
             </footer>

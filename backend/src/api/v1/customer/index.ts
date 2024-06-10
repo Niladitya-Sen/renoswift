@@ -7,9 +7,11 @@ import payment from "./payment";
 import order from "./order";
 import vr from "./vr";
 import review from "./review";
+import subscriptionEmail from "./emailsubscriptions";
 
 const customer = Router();
 
+customer.use("/subscriptionemail", subscriptionEmail)
 customer.use(verfiyUser);
 customer.use("/details", details);
 customer.use("/quotation", quotation);
