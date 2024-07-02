@@ -108,7 +108,7 @@ order.get("/:orderId",
                 return res.status(404).json({ message: "Order not found" });
             }
 
-            db.query('SELECT status, remarks, createdDate, imageURL FROM OrderStatus WHERE orderId = ? AND isCompleted = true ORDER BY createdDate DESC LIMIT 1', [orderId], (err, statusResult) => {
+            db.query('SELECT status, remarks, createdDate, imageURL FROM OrderStatus WHERE orderId = ? AND isCompleted = true ORDER BY modifiedDate DESC LIMIT 1', [orderId], (err, statusResult) => {
                 if (err) {
                     console.log(err);
                     return res.status(500).json({ message: "Internal server error" });
@@ -331,7 +331,7 @@ order.post("/update-status",
                 return;
             }
 
-            const sql = 'UPDATE OrderStatus SET remarks = ?, imageURL = ?, isCompleted = TRUE WHERE id = ?';
+            const sql = 'UPDATE OrderStatus SET remarks = ?, imageURL = ?, isCompleted = TRUE, modifiedDate = NOW() WHERE id = ?';
             const values = [remarks, "/static/images/" + req.file?.filename, statusId];
 
             db.query(sql, values, (err, result) => {
