@@ -77,7 +77,7 @@ export default function Details() {
                 <FileInput name="image4" id="4" accept='image/*' />
                 <FileInput name="image5" id="5" accept='image/*' />
                 <div className='col-span-full w-full'></div>
-                <FileInput name="video" id="video" title='*Add Video' accept='video/*' />
+                <FileInput name="video" id="video" title='Add Video' accept='video/*' />
                 <FileInput name="floorplan" id="floorplan" title='Add Floorplan' accept='image/*' />
             </div>
             <div className='flex flex-col sm:grid sm:grid-cols-3 mt-20 gap-4'>

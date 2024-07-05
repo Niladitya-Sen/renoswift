@@ -3,7 +3,7 @@ import { AdminRequest } from "../../../types/types";
 import { db } from "../../../../db/db";
 import multer from "multer";
 import { body, validationResult } from "express-validator";
-
+import crypto from 'crypto'
 const products = Router();
 
 const storage = multer.diskStorage({
@@ -105,8 +105,8 @@ products.post("/",
 
         const { name, productId, category, brand, supplier, price, productDetails } = req.body;
 
-        if (Object.keys(req.files as Express.Multer.File[]).length !== 4) {
-            res.status(400).json({ message: "Please upload 4 images" });
+        if (Object.keys(req.files as Express.Multer.File[]).length !== 2) {
+            res.status(400).json({ message: "Please upload 2 images" });
             return;
         }
 

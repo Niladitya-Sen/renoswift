@@ -68,7 +68,7 @@ export default function CustomerDetailsForm({ children }: Readonly<{ children: R
             count++;
         }
 
-        if ((bodyContents.video as File).size === 0  || count !== 5) {
+        if ( count !== 5) {
             setLoading(false);
             toast({
                 title: "Error!",

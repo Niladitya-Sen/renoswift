@@ -25,6 +25,7 @@ async function getProducts(): Promise<ProductsType[]> {
         }
     });
     const data = await response.json();
+    console.log(data);
     return data;
 
 }

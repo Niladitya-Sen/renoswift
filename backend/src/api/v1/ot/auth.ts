@@ -81,7 +81,7 @@ auth.post('/login', async (req, res) => {
     let query = `SELECT email, id FROM OperationsTeam WHERE email = '${email}' AND isDeleted = false`;
 
     if (phone) {
-        query = `SELECT phoneNumber FROM OperationsTeam WHERE phoneNumber = '${phone}' AND isDeleted = false`;
+        query = `SELECT phoneNumber, id FROM OperationsTeam WHERE phoneNumber = '${phone}' AND isDeleted = false`;
     }
 
     db.query(query, (err, results) => {

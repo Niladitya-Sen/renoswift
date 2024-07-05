@@ -269,8 +269,8 @@ order.get("/track-status/:orderId",
         }
 
         const orderId = req.params.orderId;
-
-        const sql = 'SELECT id, status, date, isCompleted FROM OrderStatus WHERE orderId = ? AND isDeleted = FALSE ORDER BY date ASC';
+             
+        const sql = 'SELECT id, status, date, isCompleted, imageURL FROM OrderStatus WHERE orderId = ? AND isDeleted = FALSE ORDER BY date ASC';
         const values = [orderId];
 
         db.query(sql, values, (err, result) => {

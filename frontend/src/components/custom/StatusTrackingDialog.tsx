@@ -13,6 +13,8 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -24,6 +26,7 @@ type StatusType = {
     date: string;
     status: string;
     isCompleted: boolean;
+    imageURL: string;
 };
 
 
@@ -141,8 +144,8 @@ export default function StatusTrackingDialog({ trigger, orderId, role }: Readonl
                             Plan is not scheduled yet.
                         </p>
                     ) : (
-                        <div className={cn("mt-4 grid grid-cols-[1fr_0.3fr_1fr] gap-x-4 mx-auto max-h-[calc(100svh-10rem)] overflow-y-auto", {
-                            "grid-cols-[1fr_0.3fr_1fr_0.3fr_0.3fr]": role === "ot"
+                        <div className={cn("mt-4 grid grid-cols-[1fr_0.3fr_1fr_0.3fr] gap-x-4 mx-auto max-h-[calc(100svh-10rem)] overflow-y-auto", {
+                            "grid-cols-[1fr_0.3fr_1fr_0.3fr_0.3fr_0.3fr]": role === "ot"
                         })}>
                             {
                                 data.map((item, index) => (
@@ -158,6 +161,16 @@ export default function StatusTrackingDialog({ trigger, orderId, role }: Readonl
                                             })} />
                                         </div>
                                         <p>{item.status}</p>
+                                        {item.imageURL && (
+                                                        <button
+                                                            className="p-1 bg-gray-500 place-self-start text-lg text-white rounded"
+                                                            onClick={() => {
+                                                                window.open(process.env.NEXT_PUBLIC_API_URL + item.imageURL, '_blank');
+                                                            }}
+                                                        >
+                                                            <IoEyeOutline />
+                                                        </button>
+                                                    )}
                                         {
                                             role === "ot" && (
                                                 <>
@@ -169,6 +182,9 @@ export default function StatusTrackingDialog({ trigger, orderId, role }: Readonl
                                                     >
                                                         <MdDelete />
                                                     </button>
+
+
+
                                                     <Popover>
                                                         <PopoverTrigger asChild>
                                                             <button className="p-1 bg-blue-500 place-self-start text-lg text-white rounded">

@@ -4,9 +4,7 @@ import multer from "multer";
 import { db } from "../../../../db/db";
 import { UserRequest } from "../../../types/types";
 import { body } from "express-validator";
-
 const details = Router();
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         if (file.mimetype.includes('video')) {

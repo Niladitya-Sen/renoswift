@@ -83,11 +83,11 @@ export default function AdminAddProductDialog({ trigger }: Readonly<{ trigger: R
                 >
                     <label htmlFor="name">
                         <p className='font-medium mb-1'>Name</p>
-                        <Input type="text" name="name" id="name" placeholder="Name" required />
+                        <Input type="text" className='rounded-sm h-[3.25rem]' name="name" id="name" placeholder="Name" required />
                     </label>
                     <label htmlFor="productId">
                         <p className='font-medium mb-1'>Product Id</p>
-                        <Input type="text" name="productId" id="productId" placeholder="Employee Id" required />
+                        <Input type="text" name="productId" id="productId" placeholder="Product Id" required />
                     </label>
                     <label htmlFor="category">
                         <p className='font-medium mb-1'>Category</p>
@@ -104,7 +104,7 @@ export default function AdminAddProductDialog({ trigger }: Readonly<{ trigger: R
                     </label>
                     <label htmlFor="price">
                         <p className='font-medium mb-1'>Price</p>
-                        <Input type="text" name="price" id="price" placeholder="Price" required />
+                        <Input type="text" className='rounded-sm h-[3.25rem]' name="price" id="price" placeholder="Price" required />
                     </label>
                     <label htmlFor="productDetails" className='col-span-full'>
                         <p className='font-medium mb-1'>Product Details</p>
@@ -113,10 +113,10 @@ export default function AdminAddProductDialog({ trigger }: Readonly<{ trigger: R
                     <div className='col-span-full'>
                         <p className='font-medium mb-1'>Add Photos</p>
                         <div className='grid grid-cols-3 sm:grid-cols-4 gap-4 max-w-2xl'>
-                            <FileInput name="product-1" id="1" accept='image/*' required />
-                            <FileInput name="product-2" id="2" accept='image/*' required />
-                            <FileInput name="product-3" id="3" accept='image/*' required />
-                            <FileInput name="product-4" id="4" accept='image/*' required />
+                            <FileInput name="product-1" id="1" accept='image/*'  />
+                            <FileInput name="product-2" id="2" accept='image/*'  />
+                            <FileInput name="product-3" id="3" accept='image/*'  />
+                            <FileInput name="product-4" id="4" accept='image/*' />
                         </div>
                     </div>
                     <div className='flex gap-4 items-center justify-center w-full col-span-full'>
