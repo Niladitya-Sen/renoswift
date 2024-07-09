@@ -1,3 +1,4 @@
+import PaymentUpdateDialog from "@/components/custom/ot/OperationsTeamUpdatePayment";
 import { buttonVariants } from "@/components/ui/button";
 import {
     Table,
@@ -46,6 +47,7 @@ export default async function Payments() {
                     <TableHead className={cn('text-primary-foreground')}>Final Due Date</TableHead>
                     <TableHead className={cn('text-primary-foreground')}>Payment Method</TableHead>
                     <TableHead></TableHead>
+                    <TableHead></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -57,6 +59,19 @@ export default async function Payments() {
                             <TableCell>&#8377;{payment.amountDue}</TableCell>
                             <TableCell>{dayjs(payment.finalDueDate).format("DD/MM/YYYY")}</TableCell>
                             <TableCell>Visa Card</TableCell>
+                            <TableCell >
+                                <PaymentUpdateDialog
+
+                                trigger={
+                       
+                            <p className={cn(buttonVariants({
+                                variant: 'outline'
+                            }), 'border-primary')} >Update</p>
+                        
+                                }
+        
+                            />
+                            </TableCell>
                             <TableCell className={cn('flex items-center justify-end')}>
                                 <Link href={`/ot/payments/${payment.orderId}`} className={cn(buttonVariants({
                                     variant: 'outline'
