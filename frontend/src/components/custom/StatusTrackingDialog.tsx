@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
-
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -168,7 +168,7 @@ export default function StatusTrackingDialog({ trigger, orderId, role }: Readonl
                                                                 window.open(process.env.NEXT_PUBLIC_API_URL + item.imageURL, '_blank');
                                                             }}
                                                         >
-                                                            <IoEyeOutline />
+                                                            <MdOutlineRemoveRedEye />
                                                         </button>
                                                     )}
                                         {
