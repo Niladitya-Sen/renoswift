@@ -19,6 +19,8 @@ type PaymentType = {
     amountDue: number;
     finalDueDate: string;
     paymentMethod: string;
+    quoteId : string;
+    userId : number;
 }
 
 async function getPayments(): Promise<PaymentType[]> {
@@ -30,6 +32,7 @@ async function getPayments(): Promise<PaymentType[]> {
         }
     });
     const data = await response.json();
+    console.log(data);
     return data;
 }
 
@@ -61,7 +64,12 @@ export default async function Payments() {
                             <TableCell>Visa Card</TableCell>
                             <TableCell >
                                 <PaymentUpdateDialog
-
+                               orderId = {payment.orderId}
+                               amountDue = {payment.amountDue}
+                               amountPaid = {payment.amountPaid}
+                               DueDate = {payment.finalDueDate}
+                               quoteId= {payment.quoteId}
+                               userId= {payment.userId}
                                 trigger={
                        
                             <p className={cn(buttonVariants({
@@ -69,7 +77,6 @@ export default async function Payments() {
                             }), 'border-primary')} >Update</p>
                         
                                 }
-        
                             />
                             </TableCell>
                             <TableCell className={cn('flex items-center justify-end')}>

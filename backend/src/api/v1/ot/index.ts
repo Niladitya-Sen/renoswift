@@ -12,7 +12,6 @@ const ot = Router();
 ot.use("/auth", auth);
 
 ot.use(verfiyOperationsTeam);
-
 ot.use("/profile", profile);
 ot.use("/quotation", quotation);
 ot.use("/order", order);
