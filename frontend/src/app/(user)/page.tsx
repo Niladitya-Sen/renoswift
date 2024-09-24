@@ -25,7 +25,7 @@ export default function Index() {
                 <Working />
                 <ClientReview />
                 <Newsletter />
-                <ChatBot />
+                {/* <ChatBot /> */}
             </SectionWrapper>
         </>
     );
