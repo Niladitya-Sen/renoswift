@@ -1,5 +1,6 @@
 "use client";
 
+import Downweb from '@/components/custom/downwep';
 import OTPInput from '@/components/custom/OTPInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -116,34 +117,35 @@ export default function Login() {
     };
 
     return (
-        <section className='flex items-center justify-center h-screen bg-[url("/assets/auth/adminLogin.png")] bg-cover bg-no-repeat bg-center'>
-            <div className={cn('absolute inset-0 bg-black/80 z-50 cursor-wait', {
-                'hidden': !loading,
-                'grid place-content-center': loading
-            })}>
-                <AiOutlineLoading3Quarters className='animate-spin text-5xl text-primary' />
-            </div>
-            <form
-                className='bg-white px-6 py-8 rounded-lg max-w-md w-full mx-auto flex flex-col gap-4'
-                onSubmit={handleLogin}
-            >
-                <h1 className='heading-1 text-center mb-4'>Welcome back</h1>
-                <label htmlFor="email">
-                    <p className='ml-1 mb-1 font-semibold'>Email ID</p>
-                    <Input ref={emailRef} name="email" type='email' inputMode='email' placeholder='Enter your email' />
-                </label>
-                <div className='grid grid-cols-[1fr_2rem_1fr] w-[80%] mt-4 mb-2 mx-auto'>
-                    <div className='bg-black/20 w-full h-0.5 self-center' />
-                    <p className='text-center'>or</p>
-                    <div className='bg-black/20 w-full h-0.5 self-center' />
-                </div>
-                <label htmlFor="phone">
-                    <p className='ml-1 mb-1 font-semibold'>Phone number</p>
-                    <Input ref={phoneRef} name="phone" type='text' inputMode='numeric' placeholder='Enter your phone number' maxLength={10} minLength={10} />
-                </label>
-                <OTPInput value={otp} setValue={setOtp} sendOTP={sendOTP} />
-                <Button>Log In</Button>
-            </form>
-        </section>
+        <Downweb/>
+        // <section className='flex items-center justify-center h-screen bg-[url("/assets/auth/adminLogin.png")] bg-cover bg-no-repeat bg-center'>
+        //     <div className={cn('absolute inset-0 bg-black/80 z-50 cursor-wait', {
+        //         'hidden': !loading,
+        //         'grid place-content-center': loading
+        //     })}>
+        //         <AiOutlineLoading3Quarters className='animate-spin text-5xl text-primary' />
+        //     </div>
+        //     <form
+        //         className='bg-white px-6 py-8 rounded-lg max-w-md w-full mx-auto flex flex-col gap-4'
+        //         onSubmit={handleLogin}
+        //     >
+        //         <h1 className='heading-1 text-center mb-4'>Welcome back</h1>
+        //         <label htmlFor="email">
+        //             <p className='ml-1 mb-1 font-semibold'>Email ID</p>
+        //             <Input ref={emailRef} name="email" type='email' inputMode='email' placeholder='Enter your email' />
+        //         </label>
+        //         <div className='grid grid-cols-[1fr_2rem_1fr] w-[80%] mt-4 mb-2 mx-auto'>
+        //             <div className='bg-black/20 w-full h-0.5 self-center' />
+        //             <p className='text-center'>or</p>
+        //             <div className='bg-black/20 w-full h-0.5 self-center' />
+        //         </div>
+        //         <label htmlFor="phone">
+        //             <p className='ml-1 mb-1 font-semibold'>Phone number</p>
+        //             <Input ref={phoneRef} name="phone" type='text' inputMode='numeric' placeholder='Enter your phone number' maxLength={10} minLength={10} />
+        //         </label>
+        //         <OTPInput value={otp} setValue={setOtp} sendOTP={sendOTP} />
+        //         <Button>Log In</Button>
+        //     </form>
+        // </section>
     )
 }

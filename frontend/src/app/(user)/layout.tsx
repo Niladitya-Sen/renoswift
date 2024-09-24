@@ -11,9 +11,9 @@ export default function UserLayout({ children }: Readonly<{ children: React.Reac
                 color='#f9cf2b'
             />
             <main className="flex flex-col max-w-screen-2xl mx-auto">
-                {/* <Navbar /> */}
+                <Navbar />
                 {children}
-                {/* <Footer /> */}
+                <Footer />
             </main>
         </>
     )
