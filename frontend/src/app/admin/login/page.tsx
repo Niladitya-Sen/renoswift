@@ -1,6 +1,5 @@
 "use client";
 
-import Downweb from '@/components/custom/downwep';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -66,29 +65,29 @@ export default function AdminLogin() {
 
 
     return (
-        <Downweb/>
-        // <section className='admin flex items-center justify-center h-screen bg-[url("/assets/auth/adminLogin.png")] bg-cover bg-no-repeat bg-center'>
-        //     <div className={cn('absolute inset-0 bg-black/80 z-50 cursor-wait', {
-        //         'hidden': !loading,
-        //         'grid place-content-center': loading
-        //     })}>
-        //         <AiOutlineLoading3Quarters className='animate-spin text-5xl text-primary' />
-        //     </div>
-        //     <form
-        //         className='bg-white px-6 py-8 rounded-lg max-w-md w-full mx-auto flex flex-col justify-between gap-4 h-[25rem]'
-        //         onSubmit={handleLogin}
-        //     >
-        //         <h1 className='heading-1 text-center mb-4'>Welcome back</h1>
-        //         <label htmlFor="email">
-        //             <p className='ml-1 mb-1 font-semibold'>Email ID</p>
-        //             <Input ref={emailRef} name="email" type='email' inputMode='email' placeholder='Enter your email' />
-        //         </label>
-        //         <label htmlFor="password">
-        //             <p className='ml-1 mb-1 font-semibold'>Password</p>
-        //             <Input ref={phoneRef} name="password" type='password' />
-        //         </label>
-        //         <Button>Log In</Button>
-        //     </form>
-        // </section>
+
+        <section className='admin flex items-center justify-center h-screen bg-[url("/assets/auth/adminLogin.png")] bg-cover bg-no-repeat bg-center'>
+            <div className={cn('absolute inset-0 bg-black/80 z-50 cursor-wait', {
+                'hidden': !loading,
+                'grid place-content-center': loading
+            })}>
+                <AiOutlineLoading3Quarters className='animate-spin text-5xl text-primary' />
+            </div>
+            <form
+                className='bg-white px-6 py-8 rounded-lg max-w-md w-full mx-auto flex flex-col justify-between gap-4 h-[25rem]'
+                onSubmit={handleLogin}
+            >
+                <h1 className='heading-1 text-center mb-4'>Welcome back</h1>
+                <label htmlFor="email">
+                    <p className='ml-1 mb-1 font-semibold'>Email ID</p>
+                    <Input ref={emailRef} name="email" type='email' inputMode='email' placeholder='Enter your email' />
+                </label>
+                <label htmlFor="password">
+                    <p className='ml-1 mb-1 font-semibold'>Password</p>
+                    <Input ref={phoneRef} name="password" type='password' />
+                </label>
+                <Button>Log In</Button>
+            </form>
+        </section>
     )
 }
