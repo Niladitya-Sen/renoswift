@@ -12,11 +12,11 @@ import { cn } from '@/lib/utils';
 const reasons = [
     {
         "title": "What Makes Us Different?",
-        "description": "When it comes to renovating your space, Renoswift® stands out for a multitude of reasons. We believe in not just renovating but revolutionizing your experience. Here's why choosing us is a decision you won't regret:"
+        "description": "When it comes to renovating your space, RenovatePro® stands out for a multitude of reasons. We believe in not just renovating but revolutionizing your experience. Here's why choosing us is a decision you won't regret:"
     },
     {
         "title": "Innovative Design Concepts",
-        "description": "At Renoswift®, creativity is our cornerstone. Our design concepts aren't just about following trends; they're about setting them. We bring innovation to every project, ensuring your space is not only beautiful but ahead of its time."
+        "description": "At RenovatePro®, creativity is our cornerstone. Our design concepts aren't just about following trends; they're about setting them. We bring innovation to every project, ensuring your space is not only beautiful but ahead of its time."
     },
     {
         "title": "Extensive Product Range",
@@ -24,7 +24,7 @@ const reasons = [
     },
     {
         "title": "Transparent and User-Friendly Process",
-        "description": "Renovations can be overwhelming, but with Renoswift®, transparency is our promise. Our process is designed to be user-friendly, ensuring you are informed and involved at every step. No hidden surprises, just a smooth and transparent journey."
+        "description": "Renovations can be overwhelming, but with RenovatePro®, transparency is our promise. Our process is designed to be user-friendly, ensuring you are informed and involved at every step. No hidden surprises, just a smooth and transparent journey."
     },
     {
         "title": "Advanced Tracking and Communication",
@@ -32,11 +32,11 @@ const reasons = [
     },
     {
         "title": "Customer-Centric Approach",
-        "description": "You're not just a client; you're a valued part of the Renoswift® family. Our customer-centric approach means your needs and satisfaction are at the forefront of everything we do. From the first consultation to the final reveal, your happiness is our priority."
+        "description": "You're not just a client; you're a valued part of the RenovatePro® family. Our customer-centric approach means your needs and satisfaction are at the forefront of everything we do. From the first consultation to the final reveal, your happiness is our priority."
     },
     {
-        "title": "The Renoswift® Advantage",
-        "description": "Choosing Renoswift® isn't just about renovating; it's about embracing a new standard of excellence. Our innovative design concepts, extensive product range, transparent process, advanced tracking, and customer-centric approach redefine the renovation experience. Say goodbye to the ordinary and welcome the extraordinary with Renoswift®."
+        "title": "The RenovatePro® Advantage",
+        "description": "Choosing RenovatePro® isn't just about renovating; it's about embracing a new standard of excellence. Our innovative design concepts, extensive product range, transparent process, advanced tracking, and customer-centric approach redefine the renovation experience. Say goodbye to the ordinary and welcome the extraordinary with RenovatePro®."
     }
 ];
 
@@ -57,7 +57,7 @@ function ChooseUsCard({ title, description, index }: Readonly<{ title: string, d
 export default function ChooseUs() {
     return (
         <section className='my-20'>
-            <h2 className='heading-1'>Why Choose Renoswift®?</h2>
+            <h2 className='heading-1'>Why Choose RenovatePro®?</h2>
             <div className='grid gap-8 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] mt-8'>
                 {
                     reasons.map((reason, index) => (

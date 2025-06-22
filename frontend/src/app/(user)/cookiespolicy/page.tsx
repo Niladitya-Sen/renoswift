@@ -73,9 +73,9 @@ const Cookies: NextPage = () => {
         <section className="mb-4">
           <h2 className="text-2xl font-semibold mb-2">8. Contact Us</h2>
           <p className="text-gray-700 mb-2">
-            If you have any questions about our use of cookies, please contact us at  <Link href="mailto:info@renoswift.com">
+            If you have any questions about our use of cookies, please contact us at  <Link href="mailto:info@RenovatePro.com">
         
-        info@renoswift.com
+        info@RenovatePro.com
     </Link>.
           </p>
         </section>

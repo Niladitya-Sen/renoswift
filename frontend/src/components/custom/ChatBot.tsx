@@ -6,7 +6,7 @@ export default function ChatBot() {
     return (
         <iframe
             className={cn("h-[90svh] fixed right-0 bottom-0 z-50 w-[30rem]")}
-            src="https://testapi.unomiru.com/api/Waysbot?bot=renoswift"
+            src="https://testapi.unomiru.com/api/Waysbot?bot=RenovatePro"
             title="chat-bot"
             frameBorder="0"
             width="50%"

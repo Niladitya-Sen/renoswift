@@ -64,7 +64,7 @@ export default function Contact() {
                         <HiOutlineMailOpen className='text-2xl' />
                         <div>
                             <h4 className='font-semibold uppercase'>Email</h4>
-                            <p className='text-primary'>info@renoswift.com</p>
+                            <p className='text-primary'>info@RenovatePro.com</p>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@ export default function Contact() {
             <div className='w-full h-full flex items-center justify-center relative rounded-xl overflow-hidden'>
                 <iframe
                     title='map'
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d223960.2906516919!2d77.3597857!3d28.7082013!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ceff8a4bf2d6f%3A0xcac8cca1b277fdcc!2sRenoswift!5e0!3m2!1sen!2sin!4v1706711828654!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d223960.2906516919!2d77.3597857!3d28.7082013!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ceff8a4bf2d6f%3A0xcac8cca1b277fdcc!2sRenovatePro!5e0!3m2!1sen!2sin!4v1706711828654!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
                     className='absolute inset-0 sm:inset-auto sm:w-[30rem] sm:h-[30rem] z-10'

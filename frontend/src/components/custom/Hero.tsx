@@ -49,13 +49,13 @@ export default function Hero() {
                                     whileInView={variants.fadeIn(0.1).visible}
                                     className='heading-1 text-white text-2xl mb-4'
                                 >
-                                    Transforming Spaces: RenoSwift&apos;s Vision for Your Dream Bathroom
+                                    Transforming Spaces: RenovatePro&apos;s Vision for Your Dream Bathroom
                                 </motion.p>
                                 <motion.p
                                     initial={variants.fadeIn(0.25).hidden}
                                     whileInView={variants.fadeIn(0.25).visible}
                                     className='text-white text-sm font-medium mb-12'>
-                                    At RenoSwift, we embark on a journey with you to turn your bathroom dreams into reality. Committed to innovation and unwavering quality, we are more than just a renovation service - we are your dedicated companions in transforming your space.
+                                    At RenovatePro, we embark on a journey with you to turn your bathroom dreams into reality. Committed to innovation and unwavering quality, we are more than just a renovation service - we are your dedicated companions in transforming your space.
                                 </motion.p>
                                 <motion.div
                                     initial={variants.fadeIn(0.4).hidden}
@@ -86,7 +86,7 @@ export default function Hero() {
                                     whileInView={variants.fadeIn(0.25).visible}
                                     className='text-white text-sm font-medium mb-12'
                                 >
-                                    Renoswift®️ revolutionizes the renovation experience by bringing expert services right to your doorstep. Our team is driven by a passion for delivering quality work, always on time. As your one-stop solution for home renovations, we take pride in the seamless integration of our Design and Technical teams.
+                                    RenovatePro®️ revolutionizes the renovation experience by bringing expert services right to your doorstep. Our team is driven by a passion for delivering quality work, always on time. As your one-stop solution for home renovations, we take pride in the seamless integration of our Design and Technical teams.
                                 </motion.p>
                             </div> */}
                         </motion.div>
@@ -103,7 +103,7 @@ export default function Hero() {
                                     whileInView={variants.fadeIn(0.1).visible}
                                     className='heading-1 text-white text-2xl mb-4'
                                 >
-                                    RenoSwift: Where Innovation Meets Bathroom Design Excellence
+                                    RenovatePro: Where Innovation Meets Bathroom Design Excellence
                                 </motion.p>
                                 <motion.p
                                     initial={variants.fadeIn(0.25).hidden}
@@ -117,7 +117,7 @@ export default function Hero() {
                                     whileInView={variants.fadeIn(0.45).visible}
                                     className='text-white text-sm mt-2 font-medium'
                                 >
-                                    Embark on a journey with RenoSwift, where excellence meets affordability. Your dream bathroom awaits - let&apos;s make it a reality together!
+                                    Embark on a journey with RenovatePro, where excellence meets affordability. Your dream bathroom awaits - let&apos;s make it a reality together!
                                 </motion.p>
                             </div> */}
                         </motion.div>

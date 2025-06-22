@@ -11,7 +11,7 @@ export default function ThankYou({ searchParams: { id } }: { searchParams: { id:
                 <p className='mt-[1em]'>Your RFQ has been successfully sent.</p>
                 <p className='mt-[1em] text-blue-500 font-bold'>Reference ID - {id}</p>
                 <hr className='h-0.5 mt-1 bg-black' />
-                <p className='mt-[1em] uppercase text-[#010847] font-semibold'>Thank you for choosing RENOSWIFT</p>
+                <p className='mt-[1em] uppercase text-[#010847] font-semibold'>Thank you for choosing RenovatePro</p>
                 <p className='mt-[1em] text-sm font-medium'>You will get notified from the team soon.</p>
             </div>
         </section>

@@ -1,462 +1,495 @@
 import { Router } from "express";
 import { UserRequest } from "../../../types/types";
 import { db } from "../../../../db/db";
-import Razorpay from "razorpay";
 import crypto from "crypto";
 
 const payment = Router();
 
 payment.get("/amount/:paymentId", (req: UserRequest, res) => {
-    const paymentId = req.params.paymentId;
-    const userId = req.userId;
+  const paymentId = req.params.paymentId;
+  const userId = req.userId;
 
-    db.query('SELECT amountPaid, phase FROM Payment WHERE id = ? AND userId = ?', [paymentId, userId], (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
+  db.query(
+    "SELECT amountPaid, phase FROM Payment WHERE id = ? AND userId = ?",
+    [paymentId, userId],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
 
-        if (result.length === 0) {
-            return res.status(404).json({ error: "Payment not found" });
-        }
+      if (result.length === 0) {
+        return res.status(404).json({ error: "Payment not found" });
+      }
 
-        res.status(200).json(result[0]);
-    });
+      res.status(200).json(result[0]);
+    }
+  );
 });
 
 payment.post("/initiate", (req: UserRequest, res) => {
-    const { amount, quoteId, phase } = req.body;
-    const userId = req.userId;
+  const { amount, quoteId, phase } = req.body;
+  const userId = req.userId;
 
-    db.beginTransaction((err) => {
+  db.beginTransaction((err) => {
+    if (err) {
+      console.error(err);
+
+      db.rollback((err) => {
         if (err) {
-            console.error(err);
+          console.error(err);
+        }
+        return res.status(500).json({ error: "Internal Server Error" });
+      });
 
-            db.rollback((err) => {
-                if (err) {
-                    console.error(err);
-                }
-                return res.status(500).json({ error: "Internal Server Error" });
-            })
+      return;
+    }
 
-            return;
+    db.query(
+      "INSERT INTO Payment (userId, quoteId, amountPaid, amountDue, status, phase, method) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [
+        userId,
+        quoteId,
+        amount,
+        phase === "design" ? amount : amount,
+        "initiated",
+        phase,
+        "Visa Card",
+      ],
+      (err, result) => {
+        if (err) {
+          console.error(err);
+
+          db.rollback((err) => {
+            if (err) {
+              console.error(err);
+            }
+            return res.status(500).json({ error: "Internal Server Error" });
+          });
         }
 
-        db.query('INSERT INTO Payment (userId, quoteId, amountPaid, amountDue, status, phase, method) VALUES (?, ?, ?, ?, ?, ?, ?)', [userId, quoteId, amount, phase === "design" ? amount : amount, 'initiated', phase, "Visa Card"], (err, result) => {
-            if (err) {
+        db.commit((err) => {
+          if (err) {
+            db.rollback((err) => {
+              if (err) {
                 console.error(err);
-
-                db.rollback((err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                    return res.status(500).json({ error: "Internal Server Error" });
-                })
-            }
-
-            db.commit((err) => {
-                if (err) {
-                    db.rollback((err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                        return res.status(500).json({ error: "Internal Server Error" });
-                    })
-                }
-
-                res.status(200).json({
-                    message: "Payment initiated successfully!",
-                    paymentId: result.insertId
-                });
+              }
+              return res.status(500).json({ error: "Internal Server Error" });
             });
+          }
+
+          res.status(200).json({
+            message: "Payment initiated successfully!",
+            paymentId: result.insertId,
+          });
         });
-    })
+      }
+    );
+  });
 });
 
 payment.post("/confirm", (req: UserRequest, res) => {
-    const { paymentId } = req.body;
-    const userId = req.userId;
+  const { paymentId } = req.body;
+  const userId = req.userId;
 
-    db.beginTransaction((err) => {
+  db.beginTransaction((err) => {
+    if (err) {
+      db.rollback((err) => {
         if (err) {
-            db.rollback((err) => {
-                if (err) {
-                    console.error(err);
-                }
-            })
-            console.error(err);
-            res.status(500).json({ error: "Internal Server Error" });
-            return;
+          console.error(err);
+        }
+      });
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+
+    db.query(
+      "UPDATE Payment SET status = ? WHERE id = ? AND userId = ?",
+      ["done", paymentId, userId],
+      (err, result) => {
+        if (err) {
+          db.rollback((err) => {
+            if (err) {
+              console.error(err);
+            }
+          });
+          console.error(err);
+          res.status(500).json({ error: "Internal Server Error" });
+          return;
         }
 
-        db.query('UPDATE Payment SET status = ? WHERE id = ? AND userId = ?', ['done', paymentId, userId], (err, result) => {
+        db.query(
+          "INSERT INTO Order_ (userId, quoteId, status) VALUES (?, (SELECT quoteId FROM Payment WHERE id = ?), ?)",
+          [userId, paymentId, "pending"],
+          (err, result) => {
             if (err) {
-                db.rollback((err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                })
-                console.error(err);
-                res.status(500).json({ error: "Internal Server Error" });
-                return;
+              db.rollback((err) => {
+                if (err) {
+                  console.error(err);
+                }
+              });
+              console.error(err);
+              res.status(500).json({ error: "Internal Server Error" });
+              return;
             }
 
-            db.query('INSERT INTO Order_ (userId, quoteId, status) VALUES (?, (SELECT quoteId FROM Payment WHERE id = ?), ?)', [userId, paymentId, 'pending'], (err, result) => {
+            db.query(
+              "SELECT paymentId FROM Payment WHERE id = ?",
+              [paymentId],
+              (err, result) => {
                 if (err) {
-                    db.rollback((err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                    })
-                    console.error(err);
-                    res.status(500).json({ error: "Internal Server Error" });
-                    return;
+                  db.rollback((err) => {
+                    if (err) {
+                      console.error(err);
+                    }
+                  });
+                  res.status(500).json({ error: "Internal Server Error" });
+                  return;
                 }
 
-                db.query('SELECT paymentId FROM Payment WHERE id = ?', [paymentId], (err, result) => {
-                    if (err) {
-                        db.rollback((err) => {
-                            if (err) {
-                                console.error(err);
-                            }
-                        });
-                        res.status(500).json({ error: "Internal Server Error" });
-                        return;
-                    }
-
-                    db.commit((err) => {
-                        if (err) {
-                            db.rollback((err) => {
-                                if (err) {
-                                    console.error(err);
-                                }
-                            })
-                            res.status(500).json({ error: "Internal Server Error" });
-                            return;
-                        }
-
-                        res.status(200).json({
-                            message: "Payment confirmed successfully!",
-                            paymentId: result[0].paymentId
-                        });
+                db.commit((err) => {
+                  if (err) {
+                    db.rollback((err) => {
+                      if (err) {
+                        console.error(err);
+                      }
                     });
+                    res.status(500).json({ error: "Internal Server Error" });
+                    return;
+                  }
+
+                  res.status(200).json({
+                    message: "Payment confirmed successfully!",
+                    paymentId: result[0].paymentId,
+                  });
                 });
-            });
-        });
-    });
+              }
+            );
+          }
+        );
+      }
+    );
+  });
 });
 
 payment.post("/confirm/design", (req: UserRequest, res) => {
-    const { paymentId } = req.body;
-    const userId = req.userId;
+  const { paymentId } = req.body;
+  const userId = req.userId;
 
-    db.beginTransaction((err) => {
+  db.beginTransaction((err) => {
+    if (err) {
+      db.rollback((err) => {
         if (err) {
-            db.rollback((err) => {
+          console.error(err);
+        }
+        return res.status(500).json({ error: "Internal Server Error" });
+      });
+    }
+
+    db.query(
+      "UPDATE Payment SET status = ? WHERE id = ? AND userId = ?",
+      ["done", paymentId, userId],
+      (err, result) => {
+        if (err) {
+          db.rollback((err) => {
+            if (err) {
+              console.error(err);
+            }
+            return res.status(500).json({ error: "Internal Server Error" });
+          });
+        }
+
+        db.query(
+          "SELECT paymentId FROM Payment WHERE id = ?",
+          [paymentId],
+          (err, result) => {
+            if (err) {
+              db.rollback((err) => {
                 if (err) {
-                    console.error(err);
+                  console.error(err);
                 }
                 return res.status(500).json({ error: "Internal Server Error" });
-            })
-        }
-
-        db.query('UPDATE Payment SET status = ? WHERE id = ? AND userId = ?', ['done', paymentId, userId], (err, result) => {
-            if (err) {
-                db.rollback((err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                    return res.status(500).json({ error: "Internal Server Error" });
-                })
+              });
             }
 
-            db.query('SELECT paymentId FROM Payment WHERE id = ?', [paymentId], (err, result) => {
-                if (err) {
-                    db.rollback((err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                        return res.status(500).json({ error: "Internal Server Error" });
-                    });
-                }
-
-                db.commit((err) => {
-                    if (err) {
-                        db.rollback((err) => {
-                            if (err) {
-                                console.error(err);
-                            }
-                            return res.status(500).json({ error: "Internal Server Error" });
-                        })
-                    }
-
-                    res.status(200).json({
-                        message: "Payment confirmed successfully!",
-                        paymentId: result[0].paymentId
-                    });
+            db.commit((err) => {
+              if (err) {
+                db.rollback((err) => {
+                  if (err) {
+                    console.error(err);
+                  }
+                  return res
+                    .status(500)
+                    .json({ error: "Internal Server Error" });
                 });
+              }
+
+              res.status(200).json({
+                message: "Payment confirmed successfully!",
+                paymentId: result[0].paymentId,
+              });
             });
-        });
-    });
+          }
+        );
+      }
+    );
+  });
 });
 
-
 payment.post("/create-order", async (req: UserRequest, res) => {
-    try {
-        const { amount, quoteId, phase } = req.body;
+  try {
+    const { amount, quoteId, phase } = req.body;
 
-        const razorpay = new Razorpay({
-            key_id: process.env.RAZORPAY_KEY_ID as string,
-            key_secret: process.env.RAZORPAY_KEY_SECRET
+    db.beginTransaction((err) => {
+      if (err) {
+        console.error(err);
+
+        db.rollback((err) => {
+          if (err) {
+            console.error(err);
+          }
+          return res.status(500).json({ error: "Internal Server Error" });
         });
 
-        const receipt = crypto.randomBytes(16).toString("hex");
+        return;
+      }
 
-        const order = await razorpay.orders.create({
-            amount: amount * 100,
-            currency: "INR",
-            receipt: receipt
-        });
+      db.query(
+        "INSERT INTO Payment (userId, quoteId, amountPaid, amountDue, status, phase, method, receipt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+          req.userId,
+          quoteId,
+          0,
+          amount,
+          "initiated",
+          phase,
+          "",
+          crypto.randomBytes(16).toString("hex"),
+        ],
+        (err, result) => {
+          if (err) {
+            console.error(err);
 
-        if (!order) {
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
-
-        db.beginTransaction((err) => {
-            if (err) {
+            db.rollback((err) => {
+              if (err) {
                 console.error(err);
+              }
+              return res.status(500).json({ error: "Internal Server Error" });
+            });
+          }
 
-                db.rollback((err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                    return res.status(500).json({ error: "Internal Server Error" });
-                })
-
-                return;
+          db.commit((err) => {
+            if (err) {
+              db.rollback((err) => {
+                if (err) {
+                  console.error(err);
+                }
+                return res.status(500).json({ error: "Internal Server Error" });
+              });
             }
 
-            db.query('INSERT INTO Payment (userId, quoteId, amountPaid, amountDue, status, phase, method, receipt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [req.userId, quoteId, 0, amount, 'initiated', phase, "", receipt], (err, result) => {
-                if (err) {
-                    console.error(err);
-
-                    db.rollback((err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                        return res.status(500).json({ error: "Internal Server Error" });
-                    })
-                }
-
-                db.commit((err) => {
-                    if (err) {
-                        db.rollback((err) => {
-                            if (err) {
-                                console.error(err);
-                            }
-                            return res.status(500).json({ error: "Internal Server Error" });
-                        })
-                    }
-
-                    res.status(200).json({ ...order, paymentId: result.insertId });
-                });
-            });
-        })
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
+            res.status(200).json({ paymentId: result.insertId });
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 payment.post("/success", async (req: UserRequest, res) => {
-    try {
-        // getting the details back from our font-end
-        const {
-            orderCreationId,
-            razorpayPaymentId,
-            razorpayOrderId,
-            razorpaySignature,
-            paymentId,
-            amount
-        } = req.body;
+  try {
+    // getting the details back from our font-end
+    const { paymentId, amount } = req.body;
 
-        const userId = req.userId;
+    const userId = req.userId;
 
-        // Creating our own digest
-        // The format should be like this:
-        // digest = hmac_sha256(orderCreationId + "|" + razorpayPaymentId, secret);
-        const shasum = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET as string);
-
-        shasum.update(`${orderCreationId}|${razorpayPaymentId}`);
-
-        const digest = shasum.digest("hex");
-
-        // comaparing our digest with the actual signature
-        if (digest !== razorpaySignature)
-            return res.status(400).json({ msg: "Transaction not legit!" });
-
-        // THE PAYMENT IS LEGIT & VERIFIED
-        // YOU CAN SAVE THE DETAILS IN YOUR DATABASE IF YOU WANT
-
-        if (req.query.phase === "design") {
-            db.beginTransaction((err) => {
-                if (err) {
-                    db.rollback((err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                        return res.status(500).json({ error: "Internal Server Error" });
-                    })
-                }
-
-                db.query("UPDATE Payment p SET p.status = ?, p.amountPaid = ?, p.amountDue = 0, p.finalDueDate = STR_TO_DATE((SELECT qr.timeline FROM QuoteReply qr WHERE qr.quoteId = p.quoteId), '%d/%m/%Y') WHERE p.id = ? AND p.userId = ?", ['done', amount, paymentId, userId], (err, result) => {
-                    if (err) {
-                        db.rollback((err) => {
-                            if (err) {
-                                console.error(err);
-                            }
-                            return res.status(500).json({ error: "Internal Server Error" });
-                        })
-                    }
-
-                    db.query('SELECT paymentId FROM Payment WHERE id = ?', [paymentId], (err, result) => {
-                        if (err) {
-                            db.rollback((err) => {
-                                if (err) {
-                                    console.error(err);
-                                }
-                                return res.status(500).json({ error: "Internal Server Error" });
-                            });
-                        }
-
-                        db.commit((err) => {
-                            if (err) {
-                                db.rollback((err) => {
-                                    if (err) {
-                                        console.error(err);
-                                    }
-                                    return res.status(500).json({ error: "Internal Server Error" });
-                                })
-                            }
-
-                            res.status(200).json({
-                                message: "Payment confirmed successfully!",
-                                paymentId: result[0].paymentId
-                            });
-                        });
-                    });
-                });
-            });
-
-            return;
+    if (req.query.phase === "design") {
+      db.beginTransaction((err) => {
+        if (err) {
+          db.rollback((err) => {
+            if (err) {
+              console.error(err);
+            }
+            return res.status(500).json({ error: "Internal Server Error" });
+          });
         }
 
-        db.beginTransaction((err) => {
+        db.query(
+          "UPDATE Payment p SET p.status = ?, p.amountPaid = ?, p.amountDue = 0, p.finalDueDate = STR_TO_DATE((SELECT qr.timeline FROM QuoteReply qr WHERE qr.quoteId = p.quoteId), '%d/%m/%Y') WHERE p.id = ? AND p.userId = ?",
+          ["done", amount, paymentId, userId],
+          (err, result) => {
             if (err) {
-                db.rollback((err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                })
-                console.error(err);
-                res.status(500).json({ error: "Internal Server Error" });
-                return;
+              db.rollback((err) => {
+                if (err) {
+                  console.error(err);
+                }
+                return res.status(500).json({ error: "Internal Server Error" });
+              });
             }
 
-            const sql = `UPDATE Payment p SET p.status = ?, p.amountPaid = ?, p.amountDue = 0, p.finalDueDate = STR_TO_DATE((SELECT qr.timeline FROM QuoteReply qr WHERE qr.quoteId = p.quoteId), '%d/%m/%Y') WHERE p.id = ? AND p.userId = ?`;
-
-            db.query(sql, ['done', amount, paymentId, userId], (err, result) => {
+            db.query(
+              "SELECT paymentId FROM Payment WHERE id = ?",
+              [paymentId],
+              (err, result) => {
                 if (err) {
-                    db.rollback((err) => {
-                        if (err) {
-                            console.error(err);
-                        }
-                    })
-                    console.error(err);
-                    res.status(500).json({ error: "Internal Server Error" });
-                    return;
+                  db.rollback((err) => {
+                    if (err) {
+                      console.error(err);
+                    }
+                    return res
+                      .status(500)
+                      .json({ error: "Internal Server Error" });
+                  });
                 }
 
-                db.query('INSERT INTO Order_ (userId, quoteId, status) VALUES (?, (SELECT quoteId FROM Payment WHERE id = ?), ?)', [userId, paymentId, 'pending'], (err, result) => {
-                    if (err) {
-                        db.rollback((err) => {
-                            if (err) {
-                                console.error(err);
-                            }
-                        })
+                db.commit((err) => {
+                  if (err) {
+                    db.rollback((err) => {
+                      if (err) {
                         console.error(err);
-                        res.status(500).json({ error: "Internal Server Error" });
-                        return;
-                    }
-
-                    db.query('SELECT paymentId FROM Payment WHERE id = ?', [paymentId], (err, result) => {
-                        if (err) {
-                            db.rollback((err) => {
-                                if (err) {
-                                    console.error(err);
-                                }
-                            });
-                            res.status(500).json({ error: "Internal Server Error" });
-                            return;
-                        }
-
-                        db.commit((err) => {
-                            if (err) {
-                                db.rollback((err) => {
-                                    if (err) {
-                                        console.error(err);
-                                    }
-                                })
-                                res.status(500).json({ error: "Internal Server Error" });
-                                return;
-                            }
-
-                            res.json({
-                                msg: "success",
-                                orderId: razorpayOrderId,
-                                paymentId: razorpayPaymentId,
-                            });
-                        });
+                      }
+                      return res
+                        .status(500)
+                        .json({ error: "Internal Server Error" });
                     });
+                  }
+
+                  res.status(200).json({
+                    message: "Payment confirmed successfully!",
+                    paymentId: result[0].paymentId,
+                  });
                 });
-            });
-        });
-    } catch (error) {
-        res.status(500).send(error);
+              }
+            );
+          }
+        );
+      });
+
+      return;
     }
+
+    db.beginTransaction((err) => {
+      if (err) {
+        db.rollback((err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+
+      const sql = `UPDATE Payment p SET p.status = ?, p.amountPaid = ?, p.amountDue = 0, p.finalDueDate = STR_TO_DATE((SELECT qr.timeline FROM QuoteReply qr WHERE qr.quoteId = p.quoteId), '%d/%m/%Y') WHERE p.id = ? AND p.userId = ?`;
+
+      db.query(sql, ["done", amount, paymentId, userId], (err, result) => {
+        if (err) {
+          db.rollback((err) => {
+            if (err) {
+              console.error(err);
+            }
+          });
+          console.error(err);
+          res.status(500).json({ error: "Internal Server Error" });
+          return;
+        }
+
+        db.query(
+          "INSERT INTO Order_ (userId, quoteId, status) VALUES (?, (SELECT quoteId FROM Payment WHERE id = ?), ?)",
+          [userId, paymentId, "pending"],
+          (err, result) => {
+            if (err) {
+              db.rollback((err) => {
+                if (err) {
+                  console.error(err);
+                }
+              });
+              console.error(err);
+              res.status(500).json({ error: "Internal Server Error" });
+              return;
+            }
+
+            db.query(
+              "SELECT paymentId FROM Payment WHERE id = ?",
+              [paymentId],
+              (err, result) => {
+                if (err) {
+                  db.rollback((err) => {
+                    if (err) {
+                      console.error(err);
+                    }
+                  });
+                  res.status(500).json({ error: "Internal Server Error" });
+                  return;
+                }
+
+                db.commit((err) => {
+                  if (err) {
+                    db.rollback((err) => {
+                      if (err) {
+                        console.error(err);
+                      }
+                    });
+                    res.status(500).json({ error: "Internal Server Error" });
+                    return;
+                  }
+
+                  res.json({
+                    msg: "success",
+                  });
+                });
+              }
+            );
+          }
+        );
+      });
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 payment.get("/", (req: UserRequest, res) => {
-    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? ORDER BY o.createdDate DESC; ';
+  const sql =
+    "SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = 'done') as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = 'done') as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? ORDER BY o.createdDate DESC; ";
 
-    db.query(sql, [req.userId], (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({ message: "Internal server error" });
-        }
+  db.query(sql, [req.userId], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
 
-        res.status(200).json(result);
-    });
+    res.status(200).json(result);
+  });
 });
 
 payment.get("/:orderId", (req: UserRequest, res) => {
-    const sql = 'SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = \'done\') as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? AND o.orderId = ? ORDER BY o.createdDate DESC;';
+  const sql =
+    "SELECT o.orderId, o.createdDate, o.status, (SELECT SUM(p.amountPaid) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = 'done') as amountPaid, (SELECT SUM(p.amountDue) FROM Payment as p WHERE o.quoteId = p.quoteId AND p.status = 'done') as amountDue, (SELECT p.finalDueDate FROM Payment as p WHERE p.quoteId = o.quoteId ORDER BY p.createdDate DESC LIMIT 1) as finalDueDate FROM Order_ as o WHERE o.userId = ? AND o.orderId = ? ORDER BY o.createdDate DESC;";
 
-    db.query(sql, [req.userId, req.params.orderId], (err, result) => {
+  db.query(sql, [req.userId, req.params.orderId], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    db.query(
+      "SELECT p.phase, p.amountPaid as amount, p.finalDueDate as dueDate, p.status FROM Payment p INNER JOIN Order_ o WHERE o.orderId = ? AND o.quoteId = p.quoteId",
+      [req.params.orderId],
+      (err, payments) => {
         if (err) {
-            console.log(err);
-            return res.status(500).json({ message: "Internal server error" });
+          console.error(err);
+          return res.status(500).json({ error: "Internal Server Error" });
         }
 
-        db.query('SELECT p.phase, p.amountPaid as amount, p.finalDueDate as dueDate, p.status FROM Payment p INNER JOIN Order_ o WHERE o.orderId = ? AND o.quoteId = p.quoteId', [req.params.orderId], (err, payments) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: "Internal Server Error" });
-            }
-
-            res.status(200).json({ ...result[0], payments });
-        });
-    });
+        res.status(200).json({ ...result[0], payments });
+      }
+    );
+  });
 });
 
 export default payment;

@@ -14,7 +14,7 @@ export default function AboutUs() {
             <div className="max-w-md">
                 <h2 className="heading-1">About <span className='text-primary'>Us</span></h2>
                 <p className="mt-[1em] max-w-lg">
-                    Welcome to Renoswift. Your Premier Destination for Bathroom Transformations! We understand the importance of a well-designed and functional bathroom. Whether you&apos;re dreaming of a luxurious or a sleek modern space, our expert team is here to bring your vision to life. With a focus on innovation, quality, and customer satisfaction, we&apos;re dedicated to delivering stunning results that exceed your expectations. Explore our range of services and let us bring your vision to life.
+                    Welcome to RenovatePro. Your Premier Destination for Bathroom Transformations! We understand the importance of a well-designed and functional bathroom. Whether you&apos;re dreaming of a luxurious or a sleek modern space, our expert team is here to bring your vision to life. With a focus on innovation, quality, and customer satisfaction, we&apos;re dedicated to delivering stunning results that exceed your expectations. Explore our range of services and let us bring your vision to life.
                 </p>
                 <Button className='mt-6' asChild>
                     <Link href='/about'>Know More</Link>

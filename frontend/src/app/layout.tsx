@@ -12,14 +12,14 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "RenoSwift",
-  description: `At RenoSwift, we embark on a journey with you to turn your bathroom dreams into reality. Committed to innovation and unwavering quality, we are more than just a renovation service – we are your dedicated companions in transforming your space.
+  title: "RenovatePro",
+  description: `At RenovatePro, we embark on a journey with you to turn your bathroom dreams into reality. Committed to innovation and unwavering quality, we are more than just a renovation service – we are your dedicated companions in transforming your space.
 
-  Renoswift®️ revolutionizes the renovation experience by bringing expert services right to your doorstep.Our team is driven by a passion for delivering quality work, always on time.As your one- stop solution for home renovations, we take pride in the seamless integration of our Design and Technical teams.
+  RenovatePro®️ revolutionizes the renovation experience by bringing expert services right to your doorstep.Our team is driven by a passion for delivering quality work, always on time.As your one- stop solution for home renovations, we take pride in the seamless integration of our Design and Technical teams.
   
   Our Design team specializes in curating beautiful and personalized designs for your home, ensuring a touch of elegance in every corner.Meanwhile, our Technical team, equipped with years of expertise, ensures a bespoke and high - quality experience, all within a budget that suits your needs.
   
-  Embark on a journey with RenoSwift, where excellence meets affordability.Your dream bathroom awaits – let's make it a reality together!
+  Embark on a journey with RenovatePro, where excellence meets affordability.Your dream bathroom awaits – let's make it a reality together!
 `,
 
   keywords: [
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     "Renovation specialists",
     "Creative bathroom design",
     "Home remodeling",
-    "Renoswift quotes",
+    "RenovatePro quotes",
     "Quality renovation",
     "Dream bathroom experience",
     "Renovation consultation",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     "Skilled renovation professionals",
     "On-time precision",
     "Renovation consultation",
-    "Renoswift craftsmanship",
+    "RenovatePro craftsmanship",
     "High-end bathroom products",
     "Home transformation services",
     "Renovation partners",
@@ -129,7 +129,7 @@ export const metadata: Metadata = {
     "Dream home makeover",
     "Customized home solutions",
     "Northern city renovations",
-    "Renoswift®️ testimonials",
+    "RenovatePro®️ testimonials",
     "Professional design team",
     "Swift home transformations",
     "Unique renovation concepts",
@@ -139,7 +139,7 @@ export const metadata: Metadata = {
     "Classy home decor",
     "Top-notch renovation service",
     "Renovation trends 2024",
-    "Renoswift®️ expansion plans",
+    "RenovatePro®️ expansion plans",
     "Home improvement stories",
     "Transformative home experiences",
     "Renovation joy and happiness",

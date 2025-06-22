@@ -29,7 +29,7 @@ export default function ClientReview() {
                         </div>
                     </div>
                     <div className='p-4 text-sm shadow-lg bg-primary rounded-sm text-white max-w-lg'>
-                        Renoswift truly exceeded my expectations! Their team transformed my outdated bathroom completely. From start to finish, they were professional, efficient, and attentive to every detail. I&apos;m thrilled with the results and highly recommend them for anyone looking to upgrade their bathroom space.
+                        RenovatePro truly exceeded my expectations! Their team transformed my outdated bathroom completely. From start to finish, they were professional, efficient, and attentive to every detail. I&apos;m thrilled with the results and highly recommend them for anyone looking to upgrade their bathroom space.
                     </div>
                 </div>
             </div>
