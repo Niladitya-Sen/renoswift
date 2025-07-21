@@ -7,31 +7,31 @@ const inspirations = [
         id: 1,
         name: 'Renovation at Your Doorstep',
         btnText: 'Open up for easy living',
-        image: '/assets/design.jpg',
+        image: '/renovate-pro/assets/design.jpg',
     },
     {
         id: 2,
         name: 'Sink',
         btnText: 'Traditional looks',
-        image: '/assets/product-9.jpg',
+        image: '/renovate-pro/assets/product-9.jpg',
     },
     {
         id: 3,
         name: 'Toilets',
         btnText: 'Sleek and sustainable',
-        image: '/assets/product-11.jpg',
+        image: '/renovate-pro/assets/product-11.jpg',
     },
     {
         id: 4,
         name: 'Bathroom',
         btnText: 'Compact living',
-        image: '/assets/product-12.jpg',
+        image: '/renovate-pro/assets/product-12.jpg',
     },
     {
         id: 5,
         name: 'Showers',
         btnText: 'Classic design',
-        image: '/assets/product-5.jpg',
+        image: '/renovate-pro/assets/product-5.jpg',
     },
 ];
 
