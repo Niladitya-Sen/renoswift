@@ -1,49 +1,51 @@
 "use client";
 
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem
+  Carousel,
+  CarouselContent,
+  CarouselItem,
 } from "@/components/ui/carousel";
-import { variants } from '@/lib/motion';
+import { variants } from "@/lib/motion";
 import Autoplay from "embla-carousel-autoplay";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export default function Hero() {
-    return (
-        <section className='relative'>
-            <div className='text-center absolute z-[2] flex flex-col items-center justify-center w-full h-full'>
-                <motion.h1
-                    className='heading-1 mb-2 max-w-lg text-white'
-                    initial={variants.fadeIn(0.1).hidden}
-                    whileInView={variants.fadeIn(0.1).visible}
-                >
-                    Design Your Dream Bathroom From Inspiration
-                </motion.h1>
-                <motion.p
-                    initial={variants.fadeIn(0.25).hidden}
-                    whileInView={variants.fadeIn(0.25).visible}
-                    className='mb-8 max-w-xl text-white'
-                >
-                    Say goodbye to bathroom worries! Our full-service renovations cover every step, from tearing down to tile-up. Contact us today and watch your dream bathroom come to life.
-                </motion.p>
-            </div>
-            <Carousel
-                plugins={[
-                    Autoplay({
-                        delay: 5000,
-                    }),
-                ]}
-                className='overflow-hidden relative z-[1] isolate'
+  return (
+    <section className="relative">
+      <div className="text-center absolute z-[2] flex flex-col items-center justify-center w-full h-full">
+        <motion.h1
+          className="heading-1 mb-2 max-w-lg text-white"
+          initial={variants.fadeIn(0.1).hidden}
+          whileInView={variants.fadeIn(0.1).visible}
+        >
+          Design Your Dream Bathroom From Inspiration
+        </motion.h1>
+        <motion.p
+          initial={variants.fadeIn(0.25).hidden}
+          whileInView={variants.fadeIn(0.25).visible}
+          className="mb-8 max-w-xl text-white"
+        >
+          Say goodbye to bathroom worries! Our full-service renovations cover
+          every step, from tearing down to tile-up. Contact us today and watch
+          your dream bathroom come to life.
+        </motion.p>
+      </div>
+      <Carousel
+        plugins={[
+          Autoplay({
+            delay: 5000,
+          }),
+        ]}
+        className="overflow-hidden relative z-[1] isolate"
+      >
+        <CarouselContent>
+          <CarouselItem>
+            <motion.div
+              initial={variants.scaleOut.hidden}
+              whileInView={variants.scaleOut.visible}
+              className='h-[35rem] scale-105 bg-[url("/renovate-pro/assets/slide-1.jpg")] bg-no-repeat bg-center bg-cover p-8 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:from-[50%] after:to-transparent after:-z-10'
             >
-                <CarouselContent>
-                    <CarouselItem>
-                        <motion.div
-                            initial={variants.scaleOut.hidden}
-                            whileInView={variants.scaleOut.visible}
-                            className='h-[35rem] scale-105 bg-[url("/assets/slide-1.jpg")] bg-no-repeat bg-center bg-cover p-8 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:from-[50%] after:to-transparent after:-z-10'
-                        >
-                            {/* <div className='max-w-lg text-center'>
+              {/* <div className='max-w-lg text-center'>
                                 <motion.p
                                     initial={variants.fadeIn(0.1).hidden}
                                     whileInView={variants.fadeIn(0.1).visible}
@@ -65,15 +67,15 @@ export default function Hero() {
                                     <Button>Request a Quote</Button>
                                 </motion.div>
                             </div> */}
-                        </motion.div>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <motion.div
-                            initial={variants.scaleOut.hidden}
-                            whileInView={variants.scaleOut.visible}
-                            className='h-[35rem] bg-[url("/assets/slide-2.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:from-[50%] after:to-transparent after:-z-10'
-                        >
-                            {/* <div className='max-w-lg text-center'>
+            </motion.div>
+          </CarouselItem>
+          <CarouselItem>
+            <motion.div
+              initial={variants.scaleOut.hidden}
+              whileInView={variants.scaleOut.visible}
+              className='h-[35rem] bg-[url("/renovate-pro/assets/slide-2.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/40 after:from-[50%] after:to-transparent after:-z-10'
+            >
+              {/* <div className='max-w-lg text-center'>
                                 <motion.p
                                     initial={variants.fadeIn(0.1).hidden}
                                     whileInView={variants.fadeIn(0.1).visible}
@@ -89,15 +91,15 @@ export default function Hero() {
                                     RenovatePro®️ revolutionizes the renovation experience by bringing expert services right to your doorstep. Our team is driven by a passion for delivering quality work, always on time. As your one-stop solution for home renovations, we take pride in the seamless integration of our Design and Technical teams.
                                 </motion.p>
                             </div> */}
-                        </motion.div>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <motion.div
-                            initial={variants.scaleOut.hidden}
-                            whileInView={variants.scaleOut.visible}
-                            className='h-[35rem] bg-[url("/assets/slide-3.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/50 after:from-[50%] after:to-transparent after:-z-10'
-                        >
-                            {/* <div className='max-w-lg text-center'>
+            </motion.div>
+          </CarouselItem>
+          <CarouselItem>
+            <motion.div
+              initial={variants.scaleOut.hidden}
+              whileInView={variants.scaleOut.visible}
+              className='h-[35rem] bg-[url("/renovate-pro/assets/slide-3.jpg")] bg-no-repeat bg-center bg-cover p-8 py-16 flex flex-col items-center justify-center relative isolate after:content-[""] after:absolute after:inset-0 after:bg-gradient-to-r after:from-black/50 after:from-[50%] after:to-transparent after:-z-10'
+            >
+              {/* <div className='max-w-lg text-center'>
                                 <motion.p
                                     initial={variants.fadeIn(0.1).hidden}
                                     whileInView={variants.fadeIn(0.1).visible}
@@ -120,10 +122,10 @@ export default function Hero() {
                                     Embark on a journey with RenovatePro, where excellence meets affordability. Your dream bathroom awaits - let&apos;s make it a reality together!
                                 </motion.p>
                             </div> */}
-                        </motion.div>
-                    </CarouselItem>
-                </CarouselContent>
-            </Carousel>
-        </section>
-    )
+            </motion.div>
+          </CarouselItem>
+        </CarouselContent>
+      </Carousel>
+    </section>
+  );
 }

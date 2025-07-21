@@ -8,7 +8,7 @@ import React from 'react'
 export default function Welcome() {
     return (
         <SectionWrapper className='mb-10'>
-            <div className='bg-[url("/assets/gallery-1.jpg")] bg-cover bg-center text-center rounded-lg h-[30rem] text-background'>
+            <div className='bg-[url("/renovate-pro/assets/gallery-1.jpg")] bg-cover bg-center text-center rounded-lg h-[30rem] text-background'>
                 <div className='rounded-lg bg-gradient-to-b from-black/60 to-transparent h-full flex flex-col gap-2 items-center justify-center text-3xl'>
                     <p>Indulge In Innovation</p>
                     <p className='text-xl mt-10'>Discover Modern Solutions For Your Bathroom Makeover</p>

@@ -66,7 +66,7 @@ export default function AdminLogin() {
 
     return (
 
-        <section className='admin flex items-center justify-center h-screen bg-[url("/assets/auth/adminLogin.png")] bg-cover bg-no-repeat bg-center'>
+        <section className='admin flex items-center justify-center h-screen bg-[url("/renovate-pro/assets/auth/adminLogin.png")] bg-cover bg-no-repeat bg-center'>
             <div className={cn('absolute inset-0 bg-black/80 z-50 cursor-wait', {
                 'hidden': !loading,
                 'grid place-content-center': loading
